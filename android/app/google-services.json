@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "972099236659",
+    "firebase_url": "https://road-watch-capstone-pro-bj1osc-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "road-watch-capstone-pro-bj1osc",
+    "storage_bucket": "road-watch-capstone-pro-bj1osc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:972099236659:android:92dbc4ffc89ec4a2de0446",
+        "android_client_info": {
+          "package_name": "com.mycompany.roadwatchcapstoneproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnt7cxNBdAjOdQFkoqQYT4YarG-Cxepf0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

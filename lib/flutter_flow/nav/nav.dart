@@ -119,9 +119,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => SignUpWidget(),
         ),
         FFRoute(
-          name: Profile1Widget.routeName,
-          path: Profile1Widget.routePath,
-          builder: (context, params) => Profile1Widget(),
+          name: TicketReceiptWidget.routeName,
+          path: TicketReceiptWidget.routePath,
+          builder: (context, params) => TicketReceiptWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

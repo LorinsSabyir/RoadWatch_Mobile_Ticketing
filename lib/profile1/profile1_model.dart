@@ -1,8 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'ticket_widget.dart' show TicketWidget;
+import 'profile1_widget.dart' show Profile1Widget;
 import 'package:flutter/material.dart';
 
-class TicketModel extends FlutterFlowModel<TicketWidget> {
+class Profile1Model extends FlutterFlowModel<Profile1Widget> {
   @override
   void initState(BuildContext context) {}
 

@@ -97,7 +97,7 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Name:',
+                                  'Driver Name:',
                                   style: FlutterFlowTheme.of(context)
                                       .labelMedium
                                       .override(
@@ -264,7 +264,7 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                   ),
                   Expanded(
                     child: Container(
-                      height: MediaQuery.sizeOf(context).height * 0.5,
+                      height: MediaQuery.sizeOf(context).height * 0.55,
                       decoration: BoxDecoration(),
                       child: ListView(
                         padding: EdgeInsets.zero,
@@ -631,8 +631,8 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                   Align(
                     alignment: AlignmentDirectional(0.0, 1.0),
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          16.0, 16.0, 16.0, 16.0),
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 16.0, 8.0),
                       child: SingleChildScrollView(
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
@@ -801,7 +801,7 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
             Align(
               alignment: AlignmentDirectional(0.0, 1.0),
               child: Padding(
-                padding: EdgeInsets.all(16.0),
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 16.0, 8.0),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,

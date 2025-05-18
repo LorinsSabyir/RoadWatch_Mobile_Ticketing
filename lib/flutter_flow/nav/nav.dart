@@ -88,6 +88,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: TicketWidget.routeName,
           path: TicketWidget.routePath,
+          requireAuth: true,
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'Ticket')
               : TicketWidget(),
@@ -95,6 +96,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: HistoryWidget.routeName,
           path: HistoryWidget.routePath,
+          requireAuth: true,
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'History')
               : HistoryWidget(),
@@ -115,6 +117,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: SignUpWidget.routeName,
           path: SignUpWidget.routePath,
           builder: (context, params) => SignUpWidget(),
+        ),
+        FFRoute(
+          name: TicketReceiptWidget.routeName,
+          path: TicketReceiptWidget.routePath,
+          builder: (context, params) => TicketReceiptWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

@@ -14,11 +14,6 @@ class SignUpModel extends FlutterFlowModel<SignUpWidget> {
           pageViewController!.page != null
       ? pageViewController!.page!.round()
       : 0;
-  // State field(s) for badgeNumber_create widget.
-  FocusNode? badgeNumberCreateFocusNode;
-  TextEditingController? badgeNumberCreateTextController;
-  String? Function(BuildContext, String?)?
-      badgeNumberCreateTextControllerValidator;
   // State field(s) for emailAddress_create widget.
   FocusNode? emailAddressCreateFocusNode;
   TextEditingController? emailAddressCreateTextController;
@@ -36,6 +31,26 @@ class SignUpModel extends FlutterFlowModel<SignUpWidget> {
   late bool confirmPasswordCreateVisibility;
   String? Function(BuildContext, String?)?
       confirmPasswordCreateTextControllerValidator;
+  // State field(s) for badgeNumber_create widget.
+  FocusNode? badgeNumberCreateFocusNode;
+  TextEditingController? badgeNumberCreateTextController;
+  String? Function(BuildContext, String?)?
+      badgeNumberCreateTextControllerValidator;
+  // State field(s) for firstname_create widget.
+  FocusNode? firstnameCreateFocusNode;
+  TextEditingController? firstnameCreateTextController;
+  String? Function(BuildContext, String?)?
+      firstnameCreateTextControllerValidator;
+  // State field(s) for lastname_create widget.
+  FocusNode? lastnameCreateFocusNode;
+  TextEditingController? lastnameCreateTextController;
+  String? Function(BuildContext, String?)?
+      lastnameCreateTextControllerValidator;
+  // State field(s) for phoneNum_create widget.
+  FocusNode? phoneNumCreateFocusNode;
+  TextEditingController? phoneNumCreateTextController;
+  String? Function(BuildContext, String?)?
+      phoneNumCreateTextControllerValidator;
 
   @override
   void initState(BuildContext context) {
@@ -45,9 +60,6 @@ class SignUpModel extends FlutterFlowModel<SignUpWidget> {
 
   @override
   void dispose() {
-    badgeNumberCreateFocusNode?.dispose();
-    badgeNumberCreateTextController?.dispose();
-
     emailAddressCreateFocusNode?.dispose();
     emailAddressCreateTextController?.dispose();
 
@@ -56,5 +68,17 @@ class SignUpModel extends FlutterFlowModel<SignUpWidget> {
 
     confirmPasswordCreateFocusNode?.dispose();
     confirmPasswordCreateTextController?.dispose();
+
+    badgeNumberCreateFocusNode?.dispose();
+    badgeNumberCreateTextController?.dispose();
+
+    firstnameCreateFocusNode?.dispose();
+    firstnameCreateTextController?.dispose();
+
+    lastnameCreateFocusNode?.dispose();
+    lastnameCreateTextController?.dispose();
+
+    phoneNumCreateFocusNode?.dispose();
+    phoneNumCreateTextController?.dispose();
   }
 }

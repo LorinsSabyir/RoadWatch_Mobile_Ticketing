@@ -1,6 +1,6 @@
 # RoadWatch Mobile Ticketing
 
-A new Flutter project.
+A Capstone Project for the Bachelor of Science in Information Technology program, developed using Flutter for the frontend, Firebase for the backend, and FlutterFlow as the visual editor.
 
 ## Getting Started
 

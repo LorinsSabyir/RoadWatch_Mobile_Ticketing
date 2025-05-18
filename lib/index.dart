@@ -1,5 +1,5 @@
 // Export pages
-export '/components/ticket/ticket_widget.dart' show TicketWidget;
+export '/components/pages/ticket/ticket_widget.dart' show TicketWidget;
 export '/components/pages/history/history_widget.dart' show HistoryWidget;
 export '/components/pages/profile/profile_widget.dart' show ProfileWidget;
 export '/components/pages/sign_in/sign_in_widget.dart' show SignInWidget;

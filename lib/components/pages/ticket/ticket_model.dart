@@ -48,6 +48,16 @@ class TicketModel extends FlutterFlowModel<TicketWidget> {
   // State field(s) for vehicleType_create widget.
   String? vehicleTypeCreateValue;
   FormFieldController<String>? vehicleTypeCreateValueController;
+  // State field(s) for vehicleBrand_create widget.
+  FocusNode? vehicleBrandCreateFocusNode;
+  TextEditingController? vehicleBrandCreateTextController;
+  String? Function(BuildContext, String?)?
+      vehicleBrandCreateTextControllerValidator;
+  // State field(s) for vehicleModel_create widget.
+  FocusNode? vehicleModelCreateFocusNode;
+  TextEditingController? vehicleModelCreateTextController;
+  String? Function(BuildContext, String?)?
+      vehicleModelCreateTextControllerValidator;
   // State field(s) for CheckboxListTile widget.
   bool? checkboxListTileValue1;
   // State field(s) for CheckboxListTile widget.
@@ -116,6 +126,12 @@ class TicketModel extends FlutterFlowModel<TicketWidget> {
 
     vehiclePlateNumCreateFocusNode1?.dispose();
     vehiclePlateNumCreateTextController1?.dispose();
+
+    vehicleBrandCreateFocusNode?.dispose();
+    vehicleBrandCreateTextController?.dispose();
+
+    vehicleModelCreateFocusNode?.dispose();
+    vehicleModelCreateTextController?.dispose();
 
     vehiclePlateNumCreateFocusNode2?.dispose();
     vehiclePlateNumCreateTextController2?.dispose();

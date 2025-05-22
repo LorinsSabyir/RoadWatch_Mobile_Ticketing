@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 
 import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
 
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -14,11 +15,6 @@ class CitationRecord extends FirestoreRecord {
   ) : super(reference, data) {
     _initializeFields();
   }
-
-  // "id" field.
-  String? _id;
-  String get id => _id ?? '';
-  bool hasId() => _id != null;
 
   // "citation_number" field.
   String? _citationNumber;
@@ -75,11 +71,6 @@ class CitationRecord extends FirestoreRecord {
   String get violatorAddress => _violatorAddress ?? '';
   bool hasViolatorAddress() => _violatorAddress != null;
 
-  // "violation" field.
-  String? _violation;
-  String get violation => _violation ?? '';
-  bool hasViolation() => _violation != null;
-
   // "reciept_num" field.
   String? _recieptNum;
   String get recieptNum => _recieptNum ?? '';
@@ -100,8 +91,22 @@ class CitationRecord extends FirestoreRecord {
   DocumentReference? get userRep => _userRep;
   bool hasUserRep() => _userRep != null;
 
+  // "violation" field.
+  List<String>? _violation;
+  List<String> get violation => _violation ?? const [];
+  bool hasViolation() => _violation != null;
+
+  // "violationTotalFine" field.
+  double? _violationTotalFine;
+  double get violationTotalFine => _violationTotalFine ?? 0.0;
+  bool hasViolationTotalFine() => _violationTotalFine != null;
+
+  // "id" field.
+  String? _id;
+  String get id => _id ?? '';
+  bool hasId() => _id != null;
+
   void _initializeFields() {
-    _id = snapshotData['id'] as String?;
     _citationNumber = snapshotData['citation_number'] as String?;
     _confUnitSerialNum = snapshotData['conf_unit_serial_num'] as String?;
     _confUnitPlateNum = snapshotData['conf_unit_plate_num'] as String?;
@@ -113,11 +118,14 @@ class CitationRecord extends FirestoreRecord {
     _apprePlace = snapshotData['appre_place'] as String?;
     _violatorName = snapshotData['violator_name'] as String?;
     _violatorAddress = snapshotData['violator_address'] as String?;
-    _violation = snapshotData['violation'] as String?;
     _recieptNum = snapshotData['reciept_num'] as String?;
     _recieptStatus = snapshotData['reciept_status'] as String?;
     _appreEnforcer = snapshotData['appre_enforcer'] as String?;
     _userRep = snapshotData['userRep'] as DocumentReference?;
+    _violation = getDataList(snapshotData['violation']);
+    _violationTotalFine =
+        castToType<double>(snapshotData['violationTotalFine']);
+    _id = snapshotData['id'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -155,7 +163,6 @@ class CitationRecord extends FirestoreRecord {
 }
 
 Map<String, dynamic> createCitationRecordData({
-  String? id,
   String? citationNumber,
   String? confUnitSerialNum,
   String? confUnitPlateNum,
@@ -167,15 +174,15 @@ Map<String, dynamic> createCitationRecordData({
   String? apprePlace,
   String? violatorName,
   String? violatorAddress,
-  String? violation,
   String? recieptNum,
   String? recieptStatus,
   String? appreEnforcer,
   DocumentReference? userRep,
+  double? violationTotalFine,
+  String? id,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
-      'id': id,
       'citation_number': citationNumber,
       'conf_unit_serial_num': confUnitSerialNum,
       'conf_unit_plate_num': confUnitPlateNum,
@@ -187,11 +194,12 @@ Map<String, dynamic> createCitationRecordData({
       'appre_place': apprePlace,
       'violator_name': violatorName,
       'violator_address': violatorAddress,
-      'violation': violation,
       'reciept_num': recieptNum,
       'reciept_status': recieptStatus,
       'appre_enforcer': appreEnforcer,
       'userRep': userRep,
+      'violationTotalFine': violationTotalFine,
+      'id': id,
     }.withoutNulls,
   );
 
@@ -203,8 +211,8 @@ class CitationRecordDocumentEquality implements Equality<CitationRecord> {
 
   @override
   bool equals(CitationRecord? e1, CitationRecord? e2) {
-    return e1?.id == e2?.id &&
-        e1?.citationNumber == e2?.citationNumber &&
+    const listEquality = ListEquality();
+    return e1?.citationNumber == e2?.citationNumber &&
         e1?.confUnitSerialNum == e2?.confUnitSerialNum &&
         e1?.confUnitPlateNum == e2?.confUnitPlateNum &&
         e1?.confUnitBrand == e2?.confUnitBrand &&
@@ -215,16 +223,17 @@ class CitationRecordDocumentEquality implements Equality<CitationRecord> {
         e1?.apprePlace == e2?.apprePlace &&
         e1?.violatorName == e2?.violatorName &&
         e1?.violatorAddress == e2?.violatorAddress &&
-        e1?.violation == e2?.violation &&
         e1?.recieptNum == e2?.recieptNum &&
         e1?.recieptStatus == e2?.recieptStatus &&
         e1?.appreEnforcer == e2?.appreEnforcer &&
-        e1?.userRep == e2?.userRep;
+        e1?.userRep == e2?.userRep &&
+        listEquality.equals(e1?.violation, e2?.violation) &&
+        e1?.violationTotalFine == e2?.violationTotalFine &&
+        e1?.id == e2?.id;
   }
 
   @override
   int hash(CitationRecord? e) => const ListEquality().hash([
-        e?.id,
         e?.citationNumber,
         e?.confUnitSerialNum,
         e?.confUnitPlateNum,
@@ -236,11 +245,13 @@ class CitationRecordDocumentEquality implements Equality<CitationRecord> {
         e?.apprePlace,
         e?.violatorName,
         e?.violatorAddress,
-        e?.violation,
         e?.recieptNum,
         e?.recieptStatus,
         e?.appreEnforcer,
-        e?.userRep
+        e?.userRep,
+        e?.violation,
+        e?.violationTotalFine,
+        e?.id
       ]);
 
   @override

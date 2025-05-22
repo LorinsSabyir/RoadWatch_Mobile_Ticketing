@@ -48,69 +48,99 @@ class _ViolationCardWidgetState extends State<ViolationCardWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 310.0,
       height: 60.0,
       decoration: BoxDecoration(),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                valueOrDefault<String>(
-                  widget.title,
-                  'Violation Title',
-                ),
-                style: FlutterFlowTheme.of(context).titleLarge.override(
-                      font: GoogleFonts.manrope(
-                        fontWeight:
-                            FlutterFlowTheme.of(context).titleLarge.fontWeight,
-                        fontStyle:
-                            FlutterFlowTheme.of(context).titleLarge.fontStyle,
+      child: Padding(
+        padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 8.0, 0.0),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Flexible(
+              child: Container(
+                width: 250.0,
+                decoration: BoxDecoration(),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      valueOrDefault<String>(
+                        widget.title,
+                        'Violation Title',
+                      ).maybeHandleOverflow(
+                        maxChars: 35,
+                        replacement: '…',
                       ),
-                      fontSize: 18.0,
-                      letterSpacing: 0.0,
-                      fontWeight:
-                          FlutterFlowTheme.of(context).titleLarge.fontWeight,
-                      fontStyle:
-                          FlutterFlowTheme.of(context).titleLarge.fontStyle,
+                      style: FlutterFlowTheme.of(context).titleLarge.override(
+                            font: GoogleFonts.manrope(
+                              fontWeight: FlutterFlowTheme.of(context)
+                                  .titleLarge
+                                  .fontWeight,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .titleLarge
+                                  .fontStyle,
+                            ),
+                            fontSize: 18.0,
+                            letterSpacing: 0.0,
+                            fontWeight: FlutterFlowTheme.of(context)
+                                .titleLarge
+                                .fontWeight,
+                            fontStyle: FlutterFlowTheme.of(context)
+                                .titleLarge
+                                .fontStyle,
+                          ),
                     ),
-              ),
-              Text(
-                valueOrDefault<String>(
-                  widget.subtitle,
-                  'violation subtitle',
-                ),
-                style: FlutterFlowTheme.of(context).labelMedium.override(
-                      font: GoogleFonts.manrope(
-                        fontWeight:
-                            FlutterFlowTheme.of(context).labelMedium.fontWeight,
-                        fontStyle:
-                            FlutterFlowTheme.of(context).labelMedium.fontStyle,
+                    Text(
+                      valueOrDefault<String>(
+                        widget.subtitle,
+                        'violation subtitle',
+                      ).maybeHandleOverflow(
+                        maxChars: 40,
+                        replacement: '…',
                       ),
-                      letterSpacing: 0.0,
-                      fontWeight:
-                          FlutterFlowTheme.of(context).labelMedium.fontWeight,
-                      fontStyle:
-                          FlutterFlowTheme.of(context).labelMedium.fontStyle,
+                      style: FlutterFlowTheme.of(context).labelMedium.override(
+                            font: GoogleFonts.manrope(
+                              fontWeight: FlutterFlowTheme.of(context)
+                                  .labelMedium
+                                  .fontWeight,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .labelMedium
+                                  .fontStyle,
+                            ),
+                            letterSpacing: 0.0,
+                            fontWeight: FlutterFlowTheme.of(context)
+                                .labelMedium
+                                .fontWeight,
+                            fontStyle: FlutterFlowTheme.of(context)
+                                .labelMedium
+                                .fontStyle,
+                          ),
                     ),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Text(
-                valueOrDefault<String>(
-                  widget.fine,
-                  'fine',
+                  ],
                 ),
-                style: FlutterFlowTheme.of(context).headlineSmall.override(
-                      font: GoogleFonts.urbanist(
+              ),
+            ),
+            Flexible(
+              child: Container(
+                decoration: BoxDecoration(),
+                child: Text(
+                  valueOrDefault<String>(
+                    widget.fine,
+                    'fine',
+                  ),
+                  style: FlutterFlowTheme.of(context).headlineSmall.override(
+                        font: GoogleFonts.urbanist(
+                          fontWeight: FlutterFlowTheme.of(context)
+                              .headlineSmall
+                              .fontWeight,
+                          fontStyle: FlutterFlowTheme.of(context)
+                              .headlineSmall
+                              .fontStyle,
+                        ),
+                        fontSize: 20.0,
+                        letterSpacing: 0.0,
                         fontWeight: FlutterFlowTheme.of(context)
                             .headlineSmall
                             .fontWeight,
@@ -118,17 +148,11 @@ class _ViolationCardWidgetState extends State<ViolationCardWidget> {
                             .headlineSmall
                             .fontStyle,
                       ),
-                      fontSize: 20.0,
-                      letterSpacing: 0.0,
-                      fontWeight:
-                          FlutterFlowTheme.of(context).headlineSmall.fontWeight,
-                      fontStyle:
-                          FlutterFlowTheme.of(context).headlineSmall.fontStyle,
-                    ),
+                ),
               ),
-            ],
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }

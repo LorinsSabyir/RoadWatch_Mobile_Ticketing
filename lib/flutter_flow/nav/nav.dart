@@ -136,6 +136,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: SearchPageWidget.routeName,
           path: SearchPageWidget.routePath,
           builder: (context, params) => SearchPageWidget(),
+        ),
+        FFRoute(
+          name: ScanLicenseWidget.routeName,
+          path: ScanLicenseWidget.routePath,
+          builder: (context, params) => ScanLicenseWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

@@ -1,8 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'violation_add_widget.dart' show ViolationAddWidget;
+import 'scan_license_widget.dart' show ScanLicenseWidget;
 import 'package:flutter/material.dart';
 
-class ViolationAddModel extends FlutterFlowModel<ViolationAddWidget> {
+class ScanLicenseModel extends FlutterFlowModel<ScanLicenseWidget> {
   @override
   void initState(BuildContext context) {}
 

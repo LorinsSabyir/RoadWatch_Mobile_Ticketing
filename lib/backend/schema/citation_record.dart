@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 
 import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
 
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -15,92 +16,116 @@ class CitationRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "uid" field.
-  String? _uid;
-  String get uid => _uid ?? '';
-  bool hasUid() => _uid != null;
+  // "citation_number" field.
+  String? _citationNumber;
+  String get citationNumber => _citationNumber ?? '';
+  bool hasCitationNumber() => _citationNumber != null;
 
-  // "created_time" field.
-  DateTime? _createdTime;
-  DateTime? get createdTime => _createdTime;
-  bool hasCreatedTime() => _createdTime != null;
+  // "conf_unit_serial_num" field.
+  String? _confUnitSerialNum;
+  String get confUnitSerialNum => _confUnitSerialNum ?? '';
+  bool hasConfUnitSerialNum() => _confUnitSerialNum != null;
 
-  // "violation_name" field.
-  String? _violationName;
-  String get violationName => _violationName ?? '';
-  bool hasViolationName() => _violationName != null;
+  // "conf_unit_plate_num" field.
+  String? _confUnitPlateNum;
+  String get confUnitPlateNum => _confUnitPlateNum ?? '';
+  bool hasConfUnitPlateNum() => _confUnitPlateNum != null;
 
-  // "violation_fine" field.
-  String? _violationFine;
-  String get violationFine => _violationFine ?? '';
-  bool hasViolationFine() => _violationFine != null;
+  // "conf_unit_brand" field.
+  String? _confUnitBrand;
+  String get confUnitBrand => _confUnitBrand ?? '';
+  bool hasConfUnitBrand() => _confUnitBrand != null;
 
-  // "violation_address" field.
-  String? _violationAddress;
-  String get violationAddress => _violationAddress ?? '';
-  bool hasViolationAddress() => _violationAddress != null;
+  // "conf_unit_model" field.
+  String? _confUnitModel;
+  String get confUnitModel => _confUnitModel ?? '';
+  bool hasConfUnitModel() => _confUnitModel != null;
 
-  // "seminar_schedule" field.
-  DateTime? _seminarSchedule;
-  DateTime? get seminarSchedule => _seminarSchedule;
-  bool hasSeminarSchedule() => _seminarSchedule != null;
+  // "conf_unit_desc" field.
+  String? _confUnitDesc;
+  String get confUnitDesc => _confUnitDesc ?? '';
+  bool hasConfUnitDesc() => _confUnitDesc != null;
 
-  // "driver_firstname" field.
-  String? _driverFirstname;
-  String get driverFirstname => _driverFirstname ?? '';
-  bool hasDriverFirstname() => _driverFirstname != null;
+  // "appre_date" field.
+  String? _appreDate;
+  String get appreDate => _appreDate ?? '';
+  bool hasAppreDate() => _appreDate != null;
 
-  // "driver_lastname" field.
-  String? _driverLastname;
-  String get driverLastname => _driverLastname ?? '';
-  bool hasDriverLastname() => _driverLastname != null;
+  // "appre_time" field.
+  String? _appreTime;
+  String get appreTime => _appreTime ?? '';
+  bool hasAppreTime() => _appreTime != null;
 
-  // "driver_address" field.
-  String? _driverAddress;
-  String get driverAddress => _driverAddress ?? '';
-  bool hasDriverAddress() => _driverAddress != null;
+  // "appre_place" field.
+  String? _apprePlace;
+  String get apprePlace => _apprePlace ?? '';
+  bool hasApprePlace() => _apprePlace != null;
 
-  // "driver_license_num" field.
-  String? _driverLicenseNum;
-  String get driverLicenseNum => _driverLicenseNum ?? '';
-  bool hasDriverLicenseNum() => _driverLicenseNum != null;
+  // "violator_name" field.
+  String? _violatorName;
+  String get violatorName => _violatorName ?? '';
+  bool hasViolatorName() => _violatorName != null;
 
-  // "driver_contact_num" field.
-  String? _driverContactNum;
-  String get driverContactNum => _driverContactNum ?? '';
-  bool hasDriverContactNum() => _driverContactNum != null;
+  // "violator_address" field.
+  String? _violatorAddress;
+  String get violatorAddress => _violatorAddress ?? '';
+  bool hasViolatorAddress() => _violatorAddress != null;
 
-  // "driver_vehicle_type" field.
-  String? _driverVehicleType;
-  String get driverVehicleType => _driverVehicleType ?? '';
-  bool hasDriverVehicleType() => _driverVehicleType != null;
+  // "reciept_num" field.
+  String? _recieptNum;
+  String get recieptNum => _recieptNum ?? '';
+  bool hasRecieptNum() => _recieptNum != null;
 
-  // "driver_vehicle_plate_num" field.
-  String? _driverVehiclePlateNum;
-  String get driverVehiclePlateNum => _driverVehiclePlateNum ?? '';
-  bool hasDriverVehiclePlateNum() => _driverVehiclePlateNum != null;
+  // "reciept_status" field.
+  String? _recieptStatus;
+  String get recieptStatus => _recieptStatus ?? '';
+  bool hasRecieptStatus() => _recieptStatus != null;
 
-  // "control_num" field.
-  String? _controlNum;
-  String get controlNum => _controlNum ?? '';
-  bool hasControlNum() => _controlNum != null;
+  // "appre_enforcer" field.
+  String? _appreEnforcer;
+  String get appreEnforcer => _appreEnforcer ?? '';
+  bool hasAppreEnforcer() => _appreEnforcer != null;
+
+  // "userRep" field.
+  DocumentReference? _userRep;
+  DocumentReference? get userRep => _userRep;
+  bool hasUserRep() => _userRep != null;
+
+  // "violation" field.
+  List<String>? _violation;
+  List<String> get violation => _violation ?? const [];
+  bool hasViolation() => _violation != null;
+
+  // "violationTotalFine" field.
+  double? _violationTotalFine;
+  double get violationTotalFine => _violationTotalFine ?? 0.0;
+  bool hasViolationTotalFine() => _violationTotalFine != null;
+
+  // "id" field.
+  String? _id;
+  String get id => _id ?? '';
+  bool hasId() => _id != null;
 
   void _initializeFields() {
-    _uid = snapshotData['uid'] as String?;
-    _createdTime = snapshotData['created_time'] as DateTime?;
-    _violationName = snapshotData['violation_name'] as String?;
-    _violationFine = snapshotData['violation_fine'] as String?;
-    _violationAddress = snapshotData['violation_address'] as String?;
-    _seminarSchedule = snapshotData['seminar_schedule'] as DateTime?;
-    _driverFirstname = snapshotData['driver_firstname'] as String?;
-    _driverLastname = snapshotData['driver_lastname'] as String?;
-    _driverAddress = snapshotData['driver_address'] as String?;
-    _driverLicenseNum = snapshotData['driver_license_num'] as String?;
-    _driverContactNum = snapshotData['driver_contact_num'] as String?;
-    _driverVehicleType = snapshotData['driver_vehicle_type'] as String?;
-    _driverVehiclePlateNum =
-        snapshotData['driver_vehicle_plate_num'] as String?;
-    _controlNum = snapshotData['control_num'] as String?;
+    _citationNumber = snapshotData['citation_number'] as String?;
+    _confUnitSerialNum = snapshotData['conf_unit_serial_num'] as String?;
+    _confUnitPlateNum = snapshotData['conf_unit_plate_num'] as String?;
+    _confUnitBrand = snapshotData['conf_unit_brand'] as String?;
+    _confUnitModel = snapshotData['conf_unit_model'] as String?;
+    _confUnitDesc = snapshotData['conf_unit_desc'] as String?;
+    _appreDate = snapshotData['appre_date'] as String?;
+    _appreTime = snapshotData['appre_time'] as String?;
+    _apprePlace = snapshotData['appre_place'] as String?;
+    _violatorName = snapshotData['violator_name'] as String?;
+    _violatorAddress = snapshotData['violator_address'] as String?;
+    _recieptNum = snapshotData['reciept_num'] as String?;
+    _recieptStatus = snapshotData['reciept_status'] as String?;
+    _appreEnforcer = snapshotData['appre_enforcer'] as String?;
+    _userRep = snapshotData['userRep'] as DocumentReference?;
+    _violation = getDataList(snapshotData['violation']);
+    _violationTotalFine =
+        castToType<double>(snapshotData['violationTotalFine']);
+    _id = snapshotData['id'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -138,37 +163,43 @@ class CitationRecord extends FirestoreRecord {
 }
 
 Map<String, dynamic> createCitationRecordData({
-  String? uid,
-  DateTime? createdTime,
-  String? violationName,
-  String? violationFine,
-  String? violationAddress,
-  DateTime? seminarSchedule,
-  String? driverFirstname,
-  String? driverLastname,
-  String? driverAddress,
-  String? driverLicenseNum,
-  String? driverContactNum,
-  String? driverVehicleType,
-  String? driverVehiclePlateNum,
-  String? controlNum,
+  String? citationNumber,
+  String? confUnitSerialNum,
+  String? confUnitPlateNum,
+  String? confUnitBrand,
+  String? confUnitModel,
+  String? confUnitDesc,
+  String? appreDate,
+  String? appreTime,
+  String? apprePlace,
+  String? violatorName,
+  String? violatorAddress,
+  String? recieptNum,
+  String? recieptStatus,
+  String? appreEnforcer,
+  DocumentReference? userRep,
+  double? violationTotalFine,
+  String? id,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
-      'uid': uid,
-      'created_time': createdTime,
-      'violation_name': violationName,
-      'violation_fine': violationFine,
-      'violation_address': violationAddress,
-      'seminar_schedule': seminarSchedule,
-      'driver_firstname': driverFirstname,
-      'driver_lastname': driverLastname,
-      'driver_address': driverAddress,
-      'driver_license_num': driverLicenseNum,
-      'driver_contact_num': driverContactNum,
-      'driver_vehicle_type': driverVehicleType,
-      'driver_vehicle_plate_num': driverVehiclePlateNum,
-      'control_num': controlNum,
+      'citation_number': citationNumber,
+      'conf_unit_serial_num': confUnitSerialNum,
+      'conf_unit_plate_num': confUnitPlateNum,
+      'conf_unit_brand': confUnitBrand,
+      'conf_unit_model': confUnitModel,
+      'conf_unit_desc': confUnitDesc,
+      'appre_date': appreDate,
+      'appre_time': appreTime,
+      'appre_place': apprePlace,
+      'violator_name': violatorName,
+      'violator_address': violatorAddress,
+      'reciept_num': recieptNum,
+      'reciept_status': recieptStatus,
+      'appre_enforcer': appreEnforcer,
+      'userRep': userRep,
+      'violationTotalFine': violationTotalFine,
+      'id': id,
     }.withoutNulls,
   );
 
@@ -180,38 +211,47 @@ class CitationRecordDocumentEquality implements Equality<CitationRecord> {
 
   @override
   bool equals(CitationRecord? e1, CitationRecord? e2) {
-    return e1?.uid == e2?.uid &&
-        e1?.createdTime == e2?.createdTime &&
-        e1?.violationName == e2?.violationName &&
-        e1?.violationFine == e2?.violationFine &&
-        e1?.violationAddress == e2?.violationAddress &&
-        e1?.seminarSchedule == e2?.seminarSchedule &&
-        e1?.driverFirstname == e2?.driverFirstname &&
-        e1?.driverLastname == e2?.driverLastname &&
-        e1?.driverAddress == e2?.driverAddress &&
-        e1?.driverLicenseNum == e2?.driverLicenseNum &&
-        e1?.driverContactNum == e2?.driverContactNum &&
-        e1?.driverVehicleType == e2?.driverVehicleType &&
-        e1?.driverVehiclePlateNum == e2?.driverVehiclePlateNum &&
-        e1?.controlNum == e2?.controlNum;
+    const listEquality = ListEquality();
+    return e1?.citationNumber == e2?.citationNumber &&
+        e1?.confUnitSerialNum == e2?.confUnitSerialNum &&
+        e1?.confUnitPlateNum == e2?.confUnitPlateNum &&
+        e1?.confUnitBrand == e2?.confUnitBrand &&
+        e1?.confUnitModel == e2?.confUnitModel &&
+        e1?.confUnitDesc == e2?.confUnitDesc &&
+        e1?.appreDate == e2?.appreDate &&
+        e1?.appreTime == e2?.appreTime &&
+        e1?.apprePlace == e2?.apprePlace &&
+        e1?.violatorName == e2?.violatorName &&
+        e1?.violatorAddress == e2?.violatorAddress &&
+        e1?.recieptNum == e2?.recieptNum &&
+        e1?.recieptStatus == e2?.recieptStatus &&
+        e1?.appreEnforcer == e2?.appreEnforcer &&
+        e1?.userRep == e2?.userRep &&
+        listEquality.equals(e1?.violation, e2?.violation) &&
+        e1?.violationTotalFine == e2?.violationTotalFine &&
+        e1?.id == e2?.id;
   }
 
   @override
   int hash(CitationRecord? e) => const ListEquality().hash([
-        e?.uid,
-        e?.createdTime,
-        e?.violationName,
-        e?.violationFine,
-        e?.violationAddress,
-        e?.seminarSchedule,
-        e?.driverFirstname,
-        e?.driverLastname,
-        e?.driverAddress,
-        e?.driverLicenseNum,
-        e?.driverContactNum,
-        e?.driverVehicleType,
-        e?.driverVehiclePlateNum,
-        e?.controlNum
+        e?.citationNumber,
+        e?.confUnitSerialNum,
+        e?.confUnitPlateNum,
+        e?.confUnitBrand,
+        e?.confUnitModel,
+        e?.confUnitDesc,
+        e?.appreDate,
+        e?.appreTime,
+        e?.apprePlace,
+        e?.violatorName,
+        e?.violatorAddress,
+        e?.recieptNum,
+        e?.recieptStatus,
+        e?.appreEnforcer,
+        e?.userRep,
+        e?.violation,
+        e?.violationTotalFine,
+        e?.id
       ]);
 
   @override

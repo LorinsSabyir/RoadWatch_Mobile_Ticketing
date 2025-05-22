@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 
 import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
 
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -55,6 +56,11 @@ class UsersRecord extends FirestoreRecord {
   String get phoneNumber => _phoneNumber ?? '';
   bool hasPhoneNumber() => _phoneNumber != null;
 
+  // "citationRef" field.
+  List<String>? _citationRef;
+  List<String> get citationRef => _citationRef ?? const [];
+  bool hasCitationRef() => _citationRef != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -64,6 +70,7 @@ class UsersRecord extends FirestoreRecord {
     _uid = snapshotData['uid'] as String?;
     _badgeNumber = snapshotData['badge_number'] as String?;
     _phoneNumber = snapshotData['phone_number'] as String?;
+    _citationRef = getDataList(snapshotData['citationRef']);
   }
 
   static CollectionReference get collection =>
@@ -130,6 +137,7 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
 
   @override
   bool equals(UsersRecord? e1, UsersRecord? e2) {
+    const listEquality = ListEquality();
     return e1?.email == e2?.email &&
         e1?.displayName == e2?.displayName &&
         e1?.photoUrl == e2?.photoUrl &&
@@ -137,7 +145,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.password == e2?.password &&
         e1?.uid == e2?.uid &&
         e1?.badgeNumber == e2?.badgeNumber &&
-        e1?.phoneNumber == e2?.phoneNumber;
+        e1?.phoneNumber == e2?.phoneNumber &&
+        listEquality.equals(e1?.citationRef, e2?.citationRef);
   }
 
   @override
@@ -149,7 +158,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.password,
         e?.uid,
         e?.badgeNumber,
-        e?.phoneNumber
+        e?.phoneNumber,
+        e?.citationRef
       ]);
 
   @override

@@ -1,8 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'empty_listsimple_widget.dart' show EmptyListsimpleWidget;
+import 'violation_card_widget.dart' show ViolationCardWidget;
 import 'package:flutter/material.dart';
 
-class EmptyListsimpleModel extends FlutterFlowModel<EmptyListsimpleWidget> {
+class ViolationCardModel extends FlutterFlowModel<ViolationCardWidget> {
   @override
   void initState(BuildContext context) {}
 

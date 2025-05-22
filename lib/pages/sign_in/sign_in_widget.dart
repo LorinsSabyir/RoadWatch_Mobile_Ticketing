@@ -124,36 +124,22 @@ class _SignInWidgetState extends State<SignInWidget>
                     children: [
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
-                            0.0, 70.0, 0.0, 32.0),
+                            0.0, 70.0, 0.0, 16.0),
                         child: Container(
-                          width: 200.0,
-                          height: 70.0,
+                          width: 150.0,
+                          height: 150.0,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(16.0),
                           ),
                           alignment: AlignmentDirectional(0.0, 0.0),
-                          child: Text(
-                            'RoadWatch',
-                            style: FlutterFlowTheme.of(context)
-                                .displaySmall
-                                .override(
-                                  font: GoogleFonts.urbanist(
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .displaySmall
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .displaySmall
-                                        .fontStyle,
-                                  ),
-                                  color: Colors.white,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .displaySmall
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .displaySmall
-                                      .fontStyle,
-                                ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: Image.asset(
+                              'assets/images/logo.png',
+                              width: 200.0,
+                              height: 200.0,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),
@@ -565,7 +551,9 @@ class _SignInWidgetState extends State<SignInWidget>
                                                           .titleSmall
                                                           .fontStyle,
                                                 ),
-                                                color: Colors.white,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
                                                 letterSpacing: 0.0,
                                                 fontWeight:
                                                     FlutterFlowTheme.of(context)
@@ -588,7 +576,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                     ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          16.0, 0.0, 16.0, 24.0),
+                                          16.0, 0.0, 16.0, 16.0),
                                       child: Text(
                                         'Or',
                                         textAlign: TextAlign.center,
@@ -605,6 +593,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                                         .labelLarge
                                                         .fontStyle,
                                               ),
+                                              fontSize: 14.0,
                                               letterSpacing: 0.0,
                                               fontWeight:
                                                   FlutterFlowTheme.of(context)
@@ -617,49 +606,29 @@ class _SignInWidgetState extends State<SignInWidget>
                                             ),
                                       ),
                                     ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 16.0),
-                                      child: FFButtonWidget(
-                                        onPressed: () {
-                                          print('Button pressed ...');
-                                        },
-                                        text: 'Continue with Google',
-                                        icon: FaIcon(
-                                          FontAwesomeIcons.google,
-                                          size: 20.0,
-                                        ),
-                                        options: FFButtonOptions(
-                                          width: double.infinity,
-                                          height: 44.0,
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 0.0, 0.0),
-                                          iconPadding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 0.0, 0.0),
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryBackground,
-                                          textStyle: FlutterFlowTheme.of(
-                                                  context)
-                                              .titleSmall
-                                              .override(
-                                                font: GoogleFonts.manrope(
-                                                  fontWeight:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .titleSmall
-                                                          .fontWeight,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .titleSmall
-                                                          .fontStyle,
-                                                ),
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
-                                                letterSpacing: 0.0,
+                                    FFButtonWidget(
+                                      onPressed: () {
+                                        print('Button pressed ...');
+                                      },
+                                      text: 'Continue with Google',
+                                      icon: FaIcon(
+                                        FontAwesomeIcons.google,
+                                        size: 20.0,
+                                      ),
+                                      options: FFButtonOptions(
+                                        width: double.infinity,
+                                        height: 44.0,
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 0.0),
+                                        iconPadding:
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0.0, 0.0, 0.0, 0.0),
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .titleSmall
+                                            .override(
+                                              font: GoogleFonts.manrope(
                                                 fontWeight:
                                                     FlutterFlowTheme.of(context)
                                                         .titleSmall
@@ -669,103 +638,29 @@ class _SignInWidgetState extends State<SignInWidget>
                                                         .titleSmall
                                                         .fontStyle,
                                               ),
-                                          elevation: 0.0,
-                                          borderSide: BorderSide(
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                            width: 2.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(12.0),
-                                          hoverColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .primaryBackground,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              letterSpacing: 0.0,
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmall
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmall
+                                                      .fontStyle,
+                                            ),
+                                        elevation: 0.0,
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .alternate,
+                                          width: 2.0,
                                         ),
-                                      ),
-                                    ),
-
-                                    // You will have to add an action on this rich text to go to your login page.
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 12.0, 0.0, 12.0),
-                                      child: InkWell(
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        onTap: () async {
-                                          context.pushNamed(
-                                              SignUpWidget.routeName);
-                                        },
-                                        child: RichText(
-                                          textScaler:
-                                              MediaQuery.of(context).textScaler,
-                                          text: TextSpan(
-                                            children: [
-                                              TextSpan(
-                                                text:
-                                                    'Don\'t have an account?  ',
-                                                style: TextStyle(),
-                                              ),
-                                              TextSpan(
-                                                text: 'Sign Up here',
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyMedium
-                                                    .override(
-                                                      font: GoogleFonts.manrope(
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontStyle,
-                                                      ),
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primary,
-                                                      letterSpacing: 0.0,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .fontStyle,
-                                                    ),
-                                              )
-                                            ],
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  font: GoogleFonts.manrope(
-                                                    fontWeight:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontWeight,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontStyle,
-                                                  ),
-                                                  letterSpacing: 0.0,
-                                                  fontWeight:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontWeight,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontStyle,
-                                                ),
-                                          ),
-                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
+                                        hoverColor: FlutterFlowTheme.of(context)
+                                            .primaryBackground,
                                       ),
                                     ),
                                   ],

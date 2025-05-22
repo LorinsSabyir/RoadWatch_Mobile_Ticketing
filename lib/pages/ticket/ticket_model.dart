@@ -1,3 +1,4 @@
+import '/components/violation_card/violation_card_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/index.dart';
@@ -25,26 +26,26 @@ class TicketModel extends FlutterFlowModel<TicketWidget> {
   TextEditingController? driverLastnameCreateTextController;
   String? Function(BuildContext, String?)?
       driverLastnameCreateTextControllerValidator;
-  // State field(s) for driverAddress_create widget.
-  FocusNode? driverAddressCreateFocusNode;
-  TextEditingController? driverAddressCreateTextController;
-  String? Function(BuildContext, String?)?
-      driverAddressCreateTextControllerValidator;
   // State field(s) for driverContactNum_create widget.
   FocusNode? driverContactNumCreateFocusNode;
   TextEditingController? driverContactNumCreateTextController;
   String? Function(BuildContext, String?)?
       driverContactNumCreateTextControllerValidator;
+  // State field(s) for driverAddress_create widget.
+  FocusNode? driverAddressCreateFocusNode;
+  TextEditingController? driverAddressCreateTextController;
+  String? Function(BuildContext, String?)?
+      driverAddressCreateTextControllerValidator;
   // State field(s) for driverLicenseNum_create widget.
   FocusNode? driverLicenseNumCreateFocusNode;
   TextEditingController? driverLicenseNumCreateTextController;
   String? Function(BuildContext, String?)?
       driverLicenseNumCreateTextControllerValidator;
   // State field(s) for vehiclePlateNum_create widget.
-  FocusNode? vehiclePlateNumCreateFocusNode1;
-  TextEditingController? vehiclePlateNumCreateTextController1;
+  FocusNode? vehiclePlateNumCreateFocusNode;
+  TextEditingController? vehiclePlateNumCreateTextController;
   String? Function(BuildContext, String?)?
-      vehiclePlateNumCreateTextController1Validator;
+      vehiclePlateNumCreateTextControllerValidator;
   // State field(s) for vehicleType_create widget.
   String? vehicleTypeCreateValue;
   FormFieldController<String>? vehicleTypeCreateValueController;
@@ -58,54 +59,18 @@ class TicketModel extends FlutterFlowModel<TicketWidget> {
   TextEditingController? vehicleModelCreateTextController;
   String? Function(BuildContext, String?)?
       vehicleModelCreateTextControllerValidator;
-  // State field(s) for CheckboxListTile widget.
-  bool? checkboxListTileValue1;
-  // State field(s) for CheckboxListTile widget.
-  bool? checkboxListTileValue2;
-  // State field(s) for CheckboxListTile widget.
-  bool? checkboxListTileValue3;
-  // State field(s) for CheckboxListTile widget.
-  bool? checkboxListTileValue4;
-  // State field(s) for CheckboxListTile widget.
-  bool? checkboxListTileValue5;
-  // State field(s) for CheckboxListTile widget.
-  bool? checkboxListTileValue6;
-  // State field(s) for CheckboxListTile widget.
-  bool? checkboxListTileValue7;
-  // State field(s) for CheckboxListTile widget.
-  bool? checkboxListTileValue8;
-  // State field(s) for CheckboxListTile widget.
-  bool? checkboxListTileValue9;
-  // State field(s) for CheckboxListTile widget.
-  bool? checkboxListTileValue10;
-  // State field(s) for CheckboxListTile widget.
-  bool? checkboxListTileValue11;
-  // State field(s) for CheckboxListTile widget.
-  bool? checkboxListTileValue12;
-  // State field(s) for CheckboxListTile widget.
-  bool? checkboxListTileValue13;
-  // State field(s) for CheckboxListTile widget.
-  bool? checkboxListTileValue14;
-  // State field(s) for CheckboxListTile widget.
-  bool? checkboxListTileValue15;
-  // State field(s) for CheckboxListTile widget.
-  bool? checkboxListTileValue16;
-  // State field(s) for CheckboxListTile widget.
-  bool? checkboxListTileValue17;
-  // State field(s) for CheckboxListTile widget.
-  bool? checkboxListTileValue18;
-  // State field(s) for CheckboxListTile widget.
-  bool? checkboxListTileValue19;
-  // State field(s) for CheckboxListTile widget.
-  bool? checkboxListTileValue20;
-  // State field(s) for vehiclePlateNum_create widget.
-  FocusNode? vehiclePlateNumCreateFocusNode2;
-  TextEditingController? vehiclePlateNumCreateTextController2;
-  String? Function(BuildContext, String?)?
-      vehiclePlateNumCreateTextController2Validator;
+  // State field(s) for ChoiceChips widget.
+  FormFieldController<List<String>>? choiceChipsValueController;
+  List<String>? get choiceChipsValues => choiceChipsValueController?.value;
+  set choiceChipsValues(List<String>? val) =>
+      choiceChipsValueController?.value = val;
+  // Models for ViolationCard dynamic component.
+  late FlutterFlowDynamicModels<ViolationCardModel> violationCardModels;
 
   @override
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+    violationCardModels = FlutterFlowDynamicModels(() => ViolationCardModel());
+  }
 
   @override
   void dispose() {
@@ -115,17 +80,17 @@ class TicketModel extends FlutterFlowModel<TicketWidget> {
     driverLastnameCreateFocusNode?.dispose();
     driverLastnameCreateTextController?.dispose();
 
-    driverAddressCreateFocusNode?.dispose();
-    driverAddressCreateTextController?.dispose();
-
     driverContactNumCreateFocusNode?.dispose();
     driverContactNumCreateTextController?.dispose();
+
+    driverAddressCreateFocusNode?.dispose();
+    driverAddressCreateTextController?.dispose();
 
     driverLicenseNumCreateFocusNode?.dispose();
     driverLicenseNumCreateTextController?.dispose();
 
-    vehiclePlateNumCreateFocusNode1?.dispose();
-    vehiclePlateNumCreateTextController1?.dispose();
+    vehiclePlateNumCreateFocusNode?.dispose();
+    vehiclePlateNumCreateTextController?.dispose();
 
     vehicleBrandCreateFocusNode?.dispose();
     vehicleBrandCreateTextController?.dispose();
@@ -133,7 +98,6 @@ class TicketModel extends FlutterFlowModel<TicketWidget> {
     vehicleModelCreateFocusNode?.dispose();
     vehicleModelCreateTextController?.dispose();
 
-    vehiclePlateNumCreateFocusNode2?.dispose();
-    vehiclePlateNumCreateTextController2?.dispose();
+    violationCardModels.dispose();
   }
 }

@@ -8,6 +8,13 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    match /violation/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if false;
+      allow delete: if false;
+    }
+
     match /citation/{document} {
       allow create: if true;
       allow read: if true;

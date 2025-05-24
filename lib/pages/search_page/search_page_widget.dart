@@ -1,4 +1,3 @@
-import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/violation_card/violation_card_widget.dart';
 import '/flutter_flow/flutter_flow_autocomplete_options_list.dart';
@@ -569,10 +568,8 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                 size: 24.0,
                                               ),
                                               onPressed: () async {
-                                                if ((currentUserDocument
-                                                                ?.citationRef
-                                                                .toList() ??
-                                                            [])
+                                                if (FFAppState()
+                                                        .citationRef
                                                         .contains(
                                                             violationSearchItem
                                                                 .id) ==
@@ -582,6 +579,26 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                     SnackBar(
                                                       content: Text(
                                                         'Violation already exist',
+                                                        style: TextStyle(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryBackground,
+                                                        ),
+                                                      ),
+                                                      duration: Duration(
+                                                          milliseconds: 4000),
+                                                      backgroundColor:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .error,
+                                                    ),
+                                                  );
+                                                } else {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    SnackBar(
+                                                      content: Text(
+                                                        'Sucessfully added',
                                                         style: TextStyle(
                                                           color: FlutterFlowTheme
                                                                   .of(context)
@@ -596,19 +613,6 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                               .secondary,
                                                     ),
                                                   );
-                                                } else {
-                                                  await currentUserReference!
-                                                      .update({
-                                                    ...mapToFirestore(
-                                                      {
-                                                        'citationRef':
-                                                            FieldValue
-                                                                .arrayUnion([
-                                                          violationSearchItem.id
-                                                        ]),
-                                                      },
-                                                    ),
-                                                  });
                                                   FFAppState()
                                                       .addToSelectedViolation(
                                                           violationSearchItem
@@ -622,6 +626,8 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                       .addToSelectedViolationSub(
                                                           violationSearchItem
                                                               .violationName);
+                                                  FFAppState().addToCitationRef(
+                                                      violationSearchItem.id);
                                                   safeSetState(() {});
                                                 }
                                               },
@@ -670,7 +676,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                   safeSetState(() {}),
                                               child: ViolationCardWidget(
                                                 key: Key(
-                                                  'Key3nm_${violationSearchItem.id}',
+                                                  'Keyqt1_${violationSearchItem.id}',
                                                 ),
                                                 title: violationSearchItem.code,
                                                 subtitle: violationSearchItem
@@ -696,10 +702,8 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                 size: 24.0,
                                               ),
                                               onPressed: () async {
-                                                if ((currentUserDocument
-                                                                ?.citationRef
-                                                                .toList() ??
-                                                            [])
+                                                if (FFAppState()
+                                                        .citationRef
                                                         .contains(
                                                             violationSearchItem
                                                                 .id) ==
@@ -709,6 +713,26 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                     SnackBar(
                                                       content: Text(
                                                         'Violation already exist',
+                                                        style: TextStyle(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryBackground,
+                                                        ),
+                                                      ),
+                                                      duration: Duration(
+                                                          milliseconds: 4000),
+                                                      backgroundColor:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .error,
+                                                    ),
+                                                  );
+                                                } else {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    SnackBar(
+                                                      content: Text(
+                                                        'Sucessfully added',
                                                         style: TextStyle(
                                                           color: FlutterFlowTheme
                                                                   .of(context)
@@ -723,19 +747,6 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                               .secondary,
                                                     ),
                                                   );
-                                                } else {
-                                                  await currentUserReference!
-                                                      .update({
-                                                    ...mapToFirestore(
-                                                      {
-                                                        'citationRef':
-                                                            FieldValue
-                                                                .arrayUnion([
-                                                          violationSearchItem.id
-                                                        ]),
-                                                      },
-                                                    ),
-                                                  });
                                                   FFAppState()
                                                       .addToSelectedViolation(
                                                           violationSearchItem
@@ -749,6 +760,8 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                       .addToSelectedViolationSub(
                                                           violationSearchItem
                                                               .violationName);
+                                                  FFAppState().addToCitationRef(
+                                                      violationSearchItem.id);
                                                   safeSetState(() {});
                                                 }
                                               },

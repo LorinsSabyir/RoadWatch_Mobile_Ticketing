@@ -1,7 +1,6 @@
 // Export pages
 export '/pages/ticket/ticket_widget.dart' show TicketWidget;
 export '/pages/history/history_widget.dart' show HistoryWidget;
-export '/pages/profile/profile_widget.dart' show ProfileWidget;
 export '/pages/sign_in/sign_in_widget.dart' show SignInWidget;
 export '/pages/ticket_receipt/ticket_receipt_widget.dart'
     show TicketReceiptWidget;

@@ -101,13 +101,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               : HistoryWidget(),
         ),
         FFRoute(
-          name: ProfileWidget.routeName,
-          path: ProfileWidget.routePath,
-          builder: (context, params) => params.isEmpty
-              ? NavBarPage(initialPage: 'Profile')
-              : ProfileWidget(),
-        ),
-        FFRoute(
           name: SignInWidget.routeName,
           path: SignInWidget.routePath,
           builder: (context, params) => SignInWidget(),

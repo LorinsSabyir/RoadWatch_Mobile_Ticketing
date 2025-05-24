@@ -131,12 +131,6 @@ class FFAppState extends ChangeNotifier {
     _violatorContact = value;
   }
 
-  String _violatorAddress = '';
-  String get violatorAddress => _violatorAddress;
-  set violatorAddress(String value) {
-    _violatorAddress = value;
-  }
-
   String _violatorLicenseNum = '';
   String get violatorLicenseNum => _violatorLicenseNum;
   set violatorLicenseNum(String value) {
@@ -173,12 +167,6 @@ class FFAppState extends ChangeNotifier {
     _apprePlace = value;
   }
 
-  DateTime? _appreDate;
-  DateTime? get appreDate => _appreDate;
-  set appreDate(DateTime? value) {
-    _appreDate = value;
-  }
-
   String _vehicleSerialNum = '';
   String get vehicleSerialNum => _vehicleSerialNum;
   set vehicleSerialNum(String value) {
@@ -191,12 +179,6 @@ class FFAppState extends ChangeNotifier {
     _appreEnforcer = value;
   }
 
-  DateTime? _appreTime;
-  DateTime? get appreTime => _appreTime;
-  set appreTime(DateTime? value) {
-    _appreTime = value;
-  }
-
   double _violationTotalFine = 0.0;
   double get violationTotalFine => _violationTotalFine;
   set violationTotalFine(double value) {
@@ -207,5 +189,58 @@ class FFAppState extends ChangeNotifier {
   int get citationNumber => _citationNumber;
   set citationNumber(int value) {
     _citationNumber = value;
+  }
+
+  List<String> _citationRef = [];
+  List<String> get citationRef => _citationRef;
+  set citationRef(List<String> value) {
+    _citationRef = value;
+  }
+
+  void addToCitationRef(String value) {
+    citationRef.add(value);
+  }
+
+  void removeFromCitationRef(String value) {
+    citationRef.remove(value);
+  }
+
+  void removeAtIndexFromCitationRef(int index) {
+    citationRef.removeAt(index);
+  }
+
+  void updateCitationRefAtIndex(
+    int index,
+    String Function(String) updateFn,
+  ) {
+    citationRef[index] = updateFn(_citationRef[index]);
+  }
+
+  void insertAtIndexInCitationRef(int index, String value) {
+    citationRef.insert(index, value);
+  }
+
+  String _violatorAddProvince = '';
+  String get violatorAddProvince => _violatorAddProvince;
+  set violatorAddProvince(String value) {
+    _violatorAddProvince = value;
+  }
+
+  String _violatorAddCity = '';
+  String get violatorAddCity => _violatorAddCity;
+  set violatorAddCity(String value) {
+    _violatorAddCity = value;
+  }
+
+  String _violatorAddBrgy = '';
+  String get violatorAddBrgy => _violatorAddBrgy;
+  set violatorAddBrgy(String value) {
+    _violatorAddBrgy = value;
+  }
+
+  String _violatorAddPrk = '';
+  String get violatorAddPrk => _violatorAddPrk;
+  set violatorAddPrk(String value) {
+    _violatorAddPrk = value;
   }
 }

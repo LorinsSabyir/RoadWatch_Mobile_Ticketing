@@ -66,30 +66,10 @@ class CitationRecord extends FirestoreRecord {
   String get violatorName => _violatorName ?? '';
   bool hasViolatorName() => _violatorName != null;
 
-  // "violator_address" field.
-  String? _violatorAddress;
-  String get violatorAddress => _violatorAddress ?? '';
-  bool hasViolatorAddress() => _violatorAddress != null;
-
-  // "reciept_num" field.
-  String? _recieptNum;
-  String get recieptNum => _recieptNum ?? '';
-  bool hasRecieptNum() => _recieptNum != null;
-
-  // "reciept_status" field.
-  String? _recieptStatus;
-  String get recieptStatus => _recieptStatus ?? '';
-  bool hasRecieptStatus() => _recieptStatus != null;
-
   // "appre_enforcer" field.
   String? _appreEnforcer;
   String get appreEnforcer => _appreEnforcer ?? '';
   bool hasAppreEnforcer() => _appreEnforcer != null;
-
-  // "userRep" field.
-  DocumentReference? _userRep;
-  DocumentReference? get userRep => _userRep;
-  bool hasUserRep() => _userRep != null;
 
   // "violation" field.
   List<String>? _violation;
@@ -106,6 +86,36 @@ class CitationRecord extends FirestoreRecord {
   String get id => _id ?? '';
   bool hasId() => _id != null;
 
+  // "violator_address_province" field.
+  String? _violatorAddressProvince;
+  String get violatorAddressProvince => _violatorAddressProvince ?? '';
+  bool hasViolatorAddressProvince() => _violatorAddressProvince != null;
+
+  // "violator_address_city" field.
+  String? _violatorAddressCity;
+  String get violatorAddressCity => _violatorAddressCity ?? '';
+  bool hasViolatorAddressCity() => _violatorAddressCity != null;
+
+  // "violator_address_brgy" field.
+  String? _violatorAddressBrgy;
+  String get violatorAddressBrgy => _violatorAddressBrgy ?? '';
+  bool hasViolatorAddressBrgy() => _violatorAddressBrgy != null;
+
+  // "violator_address_prk" field.
+  String? _violatorAddressPrk;
+  String get violatorAddressPrk => _violatorAddressPrk ?? '';
+  bool hasViolatorAddressPrk() => _violatorAddressPrk != null;
+
+  // "appre_enforcer_id" field.
+  String? _appreEnforcerId;
+  String get appreEnforcerId => _appreEnforcerId ?? '';
+  bool hasAppreEnforcerId() => _appreEnforcerId != null;
+
+  // "violator_license_num" field.
+  String? _violatorLicenseNum;
+  String get violatorLicenseNum => _violatorLicenseNum ?? '';
+  bool hasViolatorLicenseNum() => _violatorLicenseNum != null;
+
   void _initializeFields() {
     _citationNumber = snapshotData['citation_number'] as String?;
     _confUnitSerialNum = snapshotData['conf_unit_serial_num'] as String?;
@@ -117,15 +127,18 @@ class CitationRecord extends FirestoreRecord {
     _appreTime = snapshotData['appre_time'] as String?;
     _apprePlace = snapshotData['appre_place'] as String?;
     _violatorName = snapshotData['violator_name'] as String?;
-    _violatorAddress = snapshotData['violator_address'] as String?;
-    _recieptNum = snapshotData['reciept_num'] as String?;
-    _recieptStatus = snapshotData['reciept_status'] as String?;
     _appreEnforcer = snapshotData['appre_enforcer'] as String?;
-    _userRep = snapshotData['userRep'] as DocumentReference?;
     _violation = getDataList(snapshotData['violation']);
     _violationTotalFine =
         castToType<double>(snapshotData['violationTotalFine']);
     _id = snapshotData['id'] as String?;
+    _violatorAddressProvince =
+        snapshotData['violator_address_province'] as String?;
+    _violatorAddressCity = snapshotData['violator_address_city'] as String?;
+    _violatorAddressBrgy = snapshotData['violator_address_brgy'] as String?;
+    _violatorAddressPrk = snapshotData['violator_address_prk'] as String?;
+    _appreEnforcerId = snapshotData['appre_enforcer_id'] as String?;
+    _violatorLicenseNum = snapshotData['violator_license_num'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -173,13 +186,15 @@ Map<String, dynamic> createCitationRecordData({
   String? appreTime,
   String? apprePlace,
   String? violatorName,
-  String? violatorAddress,
-  String? recieptNum,
-  String? recieptStatus,
   String? appreEnforcer,
-  DocumentReference? userRep,
   double? violationTotalFine,
   String? id,
+  String? violatorAddressProvince,
+  String? violatorAddressCity,
+  String? violatorAddressBrgy,
+  String? violatorAddressPrk,
+  String? appreEnforcerId,
+  String? violatorLicenseNum,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -193,13 +208,15 @@ Map<String, dynamic> createCitationRecordData({
       'appre_time': appreTime,
       'appre_place': apprePlace,
       'violator_name': violatorName,
-      'violator_address': violatorAddress,
-      'reciept_num': recieptNum,
-      'reciept_status': recieptStatus,
       'appre_enforcer': appreEnforcer,
-      'userRep': userRep,
       'violationTotalFine': violationTotalFine,
       'id': id,
+      'violator_address_province': violatorAddressProvince,
+      'violator_address_city': violatorAddressCity,
+      'violator_address_brgy': violatorAddressBrgy,
+      'violator_address_prk': violatorAddressPrk,
+      'appre_enforcer_id': appreEnforcerId,
+      'violator_license_num': violatorLicenseNum,
     }.withoutNulls,
   );
 
@@ -222,14 +239,16 @@ class CitationRecordDocumentEquality implements Equality<CitationRecord> {
         e1?.appreTime == e2?.appreTime &&
         e1?.apprePlace == e2?.apprePlace &&
         e1?.violatorName == e2?.violatorName &&
-        e1?.violatorAddress == e2?.violatorAddress &&
-        e1?.recieptNum == e2?.recieptNum &&
-        e1?.recieptStatus == e2?.recieptStatus &&
         e1?.appreEnforcer == e2?.appreEnforcer &&
-        e1?.userRep == e2?.userRep &&
         listEquality.equals(e1?.violation, e2?.violation) &&
         e1?.violationTotalFine == e2?.violationTotalFine &&
-        e1?.id == e2?.id;
+        e1?.id == e2?.id &&
+        e1?.violatorAddressProvince == e2?.violatorAddressProvince &&
+        e1?.violatorAddressCity == e2?.violatorAddressCity &&
+        e1?.violatorAddressBrgy == e2?.violatorAddressBrgy &&
+        e1?.violatorAddressPrk == e2?.violatorAddressPrk &&
+        e1?.appreEnforcerId == e2?.appreEnforcerId &&
+        e1?.violatorLicenseNum == e2?.violatorLicenseNum;
   }
 
   @override
@@ -244,14 +263,16 @@ class CitationRecordDocumentEquality implements Equality<CitationRecord> {
         e?.appreTime,
         e?.apprePlace,
         e?.violatorName,
-        e?.violatorAddress,
-        e?.recieptNum,
-        e?.recieptStatus,
         e?.appreEnforcer,
-        e?.userRep,
         e?.violation,
         e?.violationTotalFine,
-        e?.id
+        e?.id,
+        e?.violatorAddressProvince,
+        e?.violatorAddressCity,
+        e?.violatorAddressBrgy,
+        e?.violatorAddressPrk,
+        e?.appreEnforcerId,
+        e?.violatorLicenseNum
       ]);
 
   @override

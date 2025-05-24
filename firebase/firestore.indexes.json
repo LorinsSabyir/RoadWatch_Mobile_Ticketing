@@ -1,3 +1,18 @@
 {
-  "indexes": []
+  "indexes": [
+    {
+      "collectionGroup": "citation",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "appre_enforcer_id",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "appre_time",
+          "order": "DESCENDING"
+        }
+      ]
+    }
+  ]
 }

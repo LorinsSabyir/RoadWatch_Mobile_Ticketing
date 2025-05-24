@@ -26,16 +26,31 @@ class TicketModel extends FlutterFlowModel<TicketWidget> {
   TextEditingController? violatorContactNumCreateTextController;
   String? Function(BuildContext, String?)?
       violatorContactNumCreateTextControllerValidator;
-  // State field(s) for violatorAddress_create widget.
-  FocusNode? violatorAddressCreateFocusNode;
-  TextEditingController? violatorAddressCreateTextController;
-  String? Function(BuildContext, String?)?
-      violatorAddressCreateTextControllerValidator;
   // State field(s) for violatorLicenseNum_create widget.
   FocusNode? violatorLicenseNumCreateFocusNode;
   TextEditingController? violatorLicenseNumCreateTextController;
   String? Function(BuildContext, String?)?
       violatorLicenseNumCreateTextControllerValidator;
+  // State field(s) for violatorAddPrk_create widget.
+  FocusNode? violatorAddPrkCreateFocusNode;
+  TextEditingController? violatorAddPrkCreateTextController;
+  String? Function(BuildContext, String?)?
+      violatorAddPrkCreateTextControllerValidator;
+  // State field(s) for violatorAddBrgy_create widget.
+  FocusNode? violatorAddBrgyCreateFocusNode;
+  TextEditingController? violatorAddBrgyCreateTextController;
+  String? Function(BuildContext, String?)?
+      violatorAddBrgyCreateTextControllerValidator;
+  // State field(s) for violatorAddCity_create widget.
+  FocusNode? violatorAddCityCreateFocusNode;
+  TextEditingController? violatorAddCityCreateTextController;
+  String? Function(BuildContext, String?)?
+      violatorAddCityCreateTextControllerValidator;
+  // State field(s) for violatorAddProvince_create widget.
+  FocusNode? violatorAddProvinceCreateFocusNode;
+  TextEditingController? violatorAddProvinceCreateTextController;
+  String? Function(BuildContext, String?)?
+      violatorAddProvinceCreateTextControllerValidator;
   // State field(s) for vehiclePlateNum_create widget.
   FocusNode? vehiclePlateNumCreateFocusNode;
   TextEditingController? vehiclePlateNumCreateTextController;
@@ -80,11 +95,20 @@ class TicketModel extends FlutterFlowModel<TicketWidget> {
     violatorContactNumCreateFocusNode?.dispose();
     violatorContactNumCreateTextController?.dispose();
 
-    violatorAddressCreateFocusNode?.dispose();
-    violatorAddressCreateTextController?.dispose();
-
     violatorLicenseNumCreateFocusNode?.dispose();
     violatorLicenseNumCreateTextController?.dispose();
+
+    violatorAddPrkCreateFocusNode?.dispose();
+    violatorAddPrkCreateTextController?.dispose();
+
+    violatorAddBrgyCreateFocusNode?.dispose();
+    violatorAddBrgyCreateTextController?.dispose();
+
+    violatorAddCityCreateFocusNode?.dispose();
+    violatorAddCityCreateTextController?.dispose();
+
+    violatorAddProvinceCreateFocusNode?.dispose();
+    violatorAddProvinceCreateTextController?.dispose();
 
     vehiclePlateNumCreateFocusNode?.dispose();
     vehiclePlateNumCreateTextController?.dispose();

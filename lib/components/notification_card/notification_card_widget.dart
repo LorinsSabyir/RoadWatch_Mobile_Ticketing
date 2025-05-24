@@ -8,10 +8,10 @@ export 'notification_card_model.dart';
 class NotificationCardWidget extends StatefulWidget {
   const NotificationCardWidget({
     super.key,
-    required this.title,
-    required this.subtitle,
-    required this.pupose,
-    required this.date,
+    this.title,
+    this.subtitle,
+    this.pupose,
+    this.date,
   });
 
   final String? title;
@@ -88,7 +88,7 @@ class _NotificationCardWidgetState extends State<NotificationCardWidget> {
                   padding: EdgeInsets.all(8.0),
                   child: Icon(
                     Icons.person,
-                    color: FlutterFlowTheme.of(context).secondary,
+                    color: FlutterFlowTheme.of(context).tertiary,
                     size: 24.0,
                   ),
                 ),

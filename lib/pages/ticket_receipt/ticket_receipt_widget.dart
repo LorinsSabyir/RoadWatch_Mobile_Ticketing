@@ -392,7 +392,7 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                           child: Builder(
                             builder: (context) {
                               final selected =
-                                  FFAppState().selectedViolation.toList();
+                                  FFAppState().citationRef.toList();
 
                               return ListView.separated(
                                 padding: EdgeInsets.zero,
@@ -601,27 +601,27 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                               confUnitBrand: FFAppState().vehicleBrand,
                               confUnitModel: FFAppState().vehicleModel,
                               appreDate:
-                                  dateTimeFormat("yMd", FFAppState().appreDate),
+                                  dateTimeFormat("yMd", getCurrentTimestamp),
                               appreTime:
-                                  dateTimeFormat("jm", FFAppState().appreTime),
+                                  dateTimeFormat("jm", getCurrentTimestamp),
                               apprePlace: FFAppState().apprePlace,
                               violatorName: FFAppState().violatorName,
-                              violatorAddress: FFAppState().violatorAddress,
                               appreEnforcer: currentUserDisplayName,
                               violationTotalFine: functions.totalFines(
                                   FFAppState().selectedViolationFine.toList()),
+                              confUnitDesc: '',
+                              violatorAddressProvince:
+                                  FFAppState().violatorAddProvince,
+                              violatorAddressCity: FFAppState().violatorAddCity,
+                              violatorAddressBrgy: FFAppState().violatorAddBrgy,
+                              violatorAddressPrk: FFAppState().violatorAddPrk,
+                              appreEnforcerId: currentJwtToken,
+                              violatorLicenseNum:
+                                  FFAppState().violatorLicenseNum,
                             ),
                             ...mapToFirestore(
                               {
                                 'violation': FFAppState().selectedViolation,
-                              },
-                            ),
-                          });
-
-                          await currentUserReference!.update({
-                            ...mapToFirestore(
-                              {
-                                'citationRef': FieldValue.delete(),
                               },
                             ),
                           });
@@ -630,18 +630,20 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                           FFAppState().selectedViolationSub = [];
                           FFAppState().violatorName = '';
                           FFAppState().violatorContact = '';
-                          FFAppState().violatorAddress = '';
                           FFAppState().violatorLicenseNum = '';
                           FFAppState().vehiclePlateNum = '';
                           FFAppState().vehicleType = '';
                           FFAppState().vehicleBrand = '';
                           FFAppState().vehicleModel = '';
                           FFAppState().apprePlace = '';
-                          FFAppState().appreDate = null;
                           FFAppState().vehicleSerialNum = '';
-                          FFAppState().appreTime = null;
                           FFAppState().violationTotalFine = 0.0;
                           FFAppState().citationNumber = 0;
+                          FFAppState().citationRef = [];
+                          FFAppState().violatorAddProvince = '';
+                          FFAppState().violatorAddCity = '';
+                          FFAppState().violatorAddBrgy = '';
+                          FFAppState().violatorAddPrk = '';
                           FFAppState().update(() {});
 
                           context.goNamed(TicketWidget.routeName);

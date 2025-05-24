@@ -158,7 +158,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
                                 child: NotificationCardWidget(
                                   title: 'Reasign location',
                                   subtitle: 'Maryknoll crossing',
-                                  pupose: 'Admin',
+                                  pupose: 'Dakop',
                                   date: random_data.randomDate(),
                                 ),
                               ),

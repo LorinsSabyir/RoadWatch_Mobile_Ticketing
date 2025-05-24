@@ -1,8 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'profile_widget.dart' show ProfileWidget;
+import 'text_with_icon_widget.dart' show TextWithIconWidget;
 import 'package:flutter/material.dart';
 
-class ProfileModel extends FlutterFlowModel<ProfileWidget> {
+class TextWithIconModel extends FlutterFlowModel<TextWithIconWidget> {
   @override
   void initState(BuildContext context) {}
 

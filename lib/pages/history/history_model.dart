@@ -5,17 +5,11 @@ import 'package:flutter/material.dart';
 class HistoryModel extends FlutterFlowModel<HistoryWidget> {
   ///  State fields for stateful widgets in this page.
 
-  // State field(s) for searchbar widget.
-  FocusNode? searchbarFocusNode;
-  TextEditingController? searchbarTextController;
-  String? Function(BuildContext, String?)? searchbarTextControllerValidator;
+  DateTime? datePicked;
 
   @override
   void initState(BuildContext context) {}
 
   @override
-  void dispose() {
-    searchbarFocusNode?.dispose();
-    searchbarTextController?.dispose();
-  }
+  void dispose() {}
 }

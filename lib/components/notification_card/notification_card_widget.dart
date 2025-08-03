@@ -79,7 +79,7 @@ class _NotificationCardWidgetState extends State<NotificationCardWidget> {
               padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
               child: Card(
                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                color: FlutterFlowTheme.of(context).accent2,
+                color: FlutterFlowTheme.of(context).tertiary,
                 elevation: 0.0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(40.0),
@@ -88,7 +88,7 @@ class _NotificationCardWidgetState extends State<NotificationCardWidget> {
                   padding: EdgeInsets.all(8.0),
                   child: Icon(
                     Icons.person,
-                    color: FlutterFlowTheme.of(context).tertiary,
+                    color: FlutterFlowTheme.of(context).primary,
                     size: 24.0,
                   ),
                 ),
@@ -178,6 +178,7 @@ class _NotificationCardWidgetState extends State<NotificationCardWidget> {
                                 .titleLarge
                                 .fontStyle,
                           ),
+                          color: FlutterFlowTheme.of(context).primary,
                           letterSpacing: 0.0,
                           fontWeight: FlutterFlowTheme.of(context)
                               .titleLarge
@@ -192,6 +193,9 @@ class _NotificationCardWidgetState extends State<NotificationCardWidget> {
                       valueOrDefault<String>(
                         widget.date?.toString(),
                         'date',
+                      ).maybeHandleOverflow(
+                        maxChars: 10,
+                        replacement: '…',
                       ),
                       textAlign: TextAlign.end,
                       style: FlutterFlowTheme.of(context).labelMedium.override(

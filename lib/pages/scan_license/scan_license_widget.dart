@@ -146,7 +146,8 @@ class _ScanLicenseWidgetState extends State<ScanLicenseWidget> {
                       if (selectedMedia != null &&
                           selectedMedia.every((m) =>
                               validateFileFormat(m.storagePath, context))) {
-                        safeSetState(() => _model.isDataUploading = true);
+                        safeSetState(
+                            () => _model.isDataUploading_uploadLicense = true);
                         var selectedUploadedFiles = <FFUploadedFile>[];
 
                         try {
@@ -160,12 +161,12 @@ class _ScanLicenseWidgetState extends State<ScanLicenseWidget> {
                                   ))
                               .toList();
                         } finally {
-                          _model.isDataUploading = false;
+                          _model.isDataUploading_uploadLicense = false;
                         }
                         if (selectedUploadedFiles.length ==
                             selectedMedia.length) {
                           safeSetState(() {
-                            _model.uploadedLocalFile =
+                            _model.uploadedLocalFile_uploadLicense =
                                 selectedUploadedFiles.first;
                           });
                         } else {
@@ -175,6 +176,8 @@ class _ScanLicenseWidgetState extends State<ScanLicenseWidget> {
                       }
                     },
                     child: Container(
+                      width: 400.0,
+                      height: 600.0,
                       decoration: BoxDecoration(
                         color: Color(0xFFD8D8D8),
                         borderRadius: BorderRadius.circular(12.0),
@@ -182,12 +185,13 @@ class _ScanLicenseWidgetState extends State<ScanLicenseWidget> {
                       child: Stack(
                         alignment: AlignmentDirectional(0.0, 0.0),
                         children: [
-                          if ((_model.uploadedLocalFile.bytes?.isNotEmpty ??
+                          if ((_model.uploadedLocalFile_uploadLicense.bytes
+                                      ?.isNotEmpty ??
                                   false))
                             ClipRRect(
                               borderRadius: BorderRadius.circular(12.0),
                               child: Image.memory(
-                                _model.uploadedLocalFile.bytes ??
+                                _model.uploadedLocalFile_uploadLicense.bytes ??
                                     Uint8List.fromList([]),
                                 width: 400.0,
                                 height: 600.0,
@@ -241,7 +245,7 @@ class _ScanLicenseWidgetState extends State<ScanLicenseWidget> {
                                   16.0, 0.0, 16.0, 0.0),
                               iconPadding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 0.0),
-                              color: FlutterFlowTheme.of(context).tertiary,
+                              color: FlutterFlowTheme.of(context).primary,
                               textStyle: FlutterFlowTheme.of(context)
                                   .titleSmall
                                   .override(
@@ -253,7 +257,8 @@ class _ScanLicenseWidgetState extends State<ScanLicenseWidget> {
                                           .titleSmall
                                           .fontStyle,
                                     ),
-                                    color: Colors.white,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
                                     letterSpacing: 0.0,
                                     fontWeight: FlutterFlowTheme.of(context)
                                         .titleSmall

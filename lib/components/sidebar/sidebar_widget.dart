@@ -1,4 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -72,7 +73,7 @@ class _SidebarWidgetState extends State<SidebarWidget>
       child: Container(
         width: 320.0,
         decoration: BoxDecoration(
-          color: FlutterFlowTheme.of(context).secondaryBackground,
+          color: FlutterFlowTheme.of(context).primaryBackground,
           boxShadow: [
             BoxShadow(
               blurRadius: 4.0,
@@ -259,7 +260,7 @@ class _SidebarWidgetState extends State<SidebarWidget>
                                         color: Theme.of(context).brightness ==
                                                 Brightness.light
                                             ? FlutterFlowTheme.of(context)
-                                                .secondaryBackground
+                                                .primary
                                             : FlutterFlowTheme.of(context)
                                                 .primaryBackground,
                                         borderRadius:
@@ -356,17 +357,18 @@ class _SidebarWidgetState extends State<SidebarWidget>
                                         color: Theme.of(context).brightness ==
                                                 Brightness.dark
                                             ? FlutterFlowTheme.of(context)
-                                                .secondaryBackground
+                                                .primaryText
                                             : FlutterFlowTheme.of(context)
-                                                .primaryBackground,
+                                                .secondaryBackground,
                                         borderRadius:
                                             BorderRadius.circular(10.0),
                                         border: Border.all(
                                           color: Theme.of(context).brightness ==
                                                   Brightness.dark
-                                              ? Color(0xFFE0E3E7)
+                                              ? FlutterFlowTheme.of(context)
+                                                  .primaryBackground
                                               : FlutterFlowTheme.of(context)
-                                                  .primaryBackground,
+                                                  .secondaryBackground,
                                           width: 1.0,
                                         ),
                                       ),
@@ -460,70 +462,71 @@ class _SidebarWidgetState extends State<SidebarWidget>
                     Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
-                      child: MouseRegion(
-                        opaque: false,
-                        cursor: SystemMouseCursors.click ?? MouseCursor.defer,
-                        child: InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () async {
-                            GoRouter.of(context).prepareAuthEvent();
-                            await authManager.signOut();
-                            GoRouter.of(context).clearRedirectLocation();
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () async {
+                          await currentUserReference!
+                              .update(createUsersRecordData(
+                            status: false,
+                          ));
 
-                            context.goNamedAuth(
-                                SignInWidget.routeName, context.mounted);
-                          },
-                          child: AnimatedContainer(
-                            duration: Duration(milliseconds: 150),
-                            curve: Curves.easeInOut,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: _model.mouseRegionHovered
-                                  ? FlutterFlowTheme.of(context)
-                                      .primaryBackground
-                                  : FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                              borderRadius: BorderRadius.circular(8.0),
+                          context.pushNamedAuth(
+                              SigninWidget.routeName, context.mounted);
+
+                          GoRouter.of(context).prepareAuthEvent();
+                          await authManager.signOut();
+                          GoRouter.of(context).clearRedirectLocation();
+                        },
+                        child: AnimatedContainer(
+                          duration: Duration(milliseconds: 150),
+                          curve: Curves.easeInOut,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color:
+                                FlutterFlowTheme.of(context).primaryBackground,
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 3.0,
+                                color: Color(0x35000000),
+                                offset: Offset(
+                                  0.0,
+                                  1.0,
+                                ),
+                              )
+                            ],
+                            borderRadius: BorderRadius.circular(8.0),
+                            border: Border.all(
+                              color: FlutterFlowTheme.of(context).error,
                             ),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 8.0, 0.0, 8.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Padding(
+                          ),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 8.0, 0.0, 8.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      12.0, 0.0, 0.0, 0.0),
+                                  child: Icon(
+                                    Icons.login_rounded,
+                                    color: FlutterFlowTheme.of(context).error,
+                                    size: 20.0,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         12.0, 0.0, 0.0, 0.0),
-                                    child: Icon(
-                                      Icons.login_rounded,
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      size: 20.0,
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          12.0, 0.0, 0.0, 0.0),
-                                      child: Text(
-                                        'Log out',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              font: GoogleFonts.manrope(
-                                                fontWeight:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontWeight,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontStyle,
-                                              ),
-                                              letterSpacing: 0.0,
+                                    child: Text(
+                                      'Log out',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            font: GoogleFonts.manrope(
                                               fontWeight:
                                                   FlutterFlowTheme.of(context)
                                                       .bodyMedium
@@ -533,20 +536,25 @@ class _SidebarWidgetState extends State<SidebarWidget>
                                                       .bodyMedium
                                                       .fontStyle,
                                             ),
-                                      ),
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            letterSpacing: 0.0,
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
+                                          ),
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                        onEnter: ((event) async {
-                          safeSetState(() => _model.mouseRegionHovered = true);
-                        }),
-                        onExit: ((event) async {
-                          safeSetState(() => _model.mouseRegionHovered = false);
-                        }),
                       ),
                     ),
                   ],

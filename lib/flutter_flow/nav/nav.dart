@@ -76,13 +76,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       refreshListenable: appStateNotifier,
       navigatorKey: appNavigatorKey,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? NavBarPage() : SignInWidget(),
+          appStateNotifier.loggedIn ? NavBarPage() : SigninWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? NavBarPage() : SignInWidget(),
+              appStateNotifier.loggedIn ? NavBarPage() : SigninWidget(),
         ),
         FFRoute(
           name: TicketWidget.routeName,
@@ -101,9 +101,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               : HistoryWidget(),
         ),
         FFRoute(
-          name: SignInWidget.routeName,
-          path: SignInWidget.routePath,
-          builder: (context, params) => SignInWidget(),
+          name: SigninWidget.routeName,
+          path: SigninWidget.routePath,
+          builder: (context, params) => SigninWidget(),
         ),
         FFRoute(
           name: TicketReceiptWidget.routeName,
@@ -134,6 +134,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: ScanLicenseWidget.routeName,
           path: ScanLicenseWidget.routePath,
           builder: (context, params) => ScanLicenseWidget(),
+        ),
+        FFRoute(
+          name: SignupWidget.routeName,
+          path: SignupWidget.routePath,
+          builder: (context, params) => SignupWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -304,7 +309,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.uri.toString());
-            return '/signIn';
+            return '/signin';
           }
           return null;
         },

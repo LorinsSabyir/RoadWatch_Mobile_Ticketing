@@ -142,14 +142,14 @@ class LightModeTheme extends FlutterFlowTheme {
   @Deprecated('Use tertiary instead')
   Color get tertiaryColor => tertiary;
 
-  late Color primary = const Color(0xFFFFD51F);
-  late Color secondary = const Color(0xFF8FCEDF);
-  late Color tertiary = const Color(0xFF6666D3);
+  late Color primary = const Color(0xFFF7C200);
+  late Color secondary = const Color(0xFFFFB236);
+  late Color tertiary = const Color(0xFFFFDD57);
   late Color alternate = const Color(0xFFE0E3E7);
-  late Color primaryText = const Color(0xFF201C09);
-  late Color secondaryText = const Color(0xFF57636C);
-  late Color primaryBackground = const Color(0xFFFBF8F0);
-  late Color secondaryBackground = const Color(0xFFFFFFFF);
+  late Color primaryText = const Color(0xFF0D2F60);
+  late Color secondaryText = const Color(0xFF536880);
+  late Color primaryBackground = const Color(0xFFFFFFFF);
+  late Color secondaryBackground = const Color(0xFFFEF6D9);
   late Color accent1 = const Color(0xFFFCF1C6);
   late Color accent2 = const Color(0xFFDBEFF2);
   late Color accent3 = const Color(0xFF9A97E3);
@@ -327,17 +327,17 @@ class DarkModeTheme extends FlutterFlowTheme {
   @Deprecated('Use tertiary instead')
   Color get tertiaryColor => tertiary;
 
-  late Color primary = const Color(0xFF6D5FED);
-  late Color secondary = const Color(0xFF39D2C0);
-  late Color tertiary = const Color(0xFF9489F5);
+  late Color primary = const Color(0xFF4432E6);
+  late Color secondary = const Color(0xFF1D1371);
+  late Color tertiary = const Color(0xFF9699D0);
   late Color alternate = const Color(0xFF22282F);
   late Color primaryText = const Color(0xFFFFFFFF);
-  late Color secondaryText = const Color(0xFF95A1AC);
+  late Color secondaryText = const Color(0xFF0D2F60);
   late Color primaryBackground = const Color(0xFF1A1F24);
   late Color secondaryBackground = const Color(0xFF101213);
   late Color accent1 = const Color(0x4D6D5FED);
   late Color accent2 = const Color(0x4E39D2C0);
-  late Color accent3 = const Color(0x4D9489F5);
+  late Color accent3 = const Color(0xFFFCF1C6);
   late Color accent4 = const Color(0xB31D2428);
   late Color success = const Color(0xFF24A891);
   late Color warning = const Color(0xFFCA6C45);

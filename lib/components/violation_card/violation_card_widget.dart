@@ -109,6 +109,7 @@ class _ViolationCardWidgetState extends State<ViolationCardWidget> {
                                   .labelMedium
                                   .fontStyle,
                             ),
+                            color: FlutterFlowTheme.of(context).secondaryText,
                             letterSpacing: 0.0,
                             fontWeight: FlutterFlowTheme.of(context)
                                 .labelMedium
@@ -123,15 +124,26 @@ class _ViolationCardWidgetState extends State<ViolationCardWidget> {
               ),
             ),
             Flexible(
-              child: Container(
-                decoration: BoxDecoration(),
-                child: Text(
-                  valueOrDefault<String>(
-                    widget.fine,
-                    'fine',
-                  ),
-                  style: FlutterFlowTheme.of(context).headlineSmall.override(
-                        font: GoogleFonts.urbanist(
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
+                child: Container(
+                  decoration: BoxDecoration(),
+                  child: Text(
+                    valueOrDefault<String>(
+                      widget.fine,
+                      'fine',
+                    ),
+                    style: FlutterFlowTheme.of(context).headlineSmall.override(
+                          font: GoogleFonts.urbanist(
+                            fontWeight: FlutterFlowTheme.of(context)
+                                .headlineSmall
+                                .fontWeight,
+                            fontStyle: FlutterFlowTheme.of(context)
+                                .headlineSmall
+                                .fontStyle,
+                          ),
+                          fontSize: 20.0,
+                          letterSpacing: 0.0,
                           fontWeight: FlutterFlowTheme.of(context)
                               .headlineSmall
                               .fontWeight,
@@ -139,15 +151,7 @@ class _ViolationCardWidgetState extends State<ViolationCardWidget> {
                               .headlineSmall
                               .fontStyle,
                         ),
-                        fontSize: 20.0,
-                        letterSpacing: 0.0,
-                        fontWeight: FlutterFlowTheme.of(context)
-                            .headlineSmall
-                            .fontWeight,
-                        fontStyle: FlutterFlowTheme.of(context)
-                            .headlineSmall
-                            .fontStyle,
-                      ),
+                  ),
                 ),
               ),
             ),

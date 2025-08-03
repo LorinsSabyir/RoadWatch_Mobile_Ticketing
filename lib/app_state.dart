@@ -243,4 +243,33 @@ class FFAppState extends ChangeNotifier {
   set violatorAddPrk(String value) {
     _violatorAddPrk = value;
   }
+
+  List<String> _violationSection = [];
+  List<String> get violationSection => _violationSection;
+  set violationSection(List<String> value) {
+    _violationSection = value;
+  }
+
+  void addToViolationSection(String value) {
+    violationSection.add(value);
+  }
+
+  void removeFromViolationSection(String value) {
+    violationSection.remove(value);
+  }
+
+  void removeAtIndexFromViolationSection(int index) {
+    violationSection.removeAt(index);
+  }
+
+  void updateViolationSectionAtIndex(
+    int index,
+    String Function(String) updateFn,
+  ) {
+    violationSection[index] = updateFn(_violationSection[index]);
+  }
+
+  void insertAtIndexInViolationSection(int index, String value) {
+    violationSection.insert(index, value);
+  }
 }

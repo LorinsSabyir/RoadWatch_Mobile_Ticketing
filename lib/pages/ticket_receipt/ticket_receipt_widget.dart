@@ -213,7 +213,7 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Driver Name:',
+                                'Violator Name:',
                                 style: FlutterFlowTheme.of(context)
                                     .labelMedium
                                     .override(
@@ -373,8 +373,7 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                         width: MediaQuery.sizeOf(context).width * 1.0,
                         height: MediaQuery.sizeOf(context).height * 0.57,
                         decoration: BoxDecoration(
-                          color:
-                              FlutterFlowTheme.of(context).secondaryBackground,
+                          color: FlutterFlowTheme.of(context).primaryBackground,
                           boxShadow: [
                             BoxShadow(
                               blurRadius: 3.0,
@@ -405,10 +404,7 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                                   final selectedItem = selected[selectedIndex];
                                   return Container(
                                     width: 100.0,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                    ),
+                                    decoration: BoxDecoration(),
                                     child: wrapWithModel(
                                       model:
                                           _model.violationCardModels.getModel(
@@ -426,10 +422,14 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                                         subtitle: FFAppState()
                                             .selectedViolationSub
                                             .elementAtOrNull(selectedIndex),
-                                        fine: FFAppState()
-                                            .selectedViolationFine
-                                            .elementAtOrNull(selectedIndex)!
-                                            .toString(),
+                                        fine: formatNumber(
+                                          FFAppState()
+                                              .selectedViolationFine
+                                              .elementAtOrNull(selectedIndex),
+                                          formatType: FormatType.decimal,
+                                          decimalType: DecimalType.automatic,
+                                          currency: '₱',
+                                        ),
                                       ),
                                     ),
                                   );
@@ -559,7 +559,7 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                               0.0, 0.0, 0.0, 0.0),
                           iconPadding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
-                          color: FlutterFlowTheme.of(context).accent1,
+                          color: FlutterFlowTheme.of(context).alternate,
                           textStyle: FlutterFlowTheme.of(context)
                               .titleSmall
                               .override(
@@ -594,14 +594,10 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                         onPressed: () async {
                           await CitationRecord.collection.doc().set({
                             ...createCitationRecordData(
-                              id: '',
-                              citationNumber: '',
                               confUnitSerialNum: FFAppState().vehicleSerialNum,
                               confUnitPlateNum: FFAppState().vehiclePlateNum,
                               confUnitBrand: FFAppState().vehicleBrand,
                               confUnitModel: FFAppState().vehicleModel,
-                              appreDate:
-                                  dateTimeFormat("yMd", getCurrentTimestamp),
                               appreTime:
                                   dateTimeFormat("jm", getCurrentTimestamp),
                               apprePlace: FFAppState().apprePlace,
@@ -615,13 +611,21 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                               violatorAddressCity: FFAppState().violatorAddCity,
                               violatorAddressBrgy: FFAppState().violatorAddBrgy,
                               violatorAddressPrk: FFAppState().violatorAddPrk,
-                              appreEnforcerId: currentJwtToken,
+                              appreEnforcerId: currentUserUid,
                               violatorLicenseNum:
                                   FFAppState().violatorLicenseNum,
+                              appreDateMonth:
+                                  dateTimeFormat("MMMM", getCurrentTimestamp),
+                              appreDateDay:
+                                  dateTimeFormat("d", getCurrentTimestamp),
+                              appreDateYear:
+                                  dateTimeFormat("yyyy", getCurrentTimestamp),
                             ),
                             ...mapToFirestore(
                               {
-                                'violation': FFAppState().selectedViolation,
+                                'violation': FFAppState().selectedViolationSub,
+                                'violation_section':
+                                    FFAppState().selectedViolation,
                               },
                             ),
                           });

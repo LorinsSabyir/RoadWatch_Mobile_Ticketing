@@ -402,7 +402,7 @@ class _HistoryWidgetState extends State<HistoryWidget> {
                                                 decoration: BoxDecoration(
                                                   color: FlutterFlowTheme.of(
                                                           context)
-                                                      .secondaryBackground,
+                                                      .primaryBackground,
                                                   boxShadow: [
                                                     BoxShadow(
                                                       blurRadius: 3.0,
@@ -416,12 +416,6 @@ class _HistoryWidgetState extends State<HistoryWidget> {
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           12.0),
-                                                  border: Border.all(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryBackground,
-                                                    width: 1.0,
-                                                  ),
                                                 ),
                                                 child: Padding(
                                                   padding: EdgeInsets.all(4.0),
@@ -442,7 +436,7 @@ class _HistoryWidgetState extends State<HistoryWidget> {
                                                               .antiAliasWithSaveLayer,
                                                           color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .tertiary,
+                                                              .accent1,
                                                           elevation: 0.0,
                                                           shape:
                                                               RoundedRectangleBorder(

@@ -53,7 +53,7 @@ class _NotificationCardWidgetState extends State<NotificationCardWidget> {
       width: MediaQuery.sizeOf(context).width * 1.0,
       height: 70.0,
       decoration: BoxDecoration(
-        color: FlutterFlowTheme.of(context).secondaryBackground,
+        color: FlutterFlowTheme.of(context).primaryBackground,
         boxShadow: [
           BoxShadow(
             blurRadius: 3.0,
@@ -65,10 +65,6 @@ class _NotificationCardWidgetState extends State<NotificationCardWidget> {
           )
         ],
         borderRadius: BorderRadius.circular(12.0),
-        border: Border.all(
-          color: FlutterFlowTheme.of(context).primaryBackground,
-          width: 1.0,
-        ),
       ),
       child: Padding(
         padding: EdgeInsets.all(4.0),
@@ -79,7 +75,7 @@ class _NotificationCardWidgetState extends State<NotificationCardWidget> {
               padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
               child: Card(
                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                color: FlutterFlowTheme.of(context).tertiary,
+                color: FlutterFlowTheme.of(context).accent1,
                 elevation: 0.0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(40.0),

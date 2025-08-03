@@ -586,7 +586,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                     Container(
                       width: MediaQuery.sizeOf(context).width * 1.0,
                       decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).tertiary,
+                        color: FlutterFlowTheme.of(context).accent1,
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: Column(

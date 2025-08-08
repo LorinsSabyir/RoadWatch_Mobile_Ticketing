@@ -1826,6 +1826,7 @@ class _SignupWidgetState extends State<SignupWidget>
                                                                           .text,
                                                                   accStatus:
                                                                       'pending',
+                                                                  status: false,
                                                                 ),
                                                                 ...mapToFirestore(
                                                                   {

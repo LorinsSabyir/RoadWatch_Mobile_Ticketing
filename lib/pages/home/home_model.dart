@@ -13,6 +13,10 @@ class HomeModel extends FlutterFlowModel<HomeWidget> {
   late NotificationCardModel notificationCardModel2;
   // Model for NotificationCard component.
   late NotificationCardModel notificationCardModel3;
+  // Model for NotificationCard component.
+  late NotificationCardModel notificationCardModel4;
+  // Model for NotificationCard component.
+  late NotificationCardModel notificationCardModel5;
 
   @override
   void initState(BuildContext context) {
@@ -22,6 +26,10 @@ class HomeModel extends FlutterFlowModel<HomeWidget> {
         createModel(context, () => NotificationCardModel());
     notificationCardModel3 =
         createModel(context, () => NotificationCardModel());
+    notificationCardModel4 =
+        createModel(context, () => NotificationCardModel());
+    notificationCardModel5 =
+        createModel(context, () => NotificationCardModel());
   }
 
   @override
@@ -29,5 +37,7 @@ class HomeModel extends FlutterFlowModel<HomeWidget> {
     notificationCardModel1.dispose();
     notificationCardModel2.dispose();
     notificationCardModel3.dispose();
+    notificationCardModel4.dispose();
+    notificationCardModel5.dispose();
   }
 }

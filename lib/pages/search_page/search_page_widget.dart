@@ -164,8 +164,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                   width:
                                       MediaQuery.sizeOf(context).width * 0.82,
                                   decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
+                                    color: FlutterFlowTheme.of(context).textbox,
                                     boxShadow: [
                                       BoxShadow(
                                         blurRadius: 3.0,
@@ -344,6 +343,9 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                                     .bodyLarge
                                                                     .fontStyle,
                                                               ),
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .textboxTextHollow,
                                                               fontSize: 14.0,
                                                               letterSpacing:
                                                                   0.0,
@@ -406,10 +408,6 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                           BorderRadius.circular(
                                                               12.0),
                                                     ),
-                                                    filled: true,
-                                                    fillColor: FlutterFlowTheme
-                                                            .of(context)
-                                                        .secondaryBackground,
                                                   ),
                                                   style: FlutterFlowTheme.of(
                                                           context)
@@ -428,6 +426,9 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                                   .bodyLarge
                                                                   .fontStyle,
                                                         ),
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .textboxTextActive,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FlutterFlowTheme.of(
@@ -454,7 +455,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                           icon: Icon(
                                             Icons.close,
                                             color: FlutterFlowTheme.of(context)
-                                                .secondaryText,
+                                                .textboxTextHollow,
                                             size: 24.0,
                                           ),
                                           onPressed: () async {
@@ -532,105 +533,128 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceAround,
                                           children: [
-                                            wrapWithModel(
-                                              model: _model.violationCardModels1
-                                                  .getModel(
-                                                violationSearchItem.id,
-                                                violationSearchIndex,
-                                              ),
-                                              updateCallback: () =>
-                                                  safeSetState(() {}),
-                                              child: ViolationCardWidget(
-                                                key: Key(
-                                                  'Keyhxz_${violationSearchItem.id}',
+                                            Expanded(
+                                              child: wrapWithModel(
+                                                model: _model
+                                                    .violationCardModels1
+                                                    .getModel(
+                                                  violationSearchItem.id,
+                                                  violationSearchIndex,
                                                 ),
-                                                title: violationSearchItem.code,
-                                                subtitle: violationSearchItem
-                                                    .violationName,
-                                                fine: formatNumber(
-                                                  violationSearchItem.fines,
-                                                  formatType:
-                                                      FormatType.decimal,
-                                                  decimalType:
-                                                      DecimalType.automatic,
-                                                  currency: '₱',
+                                                updateCallback: () =>
+                                                    safeSetState(() {}),
+                                                child: ViolationCardWidget(
+                                                  key: Key(
+                                                    'Keyhxz_${violationSearchItem.id}',
+                                                  ),
+                                                  title:
+                                                      violationSearchItem.code,
+                                                  subtitle: violationSearchItem
+                                                      .violationName,
+                                                  fine: formatNumber(
+                                                    violationSearchItem.fines,
+                                                    formatType:
+                                                        FormatType.decimal,
+                                                    decimalType:
+                                                        DecimalType.automatic,
+                                                    currency: '₱',
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                            FlutterFlowIconButton(
-                                              borderRadius: 8.0,
-                                              buttonSize: 40.0,
-                                              icon: Icon(
-                                                Icons.add,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .tertiary,
-                                                size: 24.0,
-                                              ),
-                                              onPressed: () async {
-                                                if (FFAppState()
+                                            Container(
+                                              width: 40.0,
+                                              height: 40.0,
+                                              decoration: BoxDecoration(),
+                                              child: Visibility(
+                                                visible: FFAppState()
                                                         .citationRef
                                                         .contains(
                                                             violationSearchItem
                                                                 .id) ==
-                                                    true) {
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(
-                                                    SnackBar(
-                                                      content: Text(
-                                                        'Violation already exist',
-                                                        style: TextStyle(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryBackground,
+                                                    false,
+                                                child: FlutterFlowIconButton(
+                                                  borderRadius: 8.0,
+                                                  buttonSize: 40.0,
+                                                  icon: Icon(
+                                                    Icons.add,
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primary,
+                                                    size: 24.0,
+                                                  ),
+                                                  onPressed: () async {
+                                                    if (FFAppState()
+                                                            .citationRef
+                                                            .contains(
+                                                                violationSearchItem
+                                                                    .id) ==
+                                                        true) {
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                        SnackBar(
+                                                          content: Text(
+                                                            'Violation already exist',
+                                                            style: TextStyle(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .secondaryBackground,
+                                                            ),
+                                                          ),
+                                                          duration: Duration(
+                                                              milliseconds:
+                                                                  4000),
+                                                          backgroundColor:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .error,
                                                         ),
-                                                      ),
-                                                      duration: Duration(
-                                                          milliseconds: 4000),
-                                                      backgroundColor:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .error,
-                                                    ),
-                                                  );
-                                                } else {
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(
-                                                    SnackBar(
-                                                      content: Text(
-                                                        'Sucessfully added',
-                                                        style: TextStyle(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryText,
+                                                      );
+                                                    } else {
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                        SnackBar(
+                                                          content: Text(
+                                                            'Sucessfully added',
+                                                            style: TextStyle(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primaryText,
+                                                            ),
+                                                          ),
+                                                          duration: Duration(
+                                                              milliseconds:
+                                                                  4000),
+                                                          backgroundColor:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .secondary,
                                                         ),
-                                                      ),
-                                                      duration: Duration(
-                                                          milliseconds: 4000),
-                                                      backgroundColor:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .secondary,
-                                                    ),
-                                                  );
-                                                  FFAppState()
-                                                      .addToSelectedViolation(
-                                                          violationSearchItem
-                                                              .code);
-                                                  FFAppState()
-                                                      .addToSelectedViolationFine(
-                                                          violationSearchItem
-                                                              .fines
-                                                              .toDouble());
-                                                  FFAppState()
-                                                      .addToSelectedViolationSub(
-                                                          violationSearchItem
-                                                              .violationName);
-                                                  FFAppState().addToCitationRef(
-                                                      violationSearchItem.id);
-                                                  safeSetState(() {});
-                                                }
-                                              },
+                                                      );
+                                                      FFAppState()
+                                                          .addToSelectedViolation(
+                                                              violationSearchItem
+                                                                  .code);
+                                                      FFAppState()
+                                                          .addToSelectedViolationFine(
+                                                              violationSearchItem
+                                                                  .fines
+                                                                  .toDouble());
+                                                      FFAppState()
+                                                          .addToSelectedViolationSub(
+                                                              violationSearchItem
+                                                                  .violationName);
+                                                      FFAppState()
+                                                          .addToCitationRef(
+                                                              violationSearchItem
+                                                                  .id);
+                                                      safeSetState(() {});
+                                                    }
+                                                  },
+                                                ),
+                                              ),
                                             ),
                                           ].divide(SizedBox(width: 4.0)),
                                         ),
@@ -666,105 +690,128 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceAround,
                                           children: [
-                                            wrapWithModel(
-                                              model: _model.violationCardModels2
-                                                  .getModel(
-                                                violationSearchItem.id,
-                                                violationSearchIndex,
-                                              ),
-                                              updateCallback: () =>
-                                                  safeSetState(() {}),
-                                              child: ViolationCardWidget(
-                                                key: Key(
-                                                  'Keyqt1_${violationSearchItem.id}',
+                                            Expanded(
+                                              child: wrapWithModel(
+                                                model: _model
+                                                    .violationCardModels2
+                                                    .getModel(
+                                                  violationSearchItem.id,
+                                                  violationSearchIndex,
                                                 ),
-                                                title: violationSearchItem.code,
-                                                subtitle: violationSearchItem
-                                                    .violationName,
-                                                fine: formatNumber(
-                                                  violationSearchItem.fines,
-                                                  formatType:
-                                                      FormatType.decimal,
-                                                  decimalType:
-                                                      DecimalType.automatic,
-                                                  currency: '₱',
+                                                updateCallback: () =>
+                                                    safeSetState(() {}),
+                                                child: ViolationCardWidget(
+                                                  key: Key(
+                                                    'Keyqt1_${violationSearchItem.id}',
+                                                  ),
+                                                  title:
+                                                      violationSearchItem.code,
+                                                  subtitle: violationSearchItem
+                                                      .violationName,
+                                                  fine: formatNumber(
+                                                    violationSearchItem.fines,
+                                                    formatType:
+                                                        FormatType.decimal,
+                                                    decimalType:
+                                                        DecimalType.automatic,
+                                                    currency: '₱',
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                            FlutterFlowIconButton(
-                                              borderRadius: 8.0,
-                                              buttonSize: 40.0,
-                                              icon: Icon(
-                                                Icons.add,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .tertiary,
-                                                size: 24.0,
-                                              ),
-                                              onPressed: () async {
-                                                if (FFAppState()
+                                            Container(
+                                              width: 40.0,
+                                              height: 40.0,
+                                              decoration: BoxDecoration(),
+                                              child: Visibility(
+                                                visible: FFAppState()
                                                         .citationRef
                                                         .contains(
                                                             violationSearchItem
                                                                 .id) ==
-                                                    true) {
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(
-                                                    SnackBar(
-                                                      content: Text(
-                                                        'Violation already exist',
-                                                        style: TextStyle(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryBackground,
+                                                    false,
+                                                child: FlutterFlowIconButton(
+                                                  borderRadius: 8.0,
+                                                  buttonSize: 40.0,
+                                                  icon: Icon(
+                                                    Icons.add,
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primary,
+                                                    size: 24.0,
+                                                  ),
+                                                  onPressed: () async {
+                                                    if (FFAppState()
+                                                            .citationRef
+                                                            .contains(
+                                                                violationSearchItem
+                                                                    .id) ==
+                                                        true) {
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                        SnackBar(
+                                                          content: Text(
+                                                            'Violation already exist',
+                                                            style: TextStyle(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .secondaryBackground,
+                                                            ),
+                                                          ),
+                                                          duration: Duration(
+                                                              milliseconds:
+                                                                  4000),
+                                                          backgroundColor:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .error,
                                                         ),
-                                                      ),
-                                                      duration: Duration(
-                                                          milliseconds: 4000),
-                                                      backgroundColor:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .error,
-                                                    ),
-                                                  );
-                                                } else {
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(
-                                                    SnackBar(
-                                                      content: Text(
-                                                        'Sucessfully added',
-                                                        style: TextStyle(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryText,
+                                                      );
+                                                    } else {
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                        SnackBar(
+                                                          content: Text(
+                                                            'Sucessfully added',
+                                                            style: TextStyle(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primaryText,
+                                                            ),
+                                                          ),
+                                                          duration: Duration(
+                                                              milliseconds:
+                                                                  4000),
+                                                          backgroundColor:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .secondary,
                                                         ),
-                                                      ),
-                                                      duration: Duration(
-                                                          milliseconds: 4000),
-                                                      backgroundColor:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .secondary,
-                                                    ),
-                                                  );
-                                                  FFAppState()
-                                                      .addToSelectedViolation(
-                                                          violationSearchItem
-                                                              .code);
-                                                  FFAppState()
-                                                      .addToSelectedViolationFine(
-                                                          violationSearchItem
-                                                              .fines
-                                                              .toDouble());
-                                                  FFAppState()
-                                                      .addToSelectedViolationSub(
-                                                          violationSearchItem
-                                                              .violationName);
-                                                  FFAppState().addToCitationRef(
-                                                      violationSearchItem.id);
-                                                  safeSetState(() {});
-                                                }
-                                              },
+                                                      );
+                                                      FFAppState()
+                                                          .addToSelectedViolation(
+                                                              violationSearchItem
+                                                                  .code);
+                                                      FFAppState()
+                                                          .addToSelectedViolationFine(
+                                                              violationSearchItem
+                                                                  .fines
+                                                                  .toDouble());
+                                                      FFAppState()
+                                                          .addToSelectedViolationSub(
+                                                              violationSearchItem
+                                                                  .violationName);
+                                                      FFAppState()
+                                                          .addToCitationRef(
+                                                              violationSearchItem
+                                                                  .id);
+                                                      safeSetState(() {});
+                                                    }
+                                                  },
+                                                ),
+                                              ),
                                             ),
                                           ].divide(SizedBox(width: 4.0)),
                                         ),

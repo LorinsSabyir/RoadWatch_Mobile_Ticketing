@@ -1,8 +1,9 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'text_with_icon_widget.dart' show TextWithIconWidget;
+import '/index.dart';
+import 'approval_page_widget.dart' show ApprovalPageWidget;
 import 'package:flutter/material.dart';
 
-class TextWithIconModel extends FlutterFlowModel<TextWithIconWidget> {
+class ApprovalPageModel extends FlutterFlowModel<ApprovalPageWidget> {
   @override
   void initState(BuildContext context) {}
 

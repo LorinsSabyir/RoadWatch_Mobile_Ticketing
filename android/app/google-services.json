@@ -8,6 +8,25 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:972099236659:android:c7ef4619d95899d3de0446",
+        "android_client_info": {
+          "package_name": "com.mycompany.roadwatchadmindashboard"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnt7cxNBdAjOdQFkoqQYT4YarG-Cxepf0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:972099236659:android:92dbc4ffc89ec4a2de0446",
         "android_client_info": {
           "package_name": "com.mycompany.roadwatchcapstoneproject"

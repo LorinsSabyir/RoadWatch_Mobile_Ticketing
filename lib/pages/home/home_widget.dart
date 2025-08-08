@@ -1,4 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/components/notification_card/notification_card_widget.dart';
 import '/components/sidebar/sidebar_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -6,7 +7,8 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'home_model.dart';
 export 'home_model.dart';
@@ -30,6 +32,13 @@ class _HomeWidgetState extends State<HomeWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => HomeModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if (valueOrDefault(currentUserDocument?.accStatus, '') == 'pending') {
+        context.goNamed(ApprovalAwaitWidget.routeName);
+      }
+    });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -301,6 +310,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                     .headlineMedium
                                                     .fontStyle,
                                           ),
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
                                           fontSize: 28.0,
                                           letterSpacing: 0.0,
                                           fontWeight:
@@ -322,7 +333,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 buttonSize: 40.0,
                                 icon: Icon(
                                   Icons.menu,
-                                  color: FlutterFlowTheme.of(context).tertiary,
+                                  color: FlutterFlowTheme.of(context).primary,
                                   size: 24.0,
                                 ),
                                 onPressed: () async {
@@ -364,7 +375,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 16.0, 0.0, 0.0, 0.0),
                             child: Container(
                               decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context).accent2,
+                                color: FlutterFlowTheme.of(context).tertiary,
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
                               child: Padding(
@@ -396,28 +407,79 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           8.0, 0.0, 0.0, 0.0),
-                                      child: Text(
-                                        '0',
-                                        style: FlutterFlowTheme.of(context)
-                                            .headlineLarge
-                                            .override(
-                                              font: GoogleFonts.urbanist(
-                                                fontWeight: FontWeight.w600,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .headlineLarge
-                                                        .fontStyle,
+                                      child: AuthUserStreamWidget(
+                                        builder: (context) =>
+                                            FutureBuilder<int>(
+                                          future: queryCitationRecordCount(
+                                            queryBuilder: (citationRecord) =>
+                                                citationRecord
+                                                    .where(
+                                                      'appre_enforcer',
+                                                      isEqualTo:
+                                                          currentUserDisplayName,
+                                                    )
+                                                    .where(
+                                                      'appre_date_day',
+                                                      isEqualTo: dateTimeFormat(
+                                                        "d",
+                                                        getCurrentTimestamp,
+                                                        locale:
+                                                            FFLocalizations.of(
+                                                                    context)
+                                                                .languageCode,
+                                                      ),
+                                                    ),
+                                          ),
+                                          builder: (context, snapshot) {
+                                            // Customize what your widget looks like when it's loading.
+                                            if (!snapshot.hasData) {
+                                              return Center(
+                                                child: SizedBox(
+                                                  width: 50.0,
+                                                  height: 50.0,
+                                                  child: SpinKitRing(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .tertiary,
+                                                    size: 50.0,
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                            int textCount = snapshot.data!;
+
+                                            return Text(
+                                              valueOrDefault<String>(
+                                                textCount.toString(),
+                                                '0',
                                               ),
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w600,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .headlineLarge
-                                                      .fontStyle,
-                                            ),
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .headlineLarge
+                                                  .override(
+                                                    font: GoogleFonts.urbanist(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .headlineLarge
+                                                              .fontStyle,
+                                                    ),
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .headlineLarge
+                                                            .fontStyle,
+                                                  ),
+                                            );
+                                          },
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -433,7 +495,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 0.0, 0.0, 16.0, 0.0),
                             child: Container(
                               decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context).accent2,
+                                color: FlutterFlowTheme.of(context).tertiary,
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
                               child: Padding(
@@ -465,28 +527,66 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           8.0, 0.0, 0.0, 0.0),
-                                      child: Text(
-                                        '0',
-                                        style: FlutterFlowTheme.of(context)
-                                            .headlineLarge
-                                            .override(
-                                              font: GoogleFonts.urbanist(
-                                                fontWeight: FontWeight.w600,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .headlineLarge
-                                                        .fontStyle,
-                                              ),
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w600,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .headlineLarge
-                                                      .fontStyle,
+                                      child: AuthUserStreamWidget(
+                                        builder: (context) =>
+                                            FutureBuilder<int>(
+                                          future: queryCitationRecordCount(
+                                            queryBuilder: (citationRecord) =>
+                                                citationRecord.where(
+                                              'appre_enforcer',
+                                              isEqualTo: currentUserDisplayName,
                                             ),
+                                          ),
+                                          builder: (context, snapshot) {
+                                            // Customize what your widget looks like when it's loading.
+                                            if (!snapshot.hasData) {
+                                              return Center(
+                                                child: SizedBox(
+                                                  width: 50.0,
+                                                  height: 50.0,
+                                                  child: SpinKitRing(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .tertiary,
+                                                    size: 50.0,
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                            int textCount = snapshot.data!;
+
+                                            return Text(
+                                              valueOrDefault<String>(
+                                                textCount.toString(),
+                                                '0',
+                                              ),
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .headlineLarge
+                                                  .override(
+                                                    font: GoogleFonts.urbanist(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .headlineLarge
+                                                              .fontStyle,
+                                                    ),
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .headlineLarge
+                                                            .fontStyle,
+                                                  ),
+                                            );
+                                          },
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -497,258 +597,11 @@ class _HomeWidgetState extends State<HomeWidget> {
                         ),
                       ].divide(SizedBox(width: 8.0)),
                     ),
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                      child: Container(
-                        width: MediaQuery.sizeOf(context).width * 1.0,
-                        decoration: BoxDecoration(),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Align(
-                              alignment: AlignmentDirectional(0.0, 0.0),
-                              child: Wrap(
-                                spacing: 16.0,
-                                runSpacing: 16.0,
-                                alignment: WrapAlignment.start,
-                                crossAxisAlignment: WrapCrossAlignment.start,
-                                direction: Axis.horizontal,
-                                runAlignment: WrapAlignment.start,
-                                verticalDirection: VerticalDirection.down,
-                                clipBehavior: Clip.none,
-                                children: [
-                                  Container(
-                                    width: 100.0,
-                                    height: 100.0,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    child: InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        context
-                                            .pushNamed(TicketWidget.routeName);
-                                      },
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          FaIcon(
-                                            FontAwesomeIcons.ticketAlt,
-                                            color: FlutterFlowTheme.of(context)
-                                                .tertiary,
-                                            size: 32.0,
-                                          ),
-                                          Text(
-                                            'Issue a Ticket',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  font: GoogleFonts.manrope(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontStyle,
-                                                  ),
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .tertiary,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontStyle,
-                                                ),
-                                          ),
-                                        ].divide(SizedBox(height: 8.0)),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 100.0,
-                                    height: 100.0,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    child: InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        context
-                                            .pushNamed(HistoryWidget.routeName);
-                                      },
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.history_sharp,
-                                            color: FlutterFlowTheme.of(context)
-                                                .tertiary,
-                                            size: 36.0,
-                                          ),
-                                          Text(
-                                            'View History',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  font: GoogleFonts.manrope(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontStyle,
-                                                  ),
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .tertiary,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontStyle,
-                                                ),
-                                          ),
-                                        ].divide(SizedBox(height: 8.0)),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 100.0,
-                                    height: 100.0,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    child: InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        context.pushNamed(
-                                            ScanLicenseWidget.routeName);
-                                      },
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.qr_code_scanner,
-                                            color: FlutterFlowTheme.of(context)
-                                                .tertiary,
-                                            size: 36.0,
-                                          ),
-                                          Text(
-                                            'Scan license',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  font: GoogleFonts.manrope(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontStyle,
-                                                  ),
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .tertiary,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontStyle,
-                                                ),
-                                          ),
-                                        ].divide(SizedBox(height: 8.0)),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 100.0,
-                                    height: 100.0,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    child: InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        context.pushNamed(
-                                            NotificationWidget.routeName);
-                                      },
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          FaIcon(
-                                            FontAwesomeIcons.solidBell,
-                                            color: FlutterFlowTheme.of(context)
-                                                .tertiary,
-                                            size: 32.0,
-                                          ),
-                                          Text(
-                                            'Notifications',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  font: GoogleFonts.manrope(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontStyle,
-                                                  ),
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .tertiary,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontStyle,
-                                                ),
-                                          ),
-                                        ].divide(SizedBox(height: 8.0)),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ].divide(SizedBox(height: 1.0)),
-                        ),
-                      ),
-                    ),
                     Container(
                       width: MediaQuery.sizeOf(context).width * 1.0,
                       decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).accent2,
+                        color: FlutterFlowTheme.of(context).accent1,
+                        borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
@@ -758,19 +611,21 @@ class _HomeWidgetState extends State<HomeWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 16.0, 0.0, 0.0, 0.0),
                             child: Text(
-                              'Notification',
+                              'Notification Today',
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
                                     font: GoogleFonts.manrope(
-                                      fontWeight: FontWeight.normal,
+                                      fontWeight: FontWeight.w600,
                                       fontStyle: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .fontStyle,
                                     ),
-                                    fontSize: 16.0,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    fontSize: 14.0,
                                     letterSpacing: 0.0,
-                                    fontWeight: FontWeight.normal,
+                                    fontWeight: FontWeight.w600,
                                     fontStyle: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .fontStyle,
@@ -819,12 +674,40 @@ class _HomeWidgetState extends State<HomeWidget> {
                               ),
                             ),
                           ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                16.0, 0.0, 16.0, 0.0),
+                            child: wrapWithModel(
+                              model: _model.notificationCardModel4,
+                              updateCallback: () => safeSetState(() {}),
+                              child: NotificationCardWidget(
+                                title: 'Lubong',
+                                subtitle: 'Assignment',
+                                pupose: 'Convoy',
+                                date: getCurrentTimestamp,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                16.0, 0.0, 16.0, 0.0),
+                            child: wrapWithModel(
+                              model: _model.notificationCardModel5,
+                              updateCallback: () => safeSetState(() {}),
+                              child: NotificationCardWidget(
+                                title: 'Lubong',
+                                subtitle: 'Assignment',
+                                pupose: 'Convoy',
+                                date: getCurrentTimestamp,
+                              ),
+                            ),
+                          ),
                         ]
                             .divide(SizedBox(height: 16.0))
                             .around(SizedBox(height: 16.0)),
                       ),
                     ),
-                  ].divide(SizedBox(height: 16.0)),
+                  ].divide(SizedBox(height: 32.0)),
                 ),
               ),
             ],

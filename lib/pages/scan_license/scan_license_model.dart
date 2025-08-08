@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 class ScanLicenseModel extends FlutterFlowModel<ScanLicenseWidget> {
   ///  State fields for stateful widgets in this page.
 
-  bool isDataUploading = false;
-  FFUploadedFile uploadedLocalFile =
+  bool isDataUploading_uploadLicense = false;
+  FFUploadedFile uploadedLocalFile_uploadLicense =
       FFUploadedFile(bytes: Uint8List.fromList([]));
 
   @override

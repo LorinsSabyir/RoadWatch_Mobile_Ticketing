@@ -54,10 +54,11 @@
 	<true/>
 
 	<key>NSCameraUsageDescription</key>
-    <string>In order to take a picture or video, this app requires permission to access the camera.</string>
+    <string>Allow camera access to scan your license and auto-fill credentials.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-    <string>In order to upload data, this app requires permission to access the photo library.</string>
-
+    <string>Allow photo library access to upload a license photo and extract credentials.</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+    <string>Allow bluetooth access to print ticket.</string>
 
 
 

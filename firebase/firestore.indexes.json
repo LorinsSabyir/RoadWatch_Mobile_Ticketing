@@ -5,12 +5,12 @@
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "appre_enforcer_id",
+          "fieldPath": "appre_enforcer",
           "order": "ASCENDING"
         },
         {
           "fieldPath": "appre_time",
-          "order": "DESCENDING"
+          "order": "ASCENDING"
         }
       ]
     }

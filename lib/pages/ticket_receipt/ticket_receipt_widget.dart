@@ -598,8 +598,12 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                               confUnitPlateNum: FFAppState().vehiclePlateNum,
                               confUnitBrand: FFAppState().vehicleBrand,
                               confUnitModel: FFAppState().vehicleModel,
-                              appreTime:
-                                  dateTimeFormat("jm", getCurrentTimestamp),
+                              appreTime: dateTimeFormat(
+                                "jm",
+                                getCurrentTimestamp,
+                                locale:
+                                    FFLocalizations.of(context).languageCode,
+                              ),
                               apprePlace: FFAppState().apprePlace,
                               violatorName: FFAppState().violatorName,
                               appreEnforcer: currentUserDisplayName,
@@ -614,12 +618,24 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                               appreEnforcerId: currentUserUid,
                               violatorLicenseNum:
                                   FFAppState().violatorLicenseNum,
-                              appreDateMonth:
-                                  dateTimeFormat("MMMM", getCurrentTimestamp),
-                              appreDateDay:
-                                  dateTimeFormat("d", getCurrentTimestamp),
-                              appreDateYear:
-                                  dateTimeFormat("yyyy", getCurrentTimestamp),
+                              appreDateMonth: dateTimeFormat(
+                                "MMMM",
+                                getCurrentTimestamp,
+                                locale:
+                                    FFLocalizations.of(context).languageCode,
+                              ),
+                              appreDateDay: dateTimeFormat(
+                                "d",
+                                getCurrentTimestamp,
+                                locale:
+                                    FFLocalizations.of(context).languageCode,
+                              ),
+                              appreDateYear: dateTimeFormat(
+                                "yyyy",
+                                getCurrentTimestamp,
+                                locale:
+                                    FFLocalizations.of(context).languageCode,
+                              ),
                             ),
                             ...mapToFirestore(
                               {

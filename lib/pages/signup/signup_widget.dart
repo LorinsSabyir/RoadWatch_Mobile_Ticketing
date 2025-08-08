@@ -1,3 +1,5 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -47,11 +49,11 @@ class _SignupWidgetState extends State<SignupWidget>
     _model.emailAddressTextController ??= TextEditingController();
     _model.emailAddressFocusNode ??= FocusNode();
 
-    _model.passwordTextController1 ??= TextEditingController();
-    _model.passwordFocusNode1 ??= FocusNode();
+    _model.passwordTextController ??= TextEditingController();
+    _model.passwordFocusNode ??= FocusNode();
 
-    _model.passwordTextController2 ??= TextEditingController();
-    _model.passwordFocusNode2 ??= FocusNode();
+    _model.confimPasswordTextController ??= TextEditingController();
+    _model.confimPasswordFocusNode ??= FocusNode();
 
     animationsMap.addAll({
       'containerOnPageLoadAnimation1': AnimationInfo(
@@ -207,7 +209,8 @@ class _SignupWidgetState extends State<SignupWidget>
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsets.all(16.0),
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 0.0, 16.0, 16.0),
                                       child: Material(
                                         color: Colors.transparent,
                                         elevation: 4.0,
@@ -222,7 +225,7 @@ class _SignupWidgetState extends State<SignupWidget>
                                           ),
                                           decoration: BoxDecoration(
                                             color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
+                                                .signinBg,
                                             boxShadow: [
                                               BoxShadow(
                                                 blurRadius: 4.0,
@@ -351,6 +354,9 @@ class _SignupWidgetState extends State<SignupWidget>
                                                                         .labelLarge
                                                                         .fontStyle,
                                                                   ),
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .textboxTextHollow,
                                                                   letterSpacing:
                                                                       0.0,
                                                                   fontWeight: FlutterFlowTheme.of(
@@ -366,9 +372,8 @@ class _SignupWidgetState extends State<SignupWidget>
                                                             OutlineInputBorder(
                                                           borderSide:
                                                               BorderSide(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryBackground,
+                                                            color: Color(
+                                                                0x00000000),
                                                             width: 2.0,
                                                           ),
                                                           borderRadius:
@@ -396,7 +401,7 @@ class _SignupWidgetState extends State<SignupWidget>
                                                               BorderSide(
                                                             color: FlutterFlowTheme
                                                                     .of(context)
-                                                                .alternate,
+                                                                .error,
                                                             width: 2.0,
                                                           ),
                                                           borderRadius:
@@ -410,7 +415,7 @@ class _SignupWidgetState extends State<SignupWidget>
                                                               BorderSide(
                                                             color: FlutterFlowTheme
                                                                     .of(context)
-                                                                .alternate,
+                                                                .error,
                                                             width: 2.0,
                                                           ),
                                                           borderRadius:
@@ -422,7 +427,7 @@ class _SignupWidgetState extends State<SignupWidget>
                                                         fillColor:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .primaryBackground,
+                                                                .textbox,
                                                       ),
                                                       style:
                                                           FlutterFlowTheme.of(
@@ -440,6 +445,9 @@ class _SignupWidgetState extends State<SignupWidget>
                                                                       .bodyLarge
                                                                       .fontStyle,
                                                                 ),
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .textboxTextActive,
                                                                 letterSpacing:
                                                                     0.0,
                                                                 fontWeight: FlutterFlowTheme.of(
@@ -490,6 +498,9 @@ class _SignupWidgetState extends State<SignupWidget>
                                                                         .labelLarge
                                                                         .fontStyle,
                                                                   ),
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .textboxTextHollow,
                                                                   letterSpacing:
                                                                       0.0,
                                                                   fontWeight: FlutterFlowTheme.of(
@@ -505,9 +516,8 @@ class _SignupWidgetState extends State<SignupWidget>
                                                             OutlineInputBorder(
                                                           borderSide:
                                                               BorderSide(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryBackground,
+                                                            color: Color(
+                                                                0x00000000),
                                                             width: 2.0,
                                                           ),
                                                           borderRadius:
@@ -535,7 +545,7 @@ class _SignupWidgetState extends State<SignupWidget>
                                                               BorderSide(
                                                             color: FlutterFlowTheme
                                                                     .of(context)
-                                                                .alternate,
+                                                                .error,
                                                             width: 2.0,
                                                           ),
                                                           borderRadius:
@@ -549,7 +559,7 @@ class _SignupWidgetState extends State<SignupWidget>
                                                               BorderSide(
                                                             color: FlutterFlowTheme
                                                                     .of(context)
-                                                                .alternate,
+                                                                .error,
                                                             width: 2.0,
                                                           ),
                                                           borderRadius:
@@ -561,7 +571,7 @@ class _SignupWidgetState extends State<SignupWidget>
                                                         fillColor:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .primaryBackground,
+                                                                .textbox,
                                                       ),
                                                       style:
                                                           FlutterFlowTheme.of(
@@ -579,6 +589,9 @@ class _SignupWidgetState extends State<SignupWidget>
                                                                       .bodyLarge
                                                                       .fontStyle,
                                                                 ),
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .textboxTextActive,
                                                                 letterSpacing:
                                                                     0.0,
                                                                 fontWeight: FlutterFlowTheme.of(
@@ -630,6 +643,9 @@ class _SignupWidgetState extends State<SignupWidget>
                                                                         .labelLarge
                                                                         .fontStyle,
                                                                   ),
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .textboxTextHollow,
                                                                   letterSpacing:
                                                                       0.0,
                                                                   fontWeight: FlutterFlowTheme.of(
@@ -645,9 +661,8 @@ class _SignupWidgetState extends State<SignupWidget>
                                                             OutlineInputBorder(
                                                           borderSide:
                                                               BorderSide(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryBackground,
+                                                            color: Color(
+                                                                0x00000000),
                                                             width: 2.0,
                                                           ),
                                                           borderRadius:
@@ -675,7 +690,7 @@ class _SignupWidgetState extends State<SignupWidget>
                                                               BorderSide(
                                                             color: FlutterFlowTheme
                                                                     .of(context)
-                                                                .alternate,
+                                                                .error,
                                                             width: 2.0,
                                                           ),
                                                           borderRadius:
@@ -689,7 +704,7 @@ class _SignupWidgetState extends State<SignupWidget>
                                                               BorderSide(
                                                             color: FlutterFlowTheme
                                                                     .of(context)
-                                                                .alternate,
+                                                                .error,
                                                             width: 2.0,
                                                           ),
                                                           borderRadius:
@@ -701,7 +716,7 @@ class _SignupWidgetState extends State<SignupWidget>
                                                         fillColor:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .primaryBackground,
+                                                                .textbox,
                                                       ),
                                                       style:
                                                           FlutterFlowTheme.of(
@@ -719,6 +734,9 @@ class _SignupWidgetState extends State<SignupWidget>
                                                                       .bodyLarge
                                                                       .fontStyle,
                                                                 ),
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .textboxTextActive,
                                                                 letterSpacing:
                                                                     0.0,
                                                                 fontWeight: FlutterFlowTheme.of(
@@ -770,6 +788,9 @@ class _SignupWidgetState extends State<SignupWidget>
                                                                         .labelLarge
                                                                         .fontStyle,
                                                                   ),
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .textboxTextHollow,
                                                                   letterSpacing:
                                                                       0.0,
                                                                   fontWeight: FlutterFlowTheme.of(
@@ -785,9 +806,8 @@ class _SignupWidgetState extends State<SignupWidget>
                                                             OutlineInputBorder(
                                                           borderSide:
                                                               BorderSide(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryBackground,
+                                                            color: Color(
+                                                                0x00000000),
                                                             width: 2.0,
                                                           ),
                                                           borderRadius:
@@ -815,7 +835,7 @@ class _SignupWidgetState extends State<SignupWidget>
                                                               BorderSide(
                                                             color: FlutterFlowTheme
                                                                     .of(context)
-                                                                .alternate,
+                                                                .error,
                                                             width: 2.0,
                                                           ),
                                                           borderRadius:
@@ -829,7 +849,7 @@ class _SignupWidgetState extends State<SignupWidget>
                                                               BorderSide(
                                                             color: FlutterFlowTheme
                                                                     .of(context)
-                                                                .alternate,
+                                                                .error,
                                                             width: 2.0,
                                                           ),
                                                           borderRadius:
@@ -841,7 +861,7 @@ class _SignupWidgetState extends State<SignupWidget>
                                                         fillColor:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .primaryBackground,
+                                                                .textbox,
                                                       ),
                                                       style:
                                                           FlutterFlowTheme.of(
@@ -859,6 +879,9 @@ class _SignupWidgetState extends State<SignupWidget>
                                                                       .bodyLarge
                                                                       .fontStyle,
                                                                 ),
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .textboxTextActive,
                                                                 letterSpacing:
                                                                     0.0,
                                                                 fontWeight: FlutterFlowTheme.of(
@@ -1062,7 +1085,8 @@ class _SignupWidgetState extends State<SignupWidget>
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsets.all(16.0),
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 0.0, 16.0, 16.0),
                                       child: Material(
                                         color: Colors.transparent,
                                         elevation: 4.0,
@@ -1077,7 +1101,7 @@ class _SignupWidgetState extends State<SignupWidget>
                                           ),
                                           decoration: BoxDecoration(
                                             color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
+                                                .signinBg,
                                             boxShadow: [
                                               BoxShadow(
                                                 blurRadius: 4.0,
@@ -1206,6 +1230,9 @@ class _SignupWidgetState extends State<SignupWidget>
                                                                         .labelLarge
                                                                         .fontStyle,
                                                                   ),
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .textboxTextHollow,
                                                                   letterSpacing:
                                                                       0.0,
                                                                   fontWeight: FlutterFlowTheme.of(
@@ -1221,9 +1248,8 @@ class _SignupWidgetState extends State<SignupWidget>
                                                             OutlineInputBorder(
                                                           borderSide:
                                                               BorderSide(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryBackground,
+                                                            color: Color(
+                                                                0x00000000),
                                                             width: 2.0,
                                                           ),
                                                           borderRadius:
@@ -1251,7 +1277,7 @@ class _SignupWidgetState extends State<SignupWidget>
                                                               BorderSide(
                                                             color: FlutterFlowTheme
                                                                     .of(context)
-                                                                .alternate,
+                                                                .error,
                                                             width: 2.0,
                                                           ),
                                                           borderRadius:
@@ -1265,7 +1291,7 @@ class _SignupWidgetState extends State<SignupWidget>
                                                               BorderSide(
                                                             color: FlutterFlowTheme
                                                                     .of(context)
-                                                                .alternate,
+                                                                .error,
                                                             width: 2.0,
                                                           ),
                                                           borderRadius:
@@ -1277,7 +1303,7 @@ class _SignupWidgetState extends State<SignupWidget>
                                                         fillColor:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .primaryBackground,
+                                                                .textbox,
                                                       ),
                                                       style:
                                                           FlutterFlowTheme.of(
@@ -1295,6 +1321,9 @@ class _SignupWidgetState extends State<SignupWidget>
                                                                       .bodyLarge
                                                                       .fontStyle,
                                                                 ),
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .textboxTextActive,
                                                                 letterSpacing:
                                                                     0.0,
                                                                 fontWeight: FlutterFlowTheme.of(
@@ -1318,15 +1347,15 @@ class _SignupWidgetState extends State<SignupWidget>
                                                     width: double.infinity,
                                                     child: TextFormField(
                                                       controller: _model
-                                                          .passwordTextController1,
+                                                          .passwordTextController,
                                                       focusNode: _model
-                                                          .passwordFocusNode1,
+                                                          .passwordFocusNode,
                                                       autofocus: true,
                                                       autofillHints: [
                                                         AutofillHints.password
                                                       ],
                                                       obscureText: !_model
-                                                          .passwordVisibility1,
+                                                          .passwordVisibility,
                                                       decoration:
                                                           InputDecoration(
                                                         labelText: 'Password',
@@ -1346,6 +1375,9 @@ class _SignupWidgetState extends State<SignupWidget>
                                                                         .labelLarge
                                                                         .fontStyle,
                                                                   ),
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .textboxTextHollow,
                                                                   letterSpacing:
                                                                       0.0,
                                                                   fontWeight: FlutterFlowTheme.of(
@@ -1361,9 +1393,8 @@ class _SignupWidgetState extends State<SignupWidget>
                                                             OutlineInputBorder(
                                                           borderSide:
                                                               BorderSide(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryBackground,
+                                                            color: Color(
+                                                                0x00000000),
                                                             width: 2.0,
                                                           ),
                                                           borderRadius:
@@ -1417,27 +1448,27 @@ class _SignupWidgetState extends State<SignupWidget>
                                                         fillColor:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .primaryBackground,
+                                                                .textbox,
                                                         suffixIcon: InkWell(
                                                           onTap: () =>
                                                               safeSetState(
                                                             () => _model
-                                                                    .passwordVisibility1 =
+                                                                    .passwordVisibility =
                                                                 !_model
-                                                                    .passwordVisibility1,
+                                                                    .passwordVisibility,
                                                           ),
                                                           focusNode: FocusNode(
                                                               skipTraversal:
                                                                   true),
                                                           child: Icon(
-                                                            _model.passwordVisibility1
+                                                            _model.passwordVisibility
                                                                 ? Icons
                                                                     .visibility_outlined
                                                                 : Icons
                                                                     .visibility_off_outlined,
                                                             color: FlutterFlowTheme
                                                                     .of(context)
-                                                                .secondaryText,
+                                                                .textboxTextHollow,
                                                             size: 24.0,
                                                           ),
                                                         ),
@@ -1458,6 +1489,9 @@ class _SignupWidgetState extends State<SignupWidget>
                                                                       .bodyLarge
                                                                       .fontStyle,
                                                                 ),
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .textboxTextActive,
                                                                 letterSpacing:
                                                                     0.0,
                                                                 fontWeight: FlutterFlowTheme.of(
@@ -1470,7 +1504,7 @@ class _SignupWidgetState extends State<SignupWidget>
                                                                     .fontStyle,
                                                               ),
                                                       validator: _model
-                                                          .passwordTextController1Validator
+                                                          .passwordTextControllerValidator
                                                           .asValidator(context),
                                                     ),
                                                   ),
@@ -1478,15 +1512,15 @@ class _SignupWidgetState extends State<SignupWidget>
                                                     width: double.infinity,
                                                     child: TextFormField(
                                                       controller: _model
-                                                          .passwordTextController2,
+                                                          .confimPasswordTextController,
                                                       focusNode: _model
-                                                          .passwordFocusNode2,
+                                                          .confimPasswordFocusNode,
                                                       autofocus: true,
                                                       autofillHints: [
                                                         AutofillHints.password
                                                       ],
                                                       obscureText: !_model
-                                                          .passwordVisibility2,
+                                                          .confimPasswordVisibility,
                                                       decoration:
                                                           InputDecoration(
                                                         labelText:
@@ -1507,6 +1541,9 @@ class _SignupWidgetState extends State<SignupWidget>
                                                                         .labelLarge
                                                                         .fontStyle,
                                                                   ),
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .textboxTextHollow,
                                                                   letterSpacing:
                                                                       0.0,
                                                                   fontWeight: FlutterFlowTheme.of(
@@ -1522,9 +1559,8 @@ class _SignupWidgetState extends State<SignupWidget>
                                                             OutlineInputBorder(
                                                           borderSide:
                                                               BorderSide(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryBackground,
+                                                            color: Color(
+                                                                0x00000000),
                                                             width: 2.0,
                                                           ),
                                                           borderRadius:
@@ -1578,27 +1614,27 @@ class _SignupWidgetState extends State<SignupWidget>
                                                         fillColor:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .primaryBackground,
+                                                                .textbox,
                                                         suffixIcon: InkWell(
                                                           onTap: () =>
                                                               safeSetState(
                                                             () => _model
-                                                                    .passwordVisibility2 =
+                                                                    .confimPasswordVisibility =
                                                                 !_model
-                                                                    .passwordVisibility2,
+                                                                    .confimPasswordVisibility,
                                                           ),
                                                           focusNode: FocusNode(
                                                               skipTraversal:
                                                                   true),
                                                           child: Icon(
-                                                            _model.passwordVisibility2
+                                                            _model.confimPasswordVisibility
                                                                 ? Icons
                                                                     .visibility_outlined
                                                                 : Icons
                                                                     .visibility_off_outlined,
                                                             color: FlutterFlowTheme
                                                                     .of(context)
-                                                                .secondaryText,
+                                                                .textboxTextHollow,
                                                             size: 24.0,
                                                           ),
                                                         ),
@@ -1619,6 +1655,9 @@ class _SignupWidgetState extends State<SignupWidget>
                                                                       .bodyLarge
                                                                       .fontStyle,
                                                                 ),
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .textboxTextActive,
                                                                 letterSpacing:
                                                                     0.0,
                                                                 fontWeight: FlutterFlowTheme.of(
@@ -1631,7 +1670,7 @@ class _SignupWidgetState extends State<SignupWidget>
                                                                     .fontStyle,
                                                               ),
                                                       validator: _model
-                                                          .passwordTextController2Validator
+                                                          .confimPasswordTextControllerValidator
                                                           .asValidator(context),
                                                     ),
                                                   ),
@@ -1650,7 +1689,7 @@ class _SignupWidgetState extends State<SignupWidget>
                                                                 () async {
                                                               await _model
                                                                   .pageViewController
-                                                                  ?.nextPage(
+                                                                  ?.previousPage(
                                                                 duration: Duration(
                                                                     milliseconds:
                                                                         300),
@@ -1724,17 +1763,86 @@ class _SignupWidgetState extends State<SignupWidget>
                                                           child: FFButtonWidget(
                                                             onPressed:
                                                                 () async {
-                                                              await _model
-                                                                  .pageViewController
-                                                                  ?.nextPage(
-                                                                duration: Duration(
-                                                                    milliseconds:
-                                                                        300),
-                                                                curve:
-                                                                    Curves.ease,
+                                                              GoRouter.of(
+                                                                      context)
+                                                                  .prepareAuthEvent();
+                                                              if (_model
+                                                                      .passwordTextController
+                                                                      .text !=
+                                                                  _model
+                                                                      .confimPasswordTextController
+                                                                      .text) {
+                                                                ScaffoldMessenger.of(
+                                                                        context)
+                                                                    .showSnackBar(
+                                                                  SnackBar(
+                                                                    content:
+                                                                        Text(
+                                                                      'Passwords don\'t match!',
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                                return;
+                                                              }
+
+                                                              final user =
+                                                                  await authManager
+                                                                      .createAccountWithEmail(
+                                                                context,
+                                                                _model
+                                                                    .emailAddressTextController
+                                                                    .text,
+                                                                _model
+                                                                    .passwordTextController
+                                                                    .text,
                                                               );
+                                                              if (user ==
+                                                                  null) {
+                                                                return;
+                                                              }
+
+                                                              await UsersRecord
+                                                                  .collection
+                                                                  .doc(user.uid)
+                                                                  .update({
+                                                                ...createUsersRecordData(
+                                                                  displayName:
+                                                                      _model
+                                                                          .firstNameTextController
+                                                                          .text,
+                                                                  email: _model
+                                                                      .emailAddressTextController
+                                                                      .text,
+                                                                  badgeNumber:
+                                                                      _model
+                                                                          .badgeNumTextController
+                                                                          .text,
+                                                                  password: _model
+                                                                      .confimPasswordTextController
+                                                                      .text,
+                                                                  phoneNumber:
+                                                                      _model
+                                                                          .phoneNumTextController
+                                                                          .text,
+                                                                  accStatus:
+                                                                      'pending',
+                                                                ),
+                                                                ...mapToFirestore(
+                                                                  {
+                                                                    'created_time':
+                                                                        FieldValue
+                                                                            .serverTimestamp(),
+                                                                  },
+                                                                ),
+                                                              });
+
+                                                              context.goNamedAuth(
+                                                                  ApprovalPageWidget
+                                                                      .routeName,
+                                                                  context
+                                                                      .mounted);
                                                             },
-                                                            text: 'Register',
+                                                            text: 'Signup',
                                                             options:
                                                                 FFButtonOptions(
                                                               width: double

@@ -164,8 +164,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                   width:
                                       MediaQuery.sizeOf(context).width * 0.82,
                                   decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
+                                    color: FlutterFlowTheme.of(context).textbox,
                                     boxShadow: [
                                       BoxShadow(
                                         blurRadius: 3.0,
@@ -344,6 +343,9 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                                     .bodyLarge
                                                                     .fontStyle,
                                                               ),
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .textboxTextHollow,
                                                               fontSize: 14.0,
                                                               letterSpacing:
                                                                   0.0,
@@ -424,6 +426,9 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                                   .bodyLarge
                                                                   .fontStyle,
                                                         ),
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .textboxTextActive,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FlutterFlowTheme.of(
@@ -450,7 +455,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                           icon: Icon(
                                             Icons.close,
                                             color: FlutterFlowTheme.of(context)
-                                                .primaryText,
+                                                .textboxTextHollow,
                                             size: 24.0,
                                           ),
                                           onPressed: () async {

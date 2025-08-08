@@ -5,7 +5,9 @@ import '/components/sidebar/sidebar_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'home_model.dart';
@@ -30,6 +32,13 @@ class _HomeWidgetState extends State<HomeWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => HomeModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if (valueOrDefault(currentUserDocument?.accStatus, '') == 'pending') {
+        context.goNamed(ApprovalAwaitWidget.routeName);
+      }
+    });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -412,8 +421,13 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                     .where(
                                                       'appre_date_day',
                                                       isEqualTo: dateTimeFormat(
-                                                          "d",
-                                                          getCurrentTimestamp),
+                                                        "d",
+                                                        getCurrentTimestamp,
+                                                        locale:
+                                                            FFLocalizations.of(
+                                                                    context)
+                                                                .languageCode,
+                                                      ),
                                                     ),
                                           ),
                                           builder: (context, snapshot) {

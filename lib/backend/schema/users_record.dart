@@ -65,6 +65,11 @@ class UsersRecord extends FirestoreRecord {
   String get assignment => _assignment ?? '';
   bool hasAssignment() => _assignment != null;
 
+  // "accStatus" field.
+  String? _accStatus;
+  String get accStatus => _accStatus ?? '';
+  bool hasAccStatus() => _accStatus != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -76,6 +81,7 @@ class UsersRecord extends FirestoreRecord {
     _phoneNumber = snapshotData['phone_number'] as String?;
     _status = snapshotData['status'] as bool?;
     _assignment = snapshotData['assignment'] as String?;
+    _accStatus = snapshotData['accStatus'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -122,6 +128,7 @@ Map<String, dynamic> createUsersRecordData({
   String? phoneNumber,
   bool? status,
   String? assignment,
+  String? accStatus,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -135,6 +142,7 @@ Map<String, dynamic> createUsersRecordData({
       'phone_number': phoneNumber,
       'status': status,
       'assignment': assignment,
+      'accStatus': accStatus,
     }.withoutNulls,
   );
 
@@ -155,7 +163,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.badgeNumber == e2?.badgeNumber &&
         e1?.phoneNumber == e2?.phoneNumber &&
         e1?.status == e2?.status &&
-        e1?.assignment == e2?.assignment;
+        e1?.assignment == e2?.assignment &&
+        e1?.accStatus == e2?.accStatus;
   }
 
   @override
@@ -169,7 +178,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.badgeNumber,
         e?.phoneNumber,
         e?.status,
-        e?.assignment
+        e?.assignment,
+        e?.accStatus
       ]);
 
   @override

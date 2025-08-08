@@ -158,8 +158,7 @@ class _SigninWidgetState extends State<SigninWidget>
                                 maxWidth: 570.0,
                               ),
                               decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
+                                color: FlutterFlowTheme.of(context).signinBg,
                                 boxShadow: [
                                   BoxShadow(
                                     blurRadius: 4.0,
@@ -283,6 +282,9 @@ class _SigninWidgetState extends State<SigninWidget>
                                                                 .labelLarge
                                                                 .fontStyle,
                                                       ),
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .textboxTextHollow,
                                                       letterSpacing: 0.0,
                                                       fontWeight:
                                                           FlutterFlowTheme.of(
@@ -297,9 +299,7 @@ class _SigninWidgetState extends State<SigninWidget>
                                                     ),
                                             enabledBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryBackground,
+                                                color: Color(0x00000000),
                                                 width: 2.0,
                                               ),
                                               borderRadius:
@@ -319,7 +319,7 @@ class _SigninWidgetState extends State<SigninWidget>
                                               borderSide: BorderSide(
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .alternate,
+                                                        .error,
                                                 width: 2.0,
                                               ),
                                               borderRadius:
@@ -330,7 +330,7 @@ class _SigninWidgetState extends State<SigninWidget>
                                               borderSide: BorderSide(
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .alternate,
+                                                        .error,
                                                 width: 2.0,
                                               ),
                                               borderRadius:
@@ -339,7 +339,7 @@ class _SigninWidgetState extends State<SigninWidget>
                                             filled: true,
                                             fillColor:
                                                 FlutterFlowTheme.of(context)
-                                                    .primaryBackground,
+                                                    .textbox,
                                           ),
                                           style: FlutterFlowTheme.of(context)
                                               .bodyLarge
@@ -356,6 +356,9 @@ class _SigninWidgetState extends State<SigninWidget>
                                                           .bodyLarge
                                                           .fontStyle,
                                                 ),
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .textboxTextActive,
                                                 letterSpacing: 0.0,
                                                 fontWeight:
                                                     FlutterFlowTheme.of(context)
@@ -403,6 +406,9 @@ class _SigninWidgetState extends State<SigninWidget>
                                                                 .labelLarge
                                                                 .fontStyle,
                                                       ),
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .textboxTextHollow,
                                                       letterSpacing: 0.0,
                                                       fontWeight:
                                                           FlutterFlowTheme.of(
@@ -417,9 +423,7 @@ class _SigninWidgetState extends State<SigninWidget>
                                                     ),
                                             enabledBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryBackground,
+                                                color: Color(0x00000000),
                                                 width: 2.0,
                                               ),
                                               borderRadius:
@@ -459,7 +463,7 @@ class _SigninWidgetState extends State<SigninWidget>
                                             filled: true,
                                             fillColor:
                                                 FlutterFlowTheme.of(context)
-                                                    .primaryBackground,
+                                                    .textbox,
                                             suffixIcon: InkWell(
                                               onTap: () => safeSetState(
                                                 () => _model
@@ -475,7 +479,7 @@ class _SigninWidgetState extends State<SigninWidget>
                                                         .visibility_off_outlined,
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .secondaryText,
+                                                        .textboxTextHollow,
                                                 size: 24.0,
                                               ),
                                             ),
@@ -495,6 +499,9 @@ class _SigninWidgetState extends State<SigninWidget>
                                                           .bodyLarge
                                                           .fontStyle,
                                                 ),
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .textboxTextActive,
                                                 letterSpacing: 0.0,
                                                 fontWeight:
                                                     FlutterFlowTheme.of(context)
@@ -531,7 +538,7 @@ class _SigninWidgetState extends State<SigninWidget>
                                             }
 
                                             context.goNamedAuth(
-                                                TicketWidget.routeName,
+                                                HomeWidget.routeName,
                                                 context.mounted);
 
                                             await currentUserReference!

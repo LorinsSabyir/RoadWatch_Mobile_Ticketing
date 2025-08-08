@@ -108,6 +108,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: TicketReceiptWidget.routeName,
           path: TicketReceiptWidget.routePath,
+          requireAuth: true,
           builder: (context, params) => TicketReceiptWidget(),
         ),
         FFRoute(
@@ -128,17 +129,30 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: SearchPageWidget.routeName,
           path: SearchPageWidget.routePath,
+          requireAuth: true,
           builder: (context, params) => SearchPageWidget(),
         ),
         FFRoute(
           name: ScanLicenseWidget.routeName,
           path: ScanLicenseWidget.routePath,
+          requireAuth: true,
           builder: (context, params) => ScanLicenseWidget(),
         ),
         FFRoute(
           name: SignupWidget.routeName,
           path: SignupWidget.routePath,
           builder: (context, params) => SignupWidget(),
+        ),
+        FFRoute(
+          name: ApprovalPageWidget.routeName,
+          path: ApprovalPageWidget.routePath,
+          requireAuth: true,
+          builder: (context, params) => ApprovalPageWidget(),
+        ),
+        FFRoute(
+          name: ApprovalAwaitWidget.routeName,
+          path: ApprovalAwaitWidget.routePath,
+          builder: (context, params) => ApprovalAwaitWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

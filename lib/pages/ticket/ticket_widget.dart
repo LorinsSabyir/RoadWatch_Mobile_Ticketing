@@ -171,7 +171,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                       height: 60.0,
                       child: Padding(
                         padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 32.0, 0.0, 0.0),
+                            EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
                         child: PageView(
                           physics: const NeverScrollableScrollPhysics(),
                           controller: _model.pageViewController ??=
@@ -319,6 +319,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                     .labelLarge
                                                                     .fontStyle,
                                                               ),
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .textboxTextHollow,
                                                               letterSpacing:
                                                                   0.0,
                                                               fontWeight:
@@ -362,7 +365,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .alternate,
+                                                                .error,
                                                         width: 1.0,
                                                       ),
                                                       borderRadius:
@@ -375,7 +378,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .alternate,
+                                                                .error,
                                                         width: 1.0,
                                                       ),
                                                       borderRadius:
@@ -383,9 +386,10 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                               12.0),
                                                     ),
                                                     filled: true,
-                                                    fillColor: FlutterFlowTheme
-                                                            .of(context)
-                                                        .secondaryBackground,
+                                                    fillColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .textbox,
                                                   ),
                                                   style: FlutterFlowTheme.of(
                                                           context)
@@ -404,6 +408,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                   .bodyLarge
                                                                   .fontStyle,
                                                         ),
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .textboxTextActive,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FlutterFlowTheme.of(
@@ -475,6 +482,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                     .labelLarge
                                                                     .fontStyle,
                                                               ),
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .textboxTextHollow,
                                                               letterSpacing:
                                                                   0.0,
                                                               fontWeight:
@@ -518,7 +528,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .alternate,
+                                                                .error,
                                                         width: 1.0,
                                                       ),
                                                       borderRadius:
@@ -531,7 +541,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .alternate,
+                                                                .error,
                                                         width: 1.0,
                                                       ),
                                                       borderRadius:
@@ -539,9 +549,10 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                               12.0),
                                                     ),
                                                     filled: true,
-                                                    fillColor: FlutterFlowTheme
-                                                            .of(context)
-                                                        .secondaryBackground,
+                                                    fillColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .textbox,
                                                   ),
                                                   style: FlutterFlowTheme.of(
                                                           context)
@@ -560,6 +571,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                   .bodyLarge
                                                                   .fontStyle,
                                                         ),
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .textboxTextActive,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FlutterFlowTheme.of(
@@ -631,6 +645,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                     .labelLarge
                                                                     .fontStyle,
                                                               ),
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .textboxTextHollow,
                                                               letterSpacing:
                                                                   0.0,
                                                               fontWeight:
@@ -674,7 +691,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .alternate,
+                                                                .error,
                                                         width: 1.0,
                                                       ),
                                                       borderRadius:
@@ -687,7 +704,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .alternate,
+                                                                .error,
                                                         width: 1.0,
                                                       ),
                                                       borderRadius:
@@ -695,9 +712,10 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                               12.0),
                                                     ),
                                                     filled: true,
-                                                    fillColor: FlutterFlowTheme
-                                                            .of(context)
-                                                        .secondaryBackground,
+                                                    fillColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .textbox,
                                                   ),
                                                   style: FlutterFlowTheme.of(
                                                           context)
@@ -716,6 +734,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                   .bodyLarge
                                                                   .fontStyle,
                                                         ),
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .textboxTextActive,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FlutterFlowTheme.of(
@@ -787,6 +808,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                     .labelLarge
                                                                     .fontStyle,
                                                               ),
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .textboxTextHollow,
                                                               letterSpacing:
                                                                   0.0,
                                                               fontWeight:
@@ -830,7 +854,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .alternate,
+                                                                .error,
                                                         width: 1.0,
                                                       ),
                                                       borderRadius:
@@ -843,7 +867,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .alternate,
+                                                                .error,
                                                         width: 1.0,
                                                       ),
                                                       borderRadius:
@@ -851,9 +875,10 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                               12.0),
                                                     ),
                                                     filled: true,
-                                                    fillColor: FlutterFlowTheme
-                                                            .of(context)
-                                                        .secondaryBackground,
+                                                    fillColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .textbox,
                                                   ),
                                                   style: FlutterFlowTheme.of(
                                                           context)
@@ -872,6 +897,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                   .bodyLarge
                                                                   .fontStyle,
                                                         ),
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .textboxTextActive,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FlutterFlowTheme.of(
@@ -943,6 +971,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                     .labelLarge
                                                                     .fontStyle,
                                                               ),
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .textboxTextHollow,
                                                               letterSpacing:
                                                                   0.0,
                                                               fontWeight:
@@ -986,7 +1017,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .alternate,
+                                                                .error,
                                                         width: 1.0,
                                                       ),
                                                       borderRadius:
@@ -999,7 +1030,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .alternate,
+                                                                .error,
                                                         width: 1.0,
                                                       ),
                                                       borderRadius:
@@ -1007,9 +1038,10 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                               12.0),
                                                     ),
                                                     filled: true,
-                                                    fillColor: FlutterFlowTheme
-                                                            .of(context)
-                                                        .secondaryBackground,
+                                                    fillColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .textbox,
                                                   ),
                                                   style: FlutterFlowTheme.of(
                                                           context)
@@ -1028,6 +1060,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                   .bodyLarge
                                                                   .fontStyle,
                                                         ),
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .textboxTextActive,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FlutterFlowTheme.of(
@@ -1100,6 +1135,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                     .labelLarge
                                                                     .fontStyle,
                                                               ),
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .textboxTextHollow,
                                                               letterSpacing:
                                                                   0.0,
                                                               fontWeight:
@@ -1143,7 +1181,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .alternate,
+                                                                .error,
                                                         width: 1.0,
                                                       ),
                                                       borderRadius:
@@ -1156,7 +1194,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .alternate,
+                                                                .error,
                                                         width: 1.0,
                                                       ),
                                                       borderRadius:
@@ -1164,9 +1202,10 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                               12.0),
                                                     ),
                                                     filled: true,
-                                                    fillColor: FlutterFlowTheme
-                                                            .of(context)
-                                                        .secondaryBackground,
+                                                    fillColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .textbox,
                                                   ),
                                                   style: FlutterFlowTheme.of(
                                                           context)
@@ -1185,6 +1224,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                   .bodyLarge
                                                                   .fontStyle,
                                                         ),
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .textboxTextActive,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FlutterFlowTheme.of(
@@ -1256,6 +1298,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                     .labelLarge
                                                                     .fontStyle,
                                                               ),
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .textboxTextHollow,
                                                               letterSpacing:
                                                                   0.0,
                                                               fontWeight:
@@ -1299,7 +1344,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .alternate,
+                                                                .error,
                                                         width: 1.0,
                                                       ),
                                                       borderRadius:
@@ -1312,7 +1357,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .alternate,
+                                                                .error,
                                                         width: 1.0,
                                                       ),
                                                       borderRadius:
@@ -1320,9 +1365,10 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                               12.0),
                                                     ),
                                                     filled: true,
-                                                    fillColor: FlutterFlowTheme
-                                                            .of(context)
-                                                        .secondaryBackground,
+                                                    fillColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .textbox,
                                                   ),
                                                   style: FlutterFlowTheme.of(
                                                           context)
@@ -1341,6 +1387,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                   .bodyLarge
                                                                   .fontStyle,
                                                         ),
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .textboxTextActive,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FlutterFlowTheme.of(
@@ -1561,6 +1610,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                     .labelLarge
                                                                     .fontStyle,
                                                               ),
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .textboxTextHollow,
                                                               letterSpacing:
                                                                   0.0,
                                                               fontWeight:
@@ -1604,7 +1656,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .alternate,
+                                                                .error,
                                                         width: 1.0,
                                                       ),
                                                       borderRadius:
@@ -1617,7 +1669,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .alternate,
+                                                                .error,
                                                         width: 1.0,
                                                       ),
                                                       borderRadius:
@@ -1625,9 +1677,10 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                               12.0),
                                                     ),
                                                     filled: true,
-                                                    fillColor: FlutterFlowTheme
-                                                            .of(context)
-                                                        .secondaryBackground,
+                                                    fillColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .textbox,
                                                   ),
                                                   style: FlutterFlowTheme.of(
                                                           context)
@@ -1646,6 +1699,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                   .bodyLarge
                                                                   .fontStyle,
                                                         ),
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .textboxTextActive,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FlutterFlowTheme.of(
@@ -1717,6 +1773,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                     .labelLarge
                                                                     .fontStyle,
                                                               ),
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .textboxTextHollow,
                                                               letterSpacing:
                                                                   0.0,
                                                               fontWeight:
@@ -1760,7 +1819,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .alternate,
+                                                                .error,
                                                         width: 1.0,
                                                       ),
                                                       borderRadius:
@@ -1773,7 +1832,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .alternate,
+                                                                .error,
                                                         width: 1.0,
                                                       ),
                                                       borderRadius:
@@ -1781,9 +1840,10 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                               12.0),
                                                     ),
                                                     filled: true,
-                                                    fillColor: FlutterFlowTheme
-                                                            .of(context)
-                                                        .secondaryBackground,
+                                                    fillColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .textbox,
                                                   ),
                                                   style: FlutterFlowTheme.of(
                                                           context)
@@ -1802,6 +1862,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                   .bodyLarge
                                                                   .fontStyle,
                                                         ),
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .textboxTextActive,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FlutterFlowTheme.of(
@@ -1890,10 +1953,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                 .bodyMedium
                                                                 .fontStyle,
                                                       ),
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .secondaryText,
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .textboxTextHollow,
                                                       fontSize: 15.0,
                                                       letterSpacing: 0.0,
                                                       fontWeight:
@@ -1913,12 +1975,12 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                       .keyboard_arrow_down_rounded,
                                                   color: FlutterFlowTheme.of(
                                                           context)
-                                                      .secondaryText,
+                                                      .textboxTextHollow,
                                                   size: 24.0,
                                                 ),
                                                 fillColor:
                                                     FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
+                                                        .textbox,
                                                 elevation: 0.0,
                                                 borderColor: Colors.transparent,
                                                 borderWidth: 0.0,
@@ -1985,6 +2047,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                     .labelLarge
                                                                     .fontStyle,
                                                               ),
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .textboxTextHollow,
                                                               letterSpacing:
                                                                   0.0,
                                                               fontWeight:
@@ -2028,7 +2093,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .alternate,
+                                                                .error,
                                                         width: 1.0,
                                                       ),
                                                       borderRadius:
@@ -2041,7 +2106,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .alternate,
+                                                                .error,
                                                         width: 1.0,
                                                       ),
                                                       borderRadius:
@@ -2049,9 +2114,10 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                               12.0),
                                                     ),
                                                     filled: true,
-                                                    fillColor: FlutterFlowTheme
-                                                            .of(context)
-                                                        .secondaryBackground,
+                                                    fillColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .textbox,
                                                   ),
                                                   style: FlutterFlowTheme.of(
                                                           context)
@@ -2070,6 +2136,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                   .bodyLarge
                                                                   .fontStyle,
                                                         ),
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .textboxTextActive,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FlutterFlowTheme.of(
@@ -2141,6 +2210,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                     .labelLarge
                                                                     .fontStyle,
                                                               ),
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .textboxTextHollow,
                                                               letterSpacing:
                                                                   0.0,
                                                               fontWeight:
@@ -2184,7 +2256,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .alternate,
+                                                                .error,
                                                         width: 1.0,
                                                       ),
                                                       borderRadius:
@@ -2197,7 +2269,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .alternate,
+                                                                .error,
                                                         width: 1.0,
                                                       ),
                                                       borderRadius:
@@ -2205,9 +2277,10 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                               12.0),
                                                     ),
                                                     filled: true,
-                                                    fillColor: FlutterFlowTheme
-                                                            .of(context)
-                                                        .secondaryBackground,
+                                                    fillColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .textbox,
                                                   ),
                                                   style: FlutterFlowTheme.of(
                                                           context)
@@ -2226,6 +2299,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                   .bodyLarge
                                                                   .fontStyle,
                                                         ),
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .textboxTextActive,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FlutterFlowTheme.of(

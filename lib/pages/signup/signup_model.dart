@@ -6,14 +6,10 @@ import 'package:flutter/material.dart';
 class SignupModel extends FlutterFlowModel<SignupWidget> {
   ///  State fields for stateful widgets in this page.
 
-  // State field(s) for PageView widget.
-  PageController? pageViewController;
-
-  int get pageViewCurrentIndex => pageViewController != null &&
-          pageViewController!.hasClients &&
-          pageViewController!.page != null
-      ? pageViewController!.page!.round()
-      : 0;
+  // State field(s) for emailAddress widget.
+  FocusNode? emailAddressFocusNode;
+  TextEditingController? emailAddressTextController;
+  String? Function(BuildContext, String?)? emailAddressTextControllerValidator;
   // State field(s) for firstName widget.
   FocusNode? firstNameFocusNode;
   TextEditingController? firstNameTextController;
@@ -30,30 +26,15 @@ class SignupModel extends FlutterFlowModel<SignupWidget> {
   FocusNode? phoneNumFocusNode;
   TextEditingController? phoneNumTextController;
   String? Function(BuildContext, String?)? phoneNumTextControllerValidator;
-  // State field(s) for emailAddress widget.
-  FocusNode? emailAddressFocusNode;
-  TextEditingController? emailAddressTextController;
-  String? Function(BuildContext, String?)? emailAddressTextControllerValidator;
-  // State field(s) for password widget.
-  FocusNode? passwordFocusNode;
-  TextEditingController? passwordTextController;
-  late bool passwordVisibility;
-  String? Function(BuildContext, String?)? passwordTextControllerValidator;
-  // State field(s) for confimPassword widget.
-  FocusNode? confimPasswordFocusNode;
-  TextEditingController? confimPasswordTextController;
-  late bool confimPasswordVisibility;
-  String? Function(BuildContext, String?)?
-      confimPasswordTextControllerValidator;
 
   @override
-  void initState(BuildContext context) {
-    passwordVisibility = false;
-    confimPasswordVisibility = false;
-  }
+  void initState(BuildContext context) {}
 
   @override
   void dispose() {
+    emailAddressFocusNode?.dispose();
+    emailAddressTextController?.dispose();
+
     firstNameFocusNode?.dispose();
     firstNameTextController?.dispose();
 
@@ -65,14 +46,5 @@ class SignupModel extends FlutterFlowModel<SignupWidget> {
 
     phoneNumFocusNode?.dispose();
     phoneNumTextController?.dispose();
-
-    emailAddressFocusNode?.dispose();
-    emailAddressTextController?.dispose();
-
-    passwordFocusNode?.dispose();
-    passwordTextController?.dispose();
-
-    confimPasswordFocusNode?.dispose();
-    confimPasswordTextController?.dispose();
   }
 }

@@ -41,8 +41,6 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
     });
 
     _model.searchbarTextController ??= TextEditingController();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

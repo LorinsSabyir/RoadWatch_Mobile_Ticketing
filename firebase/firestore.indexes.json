@@ -13,6 +13,24 @@
           "order": "ASCENDING"
         }
       ]
+    },
+    {
+      "collectionGroup": "adminNotif",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "enforcer_id",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "created_time",
+          "order": "DESCENDING"
+        },
+        {
+          "fieldPath": "edited_time",
+          "order": "DESCENDING"
+        }
+      ]
     }
   ]
 }

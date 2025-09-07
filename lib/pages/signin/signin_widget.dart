@@ -76,8 +76,6 @@ class _SigninWidgetState extends State<SigninWidget>
         ],
       ),
     });
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -108,7 +106,7 @@ class _SigninWidgetState extends State<SigninWidget>
                   gradient: LinearGradient(
                     colors: [
                       FlutterFlowTheme.of(context).primary,
-                      FlutterFlowTheme.of(context).secondaryBackground
+                      FlutterFlowTheme.of(context).primaryBackground
                     ],
                     stops: [0.0, 1.0],
                     begin: AlignmentDirectional(0.0, -1.0),
@@ -542,12 +540,6 @@ class _SigninWidgetState extends State<SigninWidget>
                                                         ?.accStatus,
                                                     '') ==
                                                 'pending') {
-                                              GoRouter.of(context)
-                                                  .prepareAuthEvent();
-                                              await authManager.signOut();
-                                              GoRouter.of(context)
-                                                  .clearRedirectLocation();
-
                                               context.goNamedAuth(
                                                   ApprovalAwaitWidget.routeName,
                                                   context.mounted);

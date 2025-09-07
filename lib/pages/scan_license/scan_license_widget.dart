@@ -27,8 +27,6 @@ class _ScanLicenseWidgetState extends State<ScanLicenseWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => ScanLicenseModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -179,7 +177,6 @@ class _ScanLicenseWidgetState extends State<ScanLicenseWidget> {
                       width: 400.0,
                       height: 600.0,
                       decoration: BoxDecoration(
-                        color: Color(0xFFD8D8D8),
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: Stack(
@@ -236,7 +233,7 @@ class _ScanLicenseWidgetState extends State<ScanLicenseWidget> {
                           ),
                           child: FFButtonWidget(
                             onPressed: () {
-                              print('Button pressed ...');
+                              print('scanButton pressed ...');
                             },
                             text: 'Scan',
                             options: FFButtonOptions(

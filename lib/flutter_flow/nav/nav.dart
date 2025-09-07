@@ -153,6 +153,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: ApprovalAwaitWidget.routeName,
           path: ApprovalAwaitWidget.routePath,
           builder: (context, params) => ApprovalAwaitWidget(),
+        ),
+        FFRoute(
+          name: ProfileEditWidget.routeName,
+          path: ProfileEditWidget.routePath,
+          requireAuth: true,
+          builder: (context, params) => ProfileEditWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

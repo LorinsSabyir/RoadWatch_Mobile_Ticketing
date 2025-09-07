@@ -1,8 +1,10 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/components/notification_card/notification_card_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'notification_model.dart';
 export 'notification_model.dart';
@@ -26,8 +28,6 @@ class _NotificationWidgetState extends State<NotificationWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => NotificationModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -146,23 +146,64 @@ class _NotificationWidgetState extends State<NotificationWidget> {
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          ListView(
-                            padding: EdgeInsets.zero,
-                            primary: false,
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            children: [
-                              wrapWithModel(
-                                model: _model.notificationCardModel,
-                                updateCallback: () => safeSetState(() {}),
-                                child: NotificationCardWidget(
-                                  title: 'Reasign location',
-                                  subtitle: 'Maryknoll crossing',
-                                  pupose: 'Dakop',
-                                  date: random_data.randomDate(),
-                                ),
-                              ),
-                            ].divide(SizedBox(height: 8.0)),
+                          StreamBuilder<List<AdminNotifRecord>>(
+                            stream: queryAdminNotifRecord(
+                              queryBuilder: (adminNotifRecord) =>
+                                  adminNotifRecord
+                                      .where(
+                                        'enforcer_id',
+                                        isEqualTo: currentUserReference,
+                                      )
+                                      .orderBy('created_time', descending: true)
+                                      .orderBy('edited_time', descending: true),
+                            ),
+                            builder: (context, snapshot) {
+                              // Customize what your widget looks like when it's loading.
+                              if (!snapshot.hasData) {
+                                return Center(
+                                  child: SizedBox(
+                                    width: 50.0,
+                                    height: 50.0,
+                                    child: SpinKitRing(
+                                      color:
+                                          FlutterFlowTheme.of(context).tertiary,
+                                      size: 50.0,
+                                    ),
+                                  ),
+                                );
+                              }
+                              List<AdminNotifRecord>
+                                  listViewAdminNotifRecordList = snapshot.data!;
+
+                              return ListView.separated(
+                                padding: EdgeInsets.zero,
+                                primary: false,
+                                shrinkWrap: true,
+                                scrollDirection: Axis.vertical,
+                                itemCount: listViewAdminNotifRecordList.length,
+                                separatorBuilder: (_, __) =>
+                                    SizedBox(height: 8.0),
+                                itemBuilder: (context, listViewIndex) {
+                                  final listViewAdminNotifRecord =
+                                      listViewAdminNotifRecordList[
+                                          listViewIndex];
+                                  return NotificationCardWidget(
+                                    key: Key(
+                                        'Key33e_${listViewIndex}_of_${listViewAdminNotifRecordList.length}'),
+                                    title: valueOrDefault<String>(
+                                      listViewAdminNotifRecord.title,
+                                      'Title',
+                                    ),
+                                    subtitle: valueOrDefault<String>(
+                                      listViewAdminNotifRecord.subtitle,
+                                      'Subtitle',
+                                    ),
+                                    pupose: 'Dakop',
+                                    date: listViewAdminNotifRecord.createdTime,
+                                  );
+                                },
+                              );
+                            },
                           ),
                         ],
                       ),

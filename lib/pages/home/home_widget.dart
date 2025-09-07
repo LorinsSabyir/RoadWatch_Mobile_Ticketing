@@ -37,10 +37,12 @@ class _HomeWidgetState extends State<HomeWidget> {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       if (valueOrDefault(currentUserDocument?.accStatus, '') == 'pending') {
         context.goNamed(ApprovalAwaitWidget.routeName);
+      } else {
+        await currentUserReference!.update(createUsersRecordData(
+          lastActive: getCurrentTimestamp,
+        ));
       }
     });
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -301,10 +303,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         .headlineMedium
                                         .override(
                                           font: GoogleFonts.urbanist(
-                                            fontWeight:
-                                                FlutterFlowTheme.of(context)
-                                                    .headlineMedium
-                                                    .fontWeight,
+                                            fontWeight: FontWeight.w600,
                                             fontStyle:
                                                 FlutterFlowTheme.of(context)
                                                     .headlineMedium
@@ -314,10 +313,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                               .primaryText,
                                           fontSize: 28.0,
                                           letterSpacing: 0.0,
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .headlineMedium
-                                                  .fontWeight,
+                                          fontWeight: FontWeight.w600,
                                           fontStyle:
                                               FlutterFlowTheme.of(context)
                                                   .headlineMedium
@@ -375,7 +371,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 16.0, 0.0, 0.0, 0.0),
                             child: Container(
                               decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context).tertiary,
+                                color: FlutterFlowTheme.of(context).primary,
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
                               child: Padding(
@@ -446,11 +442,18 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                 ),
                                               );
                                             }
-                                            int textCount = snapshot.data!;
+                                            int ticketsTodayCount =
+                                                snapshot.data!;
 
                                             return Text(
                                               valueOrDefault<String>(
-                                                textCount.toString(),
+                                                formatNumber(
+                                                  ticketsTodayCount,
+                                                  formatType:
+                                                      FormatType.decimal,
+                                                  decimalType:
+                                                      DecimalType.periodDecimal,
+                                                ),
                                                 '0',
                                               ),
                                               style: FlutterFlowTheme.of(
@@ -495,7 +498,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 0.0, 0.0, 16.0, 0.0),
                             child: Container(
                               decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context).tertiary,
+                                color: FlutterFlowTheme.of(context).primary,
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
                               child: Padding(
@@ -553,11 +556,18 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                 ),
                                               );
                                             }
-                                            int textCount = snapshot.data!;
+                                            int totalTicketsCount =
+                                                snapshot.data!;
 
                                             return Text(
                                               valueOrDefault<String>(
-                                                textCount.toString(),
+                                                formatNumber(
+                                                  totalTicketsCount,
+                                                  formatType:
+                                                      FormatType.decimal,
+                                                  decimalType:
+                                                      DecimalType.periodDecimal,
+                                                ),
                                                 '0',
                                               ),
                                               style: FlutterFlowTheme.of(
@@ -600,7 +610,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                     Container(
                       width: MediaQuery.sizeOf(context).width * 1.0,
                       decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).accent1,
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: Column(
@@ -643,6 +652,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 subtitle: 'Assignment',
                                 pupose: 'Dakop',
                                 date: getCurrentTimestamp,
+                                titleColor:
+                                    FlutterFlowTheme.of(context).primary,
                               ),
                             ),
                           ),
@@ -657,6 +668,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 subtitle: 'Assignment',
                                 pupose: 'Dakop',
                                 date: getCurrentTimestamp,
+                                titleColor:
+                                    FlutterFlowTheme.of(context).success,
                               ),
                             ),
                           ),
@@ -671,6 +684,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 subtitle: 'Assignment',
                                 pupose: 'Convoy',
                                 date: getCurrentTimestamp,
+                                titleColor:
+                                    FlutterFlowTheme.of(context).success,
                               ),
                             ),
                           ),
@@ -685,6 +700,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 subtitle: 'Assignment',
                                 pupose: 'Convoy',
                                 date: getCurrentTimestamp,
+                                titleColor:
+                                    FlutterFlowTheme.of(context).success,
                               ),
                             ),
                           ),
@@ -699,6 +716,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 subtitle: 'Assignment',
                                 pupose: 'Convoy',
                                 date: getCurrentTimestamp,
+                                titleColor:
+                                    FlutterFlowTheme.of(context).success,
                               ),
                             ),
                           ),
@@ -707,7 +726,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                             .around(SizedBox(height: 16.0)),
                       ),
                     ),
-                  ].divide(SizedBox(height: 32.0)),
+                  ].divide(SizedBox(height: 16.0)),
                 ),
               ),
             ],

@@ -60,15 +60,30 @@ class UsersRecord extends FirestoreRecord {
   bool get status => _status ?? false;
   bool hasStatus() => _status != null;
 
+  // "accStatus" field.
+  String? _accStatus;
+  String get accStatus => _accStatus ?? '';
+  bool hasAccStatus() => _accStatus != null;
+
   // "assignment" field.
   String? _assignment;
   String get assignment => _assignment ?? '';
   bool hasAssignment() => _assignment != null;
 
-  // "accStatus" field.
-  String? _accStatus;
-  String get accStatus => _accStatus ?? '';
-  bool hasAccStatus() => _accStatus != null;
+  // "lastActive" field.
+  DateTime? _lastActive;
+  DateTime? get lastActive => _lastActive;
+  bool hasLastActive() => _lastActive != null;
+
+  // "last_name" field.
+  String? _lastName;
+  String get lastName => _lastName ?? '';
+  bool hasLastName() => _lastName != null;
+
+  // "edited_time" field.
+  DateTime? _editedTime;
+  DateTime? get editedTime => _editedTime;
+  bool hasEditedTime() => _editedTime != null;
 
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
@@ -80,8 +95,11 @@ class UsersRecord extends FirestoreRecord {
     _badgeNumber = snapshotData['badge_number'] as String?;
     _phoneNumber = snapshotData['phone_number'] as String?;
     _status = snapshotData['status'] as bool?;
-    _assignment = snapshotData['assignment'] as String?;
     _accStatus = snapshotData['accStatus'] as String?;
+    _assignment = snapshotData['assignment'] as String?;
+    _lastActive = snapshotData['lastActive'] as DateTime?;
+    _lastName = snapshotData['last_name'] as String?;
+    _editedTime = snapshotData['edited_time'] as DateTime?;
   }
 
   static CollectionReference get collection =>
@@ -127,8 +145,11 @@ Map<String, dynamic> createUsersRecordData({
   String? badgeNumber,
   String? phoneNumber,
   bool? status,
-  String? assignment,
   String? accStatus,
+  String? assignment,
+  DateTime? lastActive,
+  String? lastName,
+  DateTime? editedTime,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -141,8 +162,11 @@ Map<String, dynamic> createUsersRecordData({
       'badge_number': badgeNumber,
       'phone_number': phoneNumber,
       'status': status,
-      'assignment': assignment,
       'accStatus': accStatus,
+      'assignment': assignment,
+      'lastActive': lastActive,
+      'last_name': lastName,
+      'edited_time': editedTime,
     }.withoutNulls,
   );
 
@@ -163,8 +187,11 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.badgeNumber == e2?.badgeNumber &&
         e1?.phoneNumber == e2?.phoneNumber &&
         e1?.status == e2?.status &&
+        e1?.accStatus == e2?.accStatus &&
         e1?.assignment == e2?.assignment &&
-        e1?.accStatus == e2?.accStatus;
+        e1?.lastActive == e2?.lastActive &&
+        e1?.lastName == e2?.lastName &&
+        e1?.editedTime == e2?.editedTime;
   }
 
   @override
@@ -178,8 +205,11 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.badgeNumber,
         e?.phoneNumber,
         e?.status,
+        e?.accStatus,
         e?.assignment,
-        e?.accStatus
+        e?.lastActive,
+        e?.lastName,
+        e?.editedTime
       ]);
 
   @override

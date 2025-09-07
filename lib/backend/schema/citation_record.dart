@@ -141,6 +141,16 @@ class CitationRecord extends FirestoreRecord {
   String get appreDateYear => _appreDateYear ?? '';
   bool hasAppreDateYear() => _appreDateYear != null;
 
+  // "created_time" field.
+  DateTime? _createdTime;
+  DateTime? get createdTime => _createdTime;
+  bool hasCreatedTime() => _createdTime != null;
+
+  // "edited_time" field.
+  DateTime? _editedTime;
+  DateTime? get editedTime => _editedTime;
+  bool hasEditedTime() => _editedTime != null;
+
   void _initializeFields() {
     _citationNumber = snapshotData['citation_number'] as String?;
     _confUnitSerialNum = snapshotData['conf_unit_serial_num'] as String?;
@@ -169,6 +179,8 @@ class CitationRecord extends FirestoreRecord {
     _appreDateMonth = snapshotData['appre_date_month'] as String?;
     _appreDateDay = snapshotData['appre_date_day'] as String?;
     _appreDateYear = snapshotData['appre_date_year'] as String?;
+    _createdTime = snapshotData['created_time'] as DateTime?;
+    _editedTime = snapshotData['edited_time'] as DateTime?;
   }
 
   static CollectionReference get collection =>
@@ -229,6 +241,8 @@ Map<String, dynamic> createCitationRecordData({
   String? appreDateMonth,
   String? appreDateDay,
   String? appreDateYear,
+  DateTime? createdTime,
+  DateTime? editedTime,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -255,6 +269,8 @@ Map<String, dynamic> createCitationRecordData({
       'appre_date_month': appreDateMonth,
       'appre_date_day': appreDateDay,
       'appre_date_year': appreDateYear,
+      'created_time': createdTime,
+      'edited_time': editedTime,
     }.withoutNulls,
   );
 
@@ -291,7 +307,9 @@ class CitationRecordDocumentEquality implements Equality<CitationRecord> {
         listEquality.equals(e1?.violationSection, e2?.violationSection) &&
         e1?.appreDateMonth == e2?.appreDateMonth &&
         e1?.appreDateDay == e2?.appreDateDay &&
-        e1?.appreDateYear == e2?.appreDateYear;
+        e1?.appreDateYear == e2?.appreDateYear &&
+        e1?.createdTime == e2?.createdTime &&
+        e1?.editedTime == e2?.editedTime;
   }
 
   @override
@@ -320,7 +338,9 @@ class CitationRecordDocumentEquality implements Equality<CitationRecord> {
         e?.violationSection,
         e?.appreDateMonth,
         e?.appreDateDay,
-        e?.appreDateYear
+        e?.appreDateYear,
+        e?.createdTime,
+        e?.editedTime
       ]);
 
   @override

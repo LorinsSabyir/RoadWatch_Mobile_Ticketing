@@ -15,7 +15,7 @@ export 'ticket_receipt_model.dart';
 class TicketReceiptWidget extends StatefulWidget {
   const TicketReceiptWidget({super.key});
 
-  static String routeName = 'Ticket_Receipt';
+  static String routeName = 'TicketReceipt';
   static String routePath = '/ticketReceipt';
 
   @override
@@ -31,8 +31,6 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => TicketReceiptModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -123,12 +121,25 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                                           .fontStyle,
                                     ),
                               ),
-                              Text(
-                                'Purok Pinya, New Visayas',
-                                style: FlutterFlowTheme.of(context)
-                                    .displaySmall
-                                    .override(
-                                      font: GoogleFonts.urbanist(
+                              AuthUserStreamWidget(
+                                builder: (context) => Text(
+                                  valueOrDefault(
+                                      currentUserDocument?.assignment, ''),
+                                  style: FlutterFlowTheme.of(context)
+                                      .displaySmall
+                                      .override(
+                                        font: GoogleFonts.urbanist(
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .displaySmall
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .displaySmall
+                                                  .fontStyle,
+                                        ),
+                                        fontSize: 16.0,
+                                        letterSpacing: 0.0,
                                         fontWeight: FlutterFlowTheme.of(context)
                                             .displaySmall
                                             .fontWeight,
@@ -136,15 +147,7 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                                             .displaySmall
                                             .fontStyle,
                                       ),
-                                      fontSize: 16.0,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .displaySmall
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .displaySmall
-                                          .fontStyle,
-                                    ),
+                                ),
                               ),
                             ],
                           ),

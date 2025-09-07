@@ -34,8 +34,6 @@ class _ViolationCardWidgetState extends State<ViolationCardWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => ViolationCardModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

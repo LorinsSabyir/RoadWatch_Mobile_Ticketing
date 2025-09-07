@@ -33,40 +33,38 @@ class _TicketWidgetState extends State<TicketWidget> {
     super.initState();
     _model = createModel(context, () => TicketModel());
 
-    _model.violatorNameCreateTextController ??= TextEditingController();
-    _model.violatorNameCreateFocusNode ??= FocusNode();
+    _model.violatorNameTextController ??= TextEditingController();
+    _model.violatorNameFocusNode ??= FocusNode();
 
-    _model.violatorContactNumCreateTextController ??= TextEditingController();
-    _model.violatorContactNumCreateFocusNode ??= FocusNode();
+    _model.violatorContactNumTextController ??= TextEditingController();
+    _model.violatorContactNumFocusNode ??= FocusNode();
 
-    _model.violatorLicenseNumCreateTextController ??= TextEditingController();
-    _model.violatorLicenseNumCreateFocusNode ??= FocusNode();
+    _model.violatorLicenseNumTextController ??= TextEditingController();
+    _model.violatorLicenseNumFocusNode ??= FocusNode();
 
-    _model.violatorAddPrkCreateTextController ??= TextEditingController();
-    _model.violatorAddPrkCreateFocusNode ??= FocusNode();
+    _model.violatorAddPrkTextController ??= TextEditingController();
+    _model.violatorAddPrkFocusNode ??= FocusNode();
 
-    _model.violatorAddBrgyCreateTextController ??= TextEditingController();
-    _model.violatorAddBrgyCreateFocusNode ??= FocusNode();
+    _model.violatorAddBrgyTextController ??= TextEditingController();
+    _model.violatorAddBrgyFocusNode ??= FocusNode();
 
-    _model.violatorAddCityCreateTextController ??= TextEditingController();
-    _model.violatorAddCityCreateFocusNode ??= FocusNode();
+    _model.violatorAddCityTextController ??= TextEditingController();
+    _model.violatorAddCityFocusNode ??= FocusNode();
 
-    _model.violatorAddProvinceCreateTextController ??= TextEditingController();
-    _model.violatorAddProvinceCreateFocusNode ??= FocusNode();
+    _model.violatorAddProvinceTextController ??= TextEditingController();
+    _model.violatorAddProvinceFocusNode ??= FocusNode();
 
-    _model.vehiclePlateNumCreateTextController ??= TextEditingController();
-    _model.vehiclePlateNumCreateFocusNode ??= FocusNode();
+    _model.vehiclePlateNumTextController ??= TextEditingController();
+    _model.vehiclePlateNumFocusNode ??= FocusNode();
 
-    _model.vehicleSerialNumCreateTextController ??= TextEditingController();
-    _model.vehicleSerialNumCreateFocusNode ??= FocusNode();
+    _model.vehicleSerialNumTextController ??= TextEditingController();
+    _model.vehicleSerialNumFocusNode ??= FocusNode();
 
-    _model.vehicleBrandCreateTextController ??= TextEditingController();
-    _model.vehicleBrandCreateFocusNode ??= FocusNode();
+    _model.vehicleBrandTextController ??= TextEditingController();
+    _model.vehicleBrandFocusNode ??= FocusNode();
 
-    _model.vehicleModelCreateTextController ??= TextEditingController();
-    _model.vehicleModelCreateFocusNode ??= FocusNode();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
+    _model.vehicleModelTextController ??= TextEditingController();
+    _model.vehicleModelFocusNode ??= FocusNode();
   }
 
   @override
@@ -252,7 +250,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                 Icons.qr_code_scanner,
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
+                                                        .primaryText,
                                                 size: 24.0,
                                               ),
                                               onPressed: () async {
@@ -273,9 +271,6 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                       .width *
                                                   1.0,
                                               decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
                                                 boxShadow: [
                                                   BoxShadow(
                                                     blurRadius: 3.0,
@@ -296,9 +291,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         1.0,
                                                 child: TextFormField(
                                                   controller: _model
-                                                      .violatorNameCreateTextController,
+                                                      .violatorNameTextController,
                                                   focusNode: _model
-                                                      .violatorNameCreateFocusNode,
+                                                      .violatorNameFocusNode,
                                                   autofocus: true,
                                                   obscureText: false,
                                                   decoration: InputDecoration(
@@ -424,7 +419,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                 .fontStyle,
                                                       ),
                                                   validator: _model
-                                                      .violatorNameCreateTextControllerValidator
+                                                      .violatorNameTextControllerValidator
                                                       .asValidator(context),
                                                 ),
                                               ),
@@ -436,9 +431,6 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                       .width *
                                                   1.0,
                                               decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
                                                 boxShadow: [
                                                   BoxShadow(
                                                     blurRadius: 3.0,
@@ -459,9 +451,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         1.0,
                                                 child: TextFormField(
                                                   controller: _model
-                                                      .violatorContactNumCreateTextController,
+                                                      .violatorContactNumTextController,
                                                   focusNode: _model
-                                                      .violatorContactNumCreateFocusNode,
+                                                      .violatorContactNumFocusNode,
                                                   autofocus: false,
                                                   obscureText: false,
                                                   decoration: InputDecoration(
@@ -587,7 +579,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                 .fontStyle,
                                                       ),
                                                   validator: _model
-                                                      .violatorContactNumCreateTextControllerValidator
+                                                      .violatorContactNumTextControllerValidator
                                                       .asValidator(context),
                                                 ),
                                               ),
@@ -599,9 +591,6 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                       .width *
                                                   1.0,
                                               decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
                                                 boxShadow: [
                                                   BoxShadow(
                                                     blurRadius: 3.0,
@@ -622,9 +611,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         1.0,
                                                 child: TextFormField(
                                                   controller: _model
-                                                      .violatorLicenseNumCreateTextController,
+                                                      .violatorLicenseNumTextController,
                                                   focusNode: _model
-                                                      .violatorLicenseNumCreateFocusNode,
+                                                      .violatorLicenseNumFocusNode,
                                                   autofocus: false,
                                                   obscureText: false,
                                                   decoration: InputDecoration(
@@ -750,7 +739,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                 .fontStyle,
                                                       ),
                                                   validator: _model
-                                                      .violatorLicenseNumCreateTextControllerValidator
+                                                      .violatorLicenseNumTextControllerValidator
                                                       .asValidator(context),
                                                 ),
                                               ),
@@ -762,9 +751,6 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                       .width *
                                                   1.0,
                                               decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
                                                 boxShadow: [
                                                   BoxShadow(
                                                     blurRadius: 3.0,
@@ -785,9 +771,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         1.0,
                                                 child: TextFormField(
                                                   controller: _model
-                                                      .violatorAddPrkCreateTextController,
+                                                      .violatorAddPrkTextController,
                                                   focusNode: _model
-                                                      .violatorAddPrkCreateFocusNode,
+                                                      .violatorAddPrkFocusNode,
                                                   autofocus: false,
                                                   obscureText: false,
                                                   decoration: InputDecoration(
@@ -913,7 +899,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                 .fontStyle,
                                                       ),
                                                   validator: _model
-                                                      .violatorAddPrkCreateTextControllerValidator
+                                                      .violatorAddPrkTextControllerValidator
                                                       .asValidator(context),
                                                 ),
                                               ),
@@ -925,9 +911,6 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                       .width *
                                                   1.0,
                                               decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
                                                 boxShadow: [
                                                   BoxShadow(
                                                     blurRadius: 3.0,
@@ -948,9 +931,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         1.0,
                                                 child: TextFormField(
                                                   controller: _model
-                                                      .violatorAddBrgyCreateTextController,
+                                                      .violatorAddBrgyTextController,
                                                   focusNode: _model
-                                                      .violatorAddBrgyCreateFocusNode,
+                                                      .violatorAddBrgyFocusNode,
                                                   autofocus: false,
                                                   obscureText: false,
                                                   decoration: InputDecoration(
@@ -1076,7 +1059,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                 .fontStyle,
                                                       ),
                                                   validator: _model
-                                                      .violatorAddBrgyCreateTextControllerValidator
+                                                      .violatorAddBrgyTextControllerValidator
                                                       .asValidator(context),
                                                 ),
                                               ),
@@ -1088,9 +1071,6 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                       .width *
                                                   1.0,
                                               decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
                                                 boxShadow: [
                                                   BoxShadow(
                                                     blurRadius: 3.0,
@@ -1111,9 +1091,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         1.0,
                                                 child: TextFormField(
                                                   controller: _model
-                                                      .violatorAddCityCreateTextController,
+                                                      .violatorAddCityTextController,
                                                   focusNode: _model
-                                                      .violatorAddCityCreateFocusNode,
+                                                      .violatorAddCityFocusNode,
                                                   autofocus: false,
                                                   obscureText: false,
                                                   decoration: InputDecoration(
@@ -1240,7 +1220,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                 .fontStyle,
                                                       ),
                                                   validator: _model
-                                                      .violatorAddCityCreateTextControllerValidator
+                                                      .violatorAddCityTextControllerValidator
                                                       .asValidator(context),
                                                 ),
                                               ),
@@ -1252,9 +1232,6 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                       .width *
                                                   1.0,
                                               decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
                                                 boxShadow: [
                                                   BoxShadow(
                                                     blurRadius: 3.0,
@@ -1275,9 +1252,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         1.0,
                                                 child: TextFormField(
                                                   controller: _model
-                                                      .violatorAddProvinceCreateTextController,
+                                                      .violatorAddProvinceTextController,
                                                   focusNode: _model
-                                                      .violatorAddProvinceCreateFocusNode,
+                                                      .violatorAddProvinceFocusNode,
                                                   autofocus: false,
                                                   obscureText: false,
                                                   decoration: InputDecoration(
@@ -1403,7 +1380,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                 .fontStyle,
                                                       ),
                                                   validator: _model
-                                                      .violatorAddProvinceCreateTextControllerValidator
+                                                      .violatorAddProvinceTextControllerValidator
                                                       .asValidator(context),
                                                 ),
                                               ),
@@ -1425,26 +1402,26 @@ class _TicketWidgetState extends State<TicketWidget> {
                                         FFButtonWidget(
                                           onPressed: () async {
                                             FFAppState().violatorName = _model
-                                                .violatorNameCreateTextController
+                                                .violatorNameTextController
                                                 .text;
                                             FFAppState().violatorContact = _model
-                                                .violatorContactNumCreateTextController
+                                                .violatorContactNumTextController
                                                 .text;
                                             FFAppState().violatorLicenseNum = _model
-                                                .violatorLicenseNumCreateTextController
+                                                .violatorLicenseNumTextController
                                                 .text;
                                             FFAppState().violatorAddProvince =
                                                 _model
-                                                    .violatorAddProvinceCreateTextController
+                                                    .violatorAddProvinceTextController
                                                     .text;
                                             FFAppState().violatorAddCity = _model
-                                                .violatorAddCityCreateTextController
+                                                .violatorAddCityTextController
                                                 .text;
                                             FFAppState().violatorAddBrgy = _model
-                                                .violatorAddBrgyCreateTextController
+                                                .violatorAddBrgyTextController
                                                 .text;
                                             FFAppState().violatorAddPrk = _model
-                                                .violatorAddPrkCreateTextController
+                                                .violatorAddPrkTextController
                                                 .text;
                                             safeSetState(() {});
                                             await _model.pageViewController
@@ -1483,9 +1460,10 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                 .titleSmall
                                                                 .fontStyle,
                                                       ),
-                                                      color: FlutterFlowTheme
-                                                              .of(context)
-                                                          .secondaryBackground,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText,
                                                       letterSpacing: 0.0,
                                                       fontWeight:
                                                           FlutterFlowTheme.of(
@@ -1564,9 +1542,6 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                       .width *
                                                   1.0,
                                               decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
                                                 boxShadow: [
                                                   BoxShadow(
                                                     blurRadius: 3.0,
@@ -1587,9 +1562,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         1.0,
                                                 child: TextFormField(
                                                   controller: _model
-                                                      .vehiclePlateNumCreateTextController,
+                                                      .vehiclePlateNumTextController,
                                                   focusNode: _model
-                                                      .vehiclePlateNumCreateFocusNode,
+                                                      .vehiclePlateNumFocusNode,
                                                   autofocus: false,
                                                   obscureText: false,
                                                   decoration: InputDecoration(
@@ -1715,7 +1690,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                 .fontStyle,
                                                       ),
                                                   validator: _model
-                                                      .vehiclePlateNumCreateTextControllerValidator
+                                                      .vehiclePlateNumTextControllerValidator
                                                       .asValidator(context),
                                                 ),
                                               ),
@@ -1727,9 +1702,6 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                       .width *
                                                   1.0,
                                               decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
                                                 boxShadow: [
                                                   BoxShadow(
                                                     blurRadius: 3.0,
@@ -1750,9 +1722,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         1.0,
                                                 child: TextFormField(
                                                   controller: _model
-                                                      .vehicleSerialNumCreateTextController,
+                                                      .vehicleSerialNumTextController,
                                                   focusNode: _model
-                                                      .vehicleSerialNumCreateFocusNode,
+                                                      .vehicleSerialNumFocusNode,
                                                   autofocus: false,
                                                   obscureText: false,
                                                   decoration: InputDecoration(
@@ -1878,7 +1850,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                 .fontStyle,
                                                       ),
                                                   validator: _model
-                                                      .vehicleSerialNumCreateTextControllerValidator
+                                                      .vehicleSerialNumTextControllerValidator
                                                       .asValidator(context),
                                                 ),
                                               ),
@@ -1890,9 +1862,6 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                       .width *
                                                   1.0,
                                               decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
                                                 boxShadow: [
                                                   BoxShadow(
                                                     blurRadius: 3.0,
@@ -1909,9 +1878,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                               child:
                                                   FlutterFlowDropDown<String>(
                                                 controller: _model
-                                                        .vehicleTypeCreateValueController ??=
+                                                        .vehicleTypeValueController ??=
                                                     FormFieldController<String>(
-                                                  _model.vehicleTypeCreateValue ??=
+                                                  _model.vehicleTypeValue ??=
                                                       '',
                                                 ),
                                                 options: List<String>.from([
@@ -1930,7 +1899,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                 ],
                                                 onChanged: (val) =>
                                                     safeSetState(() => _model
-                                                            .vehicleTypeCreateValue =
+                                                            .vehicleTypeValue =
                                                         val),
                                                 width:
                                                     MediaQuery.sizeOf(context)
@@ -2001,9 +1970,6 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                       .width *
                                                   1.0,
                                               decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
                                                 boxShadow: [
                                                   BoxShadow(
                                                     blurRadius: 3.0,
@@ -2024,9 +1990,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         1.0,
                                                 child: TextFormField(
                                                   controller: _model
-                                                      .vehicleBrandCreateTextController,
+                                                      .vehicleBrandTextController,
                                                   focusNode: _model
-                                                      .vehicleBrandCreateFocusNode,
+                                                      .vehicleBrandFocusNode,
                                                   autofocus: false,
                                                   obscureText: false,
                                                   decoration: InputDecoration(
@@ -2152,7 +2118,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                 .fontStyle,
                                                       ),
                                                   validator: _model
-                                                      .vehicleBrandCreateTextControllerValidator
+                                                      .vehicleBrandTextControllerValidator
                                                       .asValidator(context),
                                                 ),
                                               ),
@@ -2164,9 +2130,6 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                       .width *
                                                   1.0,
                                               decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
                                                 boxShadow: [
                                                   BoxShadow(
                                                     blurRadius: 3.0,
@@ -2187,9 +2150,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         1.0,
                                                 child: TextFormField(
                                                   controller: _model
-                                                      .vehicleModelCreateTextController,
+                                                      .vehicleModelTextController,
                                                   focusNode: _model
-                                                      .vehicleModelCreateFocusNode,
+                                                      .vehicleModelFocusNode,
                                                   autofocus: false,
                                                   obscureText: false,
                                                   decoration: InputDecoration(
@@ -2315,7 +2278,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                 .fontStyle,
                                                       ),
                                                   validator: _model
-                                                      .vehicleModelCreateTextControllerValidator
+                                                      .vehicleModelTextControllerValidator
                                                       .asValidator(context),
                                                 ),
                                               ),
@@ -2401,15 +2364,15 @@ class _TicketWidgetState extends State<TicketWidget> {
                                           child: FFButtonWidget(
                                             onPressed: () async {
                                               FFAppState().vehiclePlateNum = _model
-                                                  .vehiclePlateNumCreateTextController
+                                                  .vehiclePlateNumTextController
                                                   .text;
-                                              FFAppState().vehicleType = _model
-                                                  .vehicleTypeCreateValue!;
+                                              FFAppState().vehicleType =
+                                                  _model.vehicleTypeValue!;
                                               FFAppState().vehicleBrand = _model
-                                                  .vehicleBrandCreateTextController
+                                                  .vehicleBrandTextController
                                                   .text;
                                               FFAppState().vehicleModel = _model
-                                                  .vehicleModelCreateTextController
+                                                  .vehicleModelTextController
                                                   .text;
                                               FFAppState().vehicleSerialNum =
                                                   FFAppState().vehicleSerialNum;
@@ -2450,7 +2413,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                     ),
                                                     color: FlutterFlowTheme.of(
                                                             context)
-                                                        .secondaryBackground,
+                                                        .primaryText,
                                                     letterSpacing: 0.0,
                                                     fontWeight:
                                                         FlutterFlowTheme.of(
@@ -2546,7 +2509,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                           icon: Icon(
                                             Icons.search,
                                             color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
+                                                .primaryText,
                                             size: 24.0,
                                           ),
                                           onPressed: () async {
@@ -2572,8 +2535,8 @@ class _TicketWidgetState extends State<TicketWidget> {
                                           ChipData('Tricycle'),
                                           ChipData('PUV')
                                         ],
-                                        onChanged: (val) => safeSetState(() =>
-                                            _model.choiceChipsValues = val),
+                                        onChanged: (val) => safeSetState(
+                                            () => _model.filterValues = val),
                                         selectedChipStyle: ChipStyle(
                                           backgroundColor:
                                               FlutterFlowTheme.of(context)
@@ -2667,10 +2630,10 @@ class _TicketWidgetState extends State<TicketWidget> {
                                         rowSpacing: 4.0,
                                         multiselect: true,
                                         initialized:
-                                            _model.choiceChipsValues != null,
+                                            _model.filterValues != null,
                                         alignment: WrapAlignment.start,
                                         controller: _model
-                                                .choiceChipsValueController ??=
+                                                .filterValueController ??=
                                             FormFieldController<List<String>>(
                                           ['All'],
                                         ),
@@ -2942,9 +2905,10 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                 .titleSmall
                                                                 .fontStyle,
                                                       ),
-                                                      color: FlutterFlowTheme
-                                                              .of(context)
-                                                          .secondaryBackground,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText,
                                                       letterSpacing: 0.0,
                                                       fontWeight:
                                                           FlutterFlowTheme.of(

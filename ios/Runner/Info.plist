@@ -59,6 +59,8 @@
     <string>Allow photo library access to upload a license photo and extract credentials.</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
     <string>Allow bluetooth access to print ticket.</string>
+	<key>PermissionGroupNotification</key>
+    <string>Allow notifications to receive important updates and alerts in real time.</string>
 
 
 

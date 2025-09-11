@@ -70,11 +70,6 @@ class UsersRecord extends FirestoreRecord {
   String get assignment => _assignment ?? '';
   bool hasAssignment() => _assignment != null;
 
-  // "lastActive" field.
-  DateTime? _lastActive;
-  DateTime? get lastActive => _lastActive;
-  bool hasLastActive() => _lastActive != null;
-
   // "last_name" field.
   String? _lastName;
   String get lastName => _lastName ?? '';
@@ -84,6 +79,16 @@ class UsersRecord extends FirestoreRecord {
   DateTime? _editedTime;
   DateTime? get editedTime => _editedTime;
   bool hasEditedTime() => _editedTime != null;
+
+  // "last_active" field.
+  DateTime? _lastActive;
+  DateTime? get lastActive => _lastActive;
+  bool hasLastActive() => _lastActive != null;
+
+  // "gender" field.
+  String? _gender;
+  String get gender => _gender ?? '';
+  bool hasGender() => _gender != null;
 
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
@@ -97,9 +102,10 @@ class UsersRecord extends FirestoreRecord {
     _status = snapshotData['status'] as bool?;
     _accStatus = snapshotData['accStatus'] as String?;
     _assignment = snapshotData['assignment'] as String?;
-    _lastActive = snapshotData['lastActive'] as DateTime?;
     _lastName = snapshotData['last_name'] as String?;
     _editedTime = snapshotData['edited_time'] as DateTime?;
+    _lastActive = snapshotData['last_active'] as DateTime?;
+    _gender = snapshotData['gender'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -147,9 +153,10 @@ Map<String, dynamic> createUsersRecordData({
   bool? status,
   String? accStatus,
   String? assignment,
-  DateTime? lastActive,
   String? lastName,
   DateTime? editedTime,
+  DateTime? lastActive,
+  String? gender,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -164,9 +171,10 @@ Map<String, dynamic> createUsersRecordData({
       'status': status,
       'accStatus': accStatus,
       'assignment': assignment,
-      'lastActive': lastActive,
       'last_name': lastName,
       'edited_time': editedTime,
+      'last_active': lastActive,
+      'gender': gender,
     }.withoutNulls,
   );
 
@@ -189,9 +197,10 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.status == e2?.status &&
         e1?.accStatus == e2?.accStatus &&
         e1?.assignment == e2?.assignment &&
-        e1?.lastActive == e2?.lastActive &&
         e1?.lastName == e2?.lastName &&
-        e1?.editedTime == e2?.editedTime;
+        e1?.editedTime == e2?.editedTime &&
+        e1?.lastActive == e2?.lastActive &&
+        e1?.gender == e2?.gender;
   }
 
   @override
@@ -207,9 +216,10 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.status,
         e?.accStatus,
         e?.assignment,
-        e?.lastActive,
         e?.lastName,
-        e?.editedTime
+        e?.editedTime,
+        e?.lastActive,
+        e?.gender
       ]);
 
   @override

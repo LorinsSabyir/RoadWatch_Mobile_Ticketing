@@ -1,4 +1,5 @@
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/form_field_controller.dart';
 import '/index.dart';
 import 'signup_widget.dart' show SignupWidget;
 import 'package:flutter/material.dart';
@@ -26,9 +27,25 @@ class SignupModel extends FlutterFlowModel<SignupWidget> {
   FocusNode? phoneNumFocusNode;
   TextEditingController? phoneNumTextController;
   String? Function(BuildContext, String?)? phoneNumTextControllerValidator;
+  // State field(s) for gender widget.
+  FormFieldController<String>? genderValueController;
+  // State field(s) for password widget.
+  FocusNode? passwordFocusNode;
+  TextEditingController? passwordTextController;
+  late bool passwordVisibility;
+  String? Function(BuildContext, String?)? passwordTextControllerValidator;
+  // State field(s) for confirmPassword widget.
+  FocusNode? confirmPasswordFocusNode;
+  TextEditingController? confirmPasswordTextController;
+  late bool confirmPasswordVisibility;
+  String? Function(BuildContext, String?)?
+      confirmPasswordTextControllerValidator;
 
   @override
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+    passwordVisibility = false;
+    confirmPasswordVisibility = false;
+  }
 
   @override
   void dispose() {
@@ -46,5 +63,14 @@ class SignupModel extends FlutterFlowModel<SignupWidget> {
 
     phoneNumFocusNode?.dispose();
     phoneNumTextController?.dispose();
+
+    passwordFocusNode?.dispose();
+    passwordTextController?.dispose();
+
+    confirmPasswordFocusNode?.dispose();
+    confirmPasswordTextController?.dispose();
   }
+
+  /// Additional helper methods.
+  String? get genderValue => genderValueController?.value;
 }

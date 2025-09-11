@@ -535,11 +535,16 @@ class _SigninWidgetState extends State<SigninWidget>
                                               return;
                                             }
 
-                                            if (valueOrDefault(
-                                                    currentUserDocument
-                                                        ?.accStatus,
-                                                    '') ==
-                                                'pending') {
+                                            if ((valueOrDefault(
+                                                        currentUserDocument
+                                                            ?.accStatus,
+                                                        '') ==
+                                                    'pending') &&
+                                                (valueOrDefault(
+                                                        currentUserDocument
+                                                            ?.accStatus,
+                                                        '') !=
+                                                    'active')) {
                                               context.goNamedAuth(
                                                   ApprovalAwaitWidget.routeName,
                                                   context.mounted);

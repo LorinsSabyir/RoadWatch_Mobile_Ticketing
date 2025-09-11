@@ -238,7 +238,7 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                                     ),
                               ),
                               Text(
-                                FFAppState().violatorName,
+                                FFAppState().violatorAddName,
                                 style: FlutterFlowTheme.of(context)
                                     .displaySmall
                                     .override(
@@ -289,7 +289,7 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                                     ),
                               ),
                               Text(
-                                FFAppState().violatorLicenseNum,
+                                FFAppState().violatorAddLicenseNum,
                                 style: FlutterFlowTheme.of(context)
                                     .displaySmall
                                     .override(
@@ -340,7 +340,7 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                                     ),
                               ),
                               Text(
-                                FFAppState().vehiclePlateNum,
+                                FFAppState().vehicleAddPlateNum,
                                 style: FlutterFlowTheme.of(context)
                                     .displaySmall
                                     .override(
@@ -420,10 +420,10 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                                           'Keyvnb_${selectedItem}',
                                         ),
                                         title: FFAppState()
-                                            .selectedViolation
+                                            .selectedViolationName
                                             .elementAtOrNull(selectedIndex)!,
                                         subtitle: FFAppState()
-                                            .selectedViolationSub
+                                            .selectedViolationSection
                                             .elementAtOrNull(selectedIndex),
                                         fine: formatNumber(
                                           FFAppState()
@@ -597,22 +597,22 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                         onPressed: () async {
                           await CitationRecord.collection.doc().set({
                             ...createCitationRecordData(
-                              confUnitSerialNum: FFAppState().vehicleSerialNum,
-                              confUnitPlateNum: FFAppState().vehiclePlateNum,
-                              confUnitBrand: FFAppState().vehicleBrand,
-                              confUnitModel: FFAppState().vehicleModel,
+                              confUnitSerialNum:
+                                  FFAppState().vehicleAddSerialNum,
+                              confUnitPlateNum: FFAppState().vehicleAddPlateNum,
+                              confUnitBrand: FFAppState().vehicleAddBrand,
+                              confUnitModel: FFAppState().vehicleAddModel,
                               appreTime: dateTimeFormat(
                                 "jm",
                                 getCurrentTimestamp,
                                 locale:
                                     FFLocalizations.of(context).languageCode,
                               ),
-                              apprePlace: FFAppState().apprePlace,
-                              violatorName: FFAppState().violatorName,
+                              apprePlace: FFAppState().appreAddPlace,
+                              violatorName: FFAppState().violatorAddName,
                               appreEnforcer: currentUserDisplayName,
-                              violationTotalFine: functions.totalFines(
-                                  FFAppState().selectedViolationFine.toList()),
-                              confUnitDesc: '',
+                              confUnitDesc:
+                                  FFAppState().violationTotalFine.toString(),
                               violatorAddressProvince:
                                   FFAppState().violatorAddProvince,
                               violatorAddressCity: FFAppState().violatorAddCity,
@@ -620,7 +620,7 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                               violatorAddressPrk: FFAppState().violatorAddPrk,
                               appreEnforcerId: currentUserUid,
                               violatorLicenseNum:
-                                  FFAppState().violatorLicenseNum,
+                                  FFAppState().violatorAddLicenseNum,
                               appreDateMonth: dateTimeFormat(
                                 "MMMM",
                                 getCurrentTimestamp,
@@ -639,27 +639,34 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                                 locale:
                                     FFLocalizations.of(context).languageCode,
                               ),
+                              citationNumber: '',
+                              createdTime: getCurrentTimestamp,
+                              violationTotalFine:
+                                  FFAppState().violationTotalFine,
                             ),
                             ...mapToFirestore(
                               {
-                                'violation': FFAppState().selectedViolationSub,
                                 'violation_section':
-                                    FFAppState().selectedViolation,
+                                    FFAppState().selectedViolationSection,
+                                'violation_fine':
+                                    FFAppState().selectedViolationFine,
+                                'violation_name':
+                                    FFAppState().selectedViolationName,
                               },
                             ),
                           });
-                          FFAppState().selectedViolation = [];
+                          FFAppState().selectedViolationName = [];
                           FFAppState().selectedViolationFine = [];
-                          FFAppState().selectedViolationSub = [];
-                          FFAppState().violatorName = '';
-                          FFAppState().violatorContact = '';
-                          FFAppState().violatorLicenseNum = '';
-                          FFAppState().vehiclePlateNum = '';
-                          FFAppState().vehicleType = '';
-                          FFAppState().vehicleBrand = '';
-                          FFAppState().vehicleModel = '';
-                          FFAppState().apprePlace = '';
-                          FFAppState().vehicleSerialNum = '';
+                          FFAppState().selectedViolationSection = [];
+                          FFAppState().violatorAddName = '';
+                          FFAppState().violatorAddContact = '';
+                          FFAppState().violatorAddLicenseNum = '';
+                          FFAppState().vehicleAddPlateNum = '';
+                          FFAppState().vehicleAddType = '';
+                          FFAppState().vehicleAddBrand = '';
+                          FFAppState().vehicleAddModel = '';
+                          FFAppState().appreAddPlace = '';
+                          FFAppState().vehicleAddSerialNum = '';
                           FFAppState().violationTotalFine = 0.0;
                           FFAppState().citationNumber = 0;
                           FFAppState().citationRef = [];

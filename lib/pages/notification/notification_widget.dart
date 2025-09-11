@@ -187,19 +187,29 @@ class _NotificationWidgetState extends State<NotificationWidget> {
                                   final listViewAdminNotifRecord =
                                       listViewAdminNotifRecordList[
                                           listViewIndex];
-                                  return NotificationCardWidget(
-                                    key: Key(
-                                        'Key33e_${listViewIndex}_of_${listViewAdminNotifRecordList.length}'),
-                                    title: valueOrDefault<String>(
-                                      listViewAdminNotifRecord.title,
-                                      'Title',
+                                  return wrapWithModel(
+                                    model:
+                                        _model.notificationCardModels.getModel(
+                                      listViewIndex.toString(),
+                                      listViewIndex,
                                     ),
-                                    subtitle: valueOrDefault<String>(
-                                      listViewAdminNotifRecord.subtitle,
-                                      'Subtitle',
+                                    updateCallback: () => safeSetState(() {}),
+                                    child: NotificationCardWidget(
+                                      key: Key(
+                                        'Key33e_${listViewIndex.toString()}',
+                                      ),
+                                      title: valueOrDefault<String>(
+                                        listViewAdminNotifRecord.title,
+                                        'Title',
+                                      ),
+                                      subtitle: valueOrDefault<String>(
+                                        listViewAdminNotifRecord.subtitle,
+                                        'Subtitle',
+                                      ),
+                                      pupose: 'Dakop',
+                                      date:
+                                          listViewAdminNotifRecord.createdTime,
                                     ),
-                                    pupose: 'Dakop',
-                                    date: listViewAdminNotifRecord.createdTime,
                                   );
                                 },
                               );

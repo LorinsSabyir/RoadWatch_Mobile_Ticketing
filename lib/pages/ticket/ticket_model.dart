@@ -20,6 +20,9 @@ class TicketModel extends FlutterFlowModel<TicketWidget> {
   FocusNode? violatorNameFocusNode;
   TextEditingController? violatorNameTextController;
   String? Function(BuildContext, String?)? violatorNameTextControllerValidator;
+  // State field(s) for violatorGender widget.
+  String? violatorGenderValue;
+  FormFieldController<String>? violatorGenderValueController;
   // State field(s) for violatorContactNum widget.
   FocusNode? violatorContactNumFocusNode;
   TextEditingController? violatorContactNumTextController;
@@ -30,26 +33,23 @@ class TicketModel extends FlutterFlowModel<TicketWidget> {
   TextEditingController? violatorLicenseNumTextController;
   String? Function(BuildContext, String?)?
       violatorLicenseNumTextControllerValidator;
-  // State field(s) for violatorAddPrk widget.
-  FocusNode? violatorAddPrkFocusNode;
-  TextEditingController? violatorAddPrkTextController;
+  // State field(s) for violatorPrk widget.
+  FocusNode? violatorPrkFocusNode;
+  TextEditingController? violatorPrkTextController;
+  String? Function(BuildContext, String?)? violatorPrkTextControllerValidator;
+  // State field(s) for violatorBrgy widget.
+  FocusNode? violatorBrgyFocusNode;
+  TextEditingController? violatorBrgyTextController;
+  String? Function(BuildContext, String?)? violatorBrgyTextControllerValidator;
+  // State field(s) for violatorCity widget.
+  FocusNode? violatorCityFocusNode;
+  TextEditingController? violatorCityTextController;
+  String? Function(BuildContext, String?)? violatorCityTextControllerValidator;
+  // State field(s) for violatorProvince widget.
+  FocusNode? violatorProvinceFocusNode;
+  TextEditingController? violatorProvinceTextController;
   String? Function(BuildContext, String?)?
-      violatorAddPrkTextControllerValidator;
-  // State field(s) for violatorAddBrgy widget.
-  FocusNode? violatorAddBrgyFocusNode;
-  TextEditingController? violatorAddBrgyTextController;
-  String? Function(BuildContext, String?)?
-      violatorAddBrgyTextControllerValidator;
-  // State field(s) for violatorAddCity widget.
-  FocusNode? violatorAddCityFocusNode;
-  TextEditingController? violatorAddCityTextController;
-  String? Function(BuildContext, String?)?
-      violatorAddCityTextControllerValidator;
-  // State field(s) for violatorAddProvince widget.
-  FocusNode? violatorAddProvinceFocusNode;
-  TextEditingController? violatorAddProvinceTextController;
-  String? Function(BuildContext, String?)?
-      violatorAddProvinceTextControllerValidator;
+      violatorProvinceTextControllerValidator;
   // State field(s) for vehiclePlateNum widget.
   FocusNode? vehiclePlateNumFocusNode;
   TextEditingController? vehiclePlateNumTextController;
@@ -71,10 +71,6 @@ class TicketModel extends FlutterFlowModel<TicketWidget> {
   FocusNode? vehicleModelFocusNode;
   TextEditingController? vehicleModelTextController;
   String? Function(BuildContext, String?)? vehicleModelTextControllerValidator;
-  // State field(s) for filter widget.
-  FormFieldController<List<String>>? filterValueController;
-  List<String>? get filterValues => filterValueController?.value;
-  set filterValues(List<String>? val) => filterValueController?.value = val;
   // Models for ViolationCard dynamic component.
   late FlutterFlowDynamicModels<ViolationCardModel> violationCardModels;
 
@@ -94,17 +90,17 @@ class TicketModel extends FlutterFlowModel<TicketWidget> {
     violatorLicenseNumFocusNode?.dispose();
     violatorLicenseNumTextController?.dispose();
 
-    violatorAddPrkFocusNode?.dispose();
-    violatorAddPrkTextController?.dispose();
+    violatorPrkFocusNode?.dispose();
+    violatorPrkTextController?.dispose();
 
-    violatorAddBrgyFocusNode?.dispose();
-    violatorAddBrgyTextController?.dispose();
+    violatorBrgyFocusNode?.dispose();
+    violatorBrgyTextController?.dispose();
 
-    violatorAddCityFocusNode?.dispose();
-    violatorAddCityTextController?.dispose();
+    violatorCityFocusNode?.dispose();
+    violatorCityTextController?.dispose();
 
-    violatorAddProvinceFocusNode?.dispose();
-    violatorAddProvinceTextController?.dispose();
+    violatorProvinceFocusNode?.dispose();
+    violatorProvinceTextController?.dispose();
 
     vehiclePlateNumFocusNode?.dispose();
     vehiclePlateNumTextController?.dispose();

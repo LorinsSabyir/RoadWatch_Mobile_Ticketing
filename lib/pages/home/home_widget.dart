@@ -325,7 +325,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                             ),
                             Builder(
                               builder: (context) => FlutterFlowIconButton(
-                                borderRadius: 8.0,
+                                borderRadius: 50.0,
                                 buttonSize: 40.0,
                                 icon: Icon(
                                   Icons.menu,
@@ -403,76 +403,59 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           8.0, 0.0, 0.0, 0.0),
-                                      child: AuthUserStreamWidget(
-                                        builder: (context) =>
-                                            FutureBuilder<int>(
-                                          future: queryCitationRecordCount(
-                                            queryBuilder: (citationRecord) =>
-                                                citationRecord
-                                                    .where(
-                                                      'appre_enforcer',
-                                                      isEqualTo:
-                                                          currentUserDisplayName,
-                                                    )
-                                                    .where(
-                                                      'appre_date_day',
-                                                      isEqualTo: dateTimeFormat(
-                                                        "d",
-                                                        getCurrentTimestamp,
-                                                        locale:
-                                                            FFLocalizations.of(
-                                                                    context)
-                                                                .languageCode,
-                                                      ),
-                                                    ),
-                                          ),
-                                          builder: (context, snapshot) {
-                                            // Customize what your widget looks like when it's loading.
-                                            if (!snapshot.hasData) {
-                                              return Center(
-                                                child: SizedBox(
-                                                  width: 50.0,
-                                                  height: 50.0,
-                                                  child: SpinKitRing(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .tertiary,
-                                                    size: 50.0,
-                                                  ),
-                                                ),
-                                              );
-                                            }
-                                            int ticketsTodayCount =
-                                                snapshot.data!;
-
-                                            return Text(
-                                              valueOrDefault<String>(
-                                                formatNumber(
-                                                  ticketsTodayCount,
-                                                  formatType:
-                                                      FormatType.decimal,
-                                                  decimalType:
-                                                      DecimalType.periodDecimal,
-                                                ),
-                                                '0',
-                                              ),
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .headlineLarge
-                                                  .override(
-                                                    font: GoogleFonts.urbanist(
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontStyle:
-                                                          FlutterFlowTheme.of(
+                                      child: FutureBuilder<int>(
+                                        future: queryCitationRecordCount(
+                                          queryBuilder: (citationRecord) =>
+                                              citationRecord
+                                                  .where(
+                                                    'appre_enforcer_id',
+                                                    isEqualTo: currentUserUid,
+                                                  )
+                                                  .where(
+                                                    'appre_date_day',
+                                                    isEqualTo: dateTimeFormat(
+                                                      "d",
+                                                      getCurrentTimestamp,
+                                                      locale:
+                                                          FFLocalizations.of(
                                                                   context)
-                                                              .headlineLarge
-                                                              .fontStyle,
+                                                              .languageCode,
                                                     ),
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryText,
-                                                    letterSpacing: 0.0,
+                                                  ),
+                                        ),
+                                        builder: (context, snapshot) {
+                                          // Customize what your widget looks like when it's loading.
+                                          if (!snapshot.hasData) {
+                                            return Center(
+                                              child: SizedBox(
+                                                width: 50.0,
+                                                height: 50.0,
+                                                child: SpinKitRing(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .tertiary,
+                                                  size: 50.0,
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                          int ticketsTodayCount =
+                                              snapshot.data!;
+
+                                          return Text(
+                                            valueOrDefault<String>(
+                                              formatNumber(
+                                                ticketsTodayCount,
+                                                formatType: FormatType.decimal,
+                                                decimalType:
+                                                    DecimalType.periodDecimal,
+                                              ),
+                                              '0',
+                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .headlineLarge
+                                                .override(
+                                                  font: GoogleFonts.urbanist(
                                                     fontWeight: FontWeight.w600,
                                                     fontStyle:
                                                         FlutterFlowTheme.of(
@@ -480,9 +463,19 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                             .headlineLarge
                                                             .fontStyle,
                                                   ),
-                                            );
-                                          },
-                                        ),
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .headlineLarge
+                                                          .fontStyle,
+                                                ),
+                                          );
+                                        },
                                       ),
                                     ),
                                   ],
@@ -530,63 +523,47 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           8.0, 0.0, 0.0, 0.0),
-                                      child: AuthUserStreamWidget(
-                                        builder: (context) =>
-                                            FutureBuilder<int>(
-                                          future: queryCitationRecordCount(
-                                            queryBuilder: (citationRecord) =>
-                                                citationRecord.where(
-                                              'appre_enforcer',
-                                              isEqualTo: currentUserDisplayName,
-                                            ),
+                                      child: FutureBuilder<int>(
+                                        future: queryCitationRecordCount(
+                                          queryBuilder: (citationRecord) =>
+                                              citationRecord.where(
+                                            'appre_enforcer_id',
+                                            isEqualTo: currentUserUid,
                                           ),
-                                          builder: (context, snapshot) {
-                                            // Customize what your widget looks like when it's loading.
-                                            if (!snapshot.hasData) {
-                                              return Center(
-                                                child: SizedBox(
-                                                  width: 50.0,
-                                                  height: 50.0,
-                                                  child: SpinKitRing(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .tertiary,
-                                                    size: 50.0,
-                                                  ),
+                                        ),
+                                        builder: (context, snapshot) {
+                                          // Customize what your widget looks like when it's loading.
+                                          if (!snapshot.hasData) {
+                                            return Center(
+                                              child: SizedBox(
+                                                width: 50.0,
+                                                height: 50.0,
+                                                child: SpinKitRing(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .tertiary,
+                                                  size: 50.0,
                                                 ),
-                                              );
-                                            }
-                                            int totalTicketsCount =
-                                                snapshot.data!;
-
-                                            return Text(
-                                              valueOrDefault<String>(
-                                                formatNumber(
-                                                  totalTicketsCount,
-                                                  formatType:
-                                                      FormatType.decimal,
-                                                  decimalType:
-                                                      DecimalType.periodDecimal,
-                                                ),
-                                                '0',
                                               ),
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .headlineLarge
-                                                  .override(
-                                                    font: GoogleFonts.urbanist(
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .headlineLarge
-                                                              .fontStyle,
-                                                    ),
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryText,
-                                                    letterSpacing: 0.0,
+                                            );
+                                          }
+                                          int totalTicketsCount =
+                                              snapshot.data!;
+
+                                          return Text(
+                                            valueOrDefault<String>(
+                                              formatNumber(
+                                                totalTicketsCount,
+                                                formatType: FormatType.decimal,
+                                                decimalType:
+                                                    DecimalType.periodDecimal,
+                                              ),
+                                              '0',
+                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .headlineLarge
+                                                .override(
+                                                  font: GoogleFonts.urbanist(
                                                     fontWeight: FontWeight.w600,
                                                     fontStyle:
                                                         FlutterFlowTheme.of(
@@ -594,9 +571,19 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                             .headlineLarge
                                                             .fontStyle,
                                                   ),
-                                            );
-                                          },
-                                        ),
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .headlineLarge
+                                                          .fontStyle,
+                                                ),
+                                          );
+                                        },
                                       ),
                                     ),
                                   ],

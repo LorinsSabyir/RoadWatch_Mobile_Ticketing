@@ -124,7 +124,8 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                               AuthUserStreamWidget(
                                 builder: (context) => Text(
                                   valueOrDefault(
-                                      currentUserDocument?.assignment, ''),
+                                      currentUserDocument?.assignmentLandmark,
+                                      ''),
                                   style: FlutterFlowTheme.of(context)
                                       .displaySmall
                                       .override(
@@ -643,6 +644,8 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                               createdTime: getCurrentTimestamp,
                               violationTotalFine:
                                   FFAppState().violationTotalFine,
+                              violatorGender: FFAppState().violatorAddGender,
+                              confUnitType: FFAppState().vehicleAddType,
                             ),
                             ...mapToFirestore(
                               {
@@ -674,6 +677,7 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                           FFAppState().violatorAddCity = '';
                           FFAppState().violatorAddBrgy = '';
                           FFAppState().violatorAddPrk = '';
+                          FFAppState().violatorAddGender = '';
                           FFAppState().update(() {});
 
                           context.goNamed(TicketWidget.routeName);

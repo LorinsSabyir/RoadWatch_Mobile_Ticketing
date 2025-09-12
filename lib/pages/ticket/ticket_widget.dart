@@ -450,8 +450,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                     FormFieldController<String>(
                                                         null),
                                                 options: [
-                                                  'Class 2 Vehicle (bus, light truck)',
-                                                  'Class 3 Vehicle (trailer trucks, large truck)'
+                                                  'Male',
+                                                  'Female',
+                                                  'Others'
                                                 ],
                                                 onChanged: (val) =>
                                                     safeSetState(() => _model

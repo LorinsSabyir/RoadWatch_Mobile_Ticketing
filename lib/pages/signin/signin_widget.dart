@@ -545,18 +545,29 @@ class _SigninWidgetState extends State<SigninWidget>
                                                             ?.accStatus,
                                                         '') !=
                                                     'active')) {
+                                              await currentUserReference!
+                                                  .update(createUsersRecordData(
+                                                status: false,
+                                                lastActive: getCurrentTimestamp,
+                                              ));
+                                              GoRouter.of(context)
+                                                  .prepareAuthEvent();
+                                              await authManager.signOut();
+                                              GoRouter.of(context)
+                                                  .clearRedirectLocation();
+
                                               context.goNamedAuth(
                                                   ApprovalAwaitWidget.routeName,
                                                   context.mounted);
                                             } else {
-                                              context.goNamedAuth(
-                                                  HomeWidget.routeName,
-                                                  context.mounted);
-
                                               await currentUserReference!
                                                   .update(createUsersRecordData(
                                                 status: true,
                                               ));
+
+                                              context.goNamedAuth(
+                                                  HomeWidget.routeName,
+                                                  context.mounted);
                                             }
                                           },
                                           text: 'Sign In',

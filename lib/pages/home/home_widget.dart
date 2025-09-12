@@ -1,7 +1,7 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/notification_card/notification_card_widget.dart';
-import '/components/sidebar/sidebar_widget.dart';
+import '/components/user_option/user_option_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -35,7 +35,8 @@ class _HomeWidgetState extends State<HomeWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      if (valueOrDefault(currentUserDocument?.accStatus, '') == 'pending') {
+      if ((valueOrDefault(currentUserDocument?.accStatus, '') == 'pending') &&
+          (valueOrDefault(currentUserDocument?.accStatus, '') != 'active')) {
         context.goNamed(ApprovalAwaitWidget.routeName);
       } else {
         await currentUserReference!.update(createUsersRecordData(
@@ -345,11 +346,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                             AlignmentDirectional(0.0, 0.0)
                                                 .resolve(
                                                     Directionality.of(context)),
-                                        child: Container(
-                                          height: 250.0,
-                                          width: 320.0,
-                                          child: SidebarWidget(),
-                                        ),
+                                        child: UserOptionWidget(),
                                       );
                                     },
                                   );

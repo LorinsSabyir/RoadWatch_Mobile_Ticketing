@@ -146,7 +146,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: ApprovalPageWidget.routeName,
           path: ApprovalPageWidget.routePath,
-          requireAuth: true,
           builder: (context, params) => ApprovalPageWidget(),
         ),
         FFRoute(

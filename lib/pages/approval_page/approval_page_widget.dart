@@ -1,5 +1,3 @@
-import '/auth/firebase_auth/auth_util.dart';
-import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -243,22 +241,10 @@ class _ApprovalPageWidgetState extends State<ApprovalPageWidget>
                                                   0.0, 24.0, 0.0, 0.0),
                                           child: FFButtonWidget(
                                             onPressed: () async {
-                                              await currentUserReference!
-                                                  .update(createUsersRecordData(
-                                                status: false,
-                                                lastActive: getCurrentTimestamp,
-                                              ));
-                                              GoRouter.of(context)
-                                                  .prepareAuthEvent();
-                                              await authManager.signOut();
-                                              GoRouter.of(context)
-                                                  .clearRedirectLocation();
-
-                                              context.goNamedAuth(
-                                                  SigninWidget.routeName,
-                                                  context.mounted);
+                                              context.goNamed(
+                                                  SigninWidget.routeName);
                                             },
-                                            text: 'Logout',
+                                            text: ' Back to Sign in',
                                             options: FFButtonOptions(
                                               width: double.infinity,
                                               height: 44.0,

@@ -1275,17 +1275,6 @@ class _SignupWidgetState extends State<SignupWidget>
                                       ),
                                     FFButtonWidget(
                                       onPressed: () async {
-                                        await AdminNotifRecord.collection
-                                            .doc()
-                                            .set(createAdminNotifRecordData(
-                                              title:
-                                                  'Enforcer Creation Attempt!',
-                                              type: 'system',
-                                              status: 'pending',
-                                              enforcerId: currentUserReference,
-                                              notifType: 'warning',
-                                              createdTime: getCurrentTimestamp,
-                                            ));
                                         GoRouter.of(context).prepareAuthEvent();
                                         if (_model
                                                 .passwordTextController.text !=
@@ -1317,8 +1306,6 @@ class _SignupWidgetState extends State<SignupWidget>
                                             .doc(user.uid)
                                             .update({
                                           ...createUsersRecordData(
-                                            displayName: _model
-                                                .firstNameTextController.text,
                                             email: _model
                                                 .emailAddressTextController
                                                 .text,
@@ -1327,12 +1314,14 @@ class _SignupWidgetState extends State<SignupWidget>
                                             password: 'user123',
                                             phoneNumber: _model
                                                 .phoneNumTextController.text,
-                                            accStatus: 'pending',
                                             status: false,
                                             lastName: _model
                                                 .lastNameTextController.text,
                                             lastActive: getCurrentTimestamp,
                                             gender: _model.genderValue,
+                                            accStatus: 'pending',
+                                            displayName: _model
+                                                .firstNameTextController.text,
                                           ),
                                           ...mapToFirestore(
                                             {
@@ -1341,6 +1330,31 @@ class _SignupWidgetState extends State<SignupWidget>
                                             },
                                           ),
                                         });
+
+                                        await AdminNotifRecord.collection
+                                            .doc()
+                                            .set(createAdminNotifRecordData(
+                                              title:
+                                                  'Enforcer Creation Attempt!',
+                                              type: 'System',
+                                              status: 'pending',
+                                              enforcerId: currentUserReference,
+                                              notifType: 'warning',
+                                              createdTime: getCurrentTimestamp,
+                                              subtitle: valueOrDefault(
+                                                  currentUserDocument?.lastName,
+                                                  ''),
+                                            ));
+
+                                        await currentUserReference!
+                                            .update(createUsersRecordData(
+                                          status: false,
+                                          lastActive: getCurrentTimestamp,
+                                        ));
+                                        GoRouter.of(context).prepareAuthEvent();
+                                        await authManager.signOut();
+                                        GoRouter.of(context)
+                                            .clearRedirectLocation();
 
                                         context.goNamedAuth(
                                             ApprovalPageWidget.routeName,
@@ -1483,7 +1497,7 @@ class _SignupWidgetState extends State<SignupWidget>
                         ).animateOnPageLoad(
                             animationsMap['containerOnPageLoadAnimation']!),
                       ),
-                    ].divide(SizedBox(height: 16.0)),
+                    ].divide(SizedBox(height: 6.0)),
                   ),
                 ),
               ),

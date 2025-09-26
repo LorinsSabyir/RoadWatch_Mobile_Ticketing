@@ -604,7 +604,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 16.0, 0.0, 0.0, 0.0),
                             child: Text(
-                              'Notification Today',
+                              'Assignment Notification',
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
@@ -625,85 +625,81 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   ),
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 16.0, 0.0),
-                            child: wrapWithModel(
-                              model: _model.notificationCardModel1,
-                              updateCallback: () => safeSetState(() {}),
-                              child: NotificationCardWidget(
-                                title: 'DNSC',
-                                subtitle: 'Assignment',
-                                pupose: 'Dakop',
-                                date: getCurrentTimestamp,
-                                titleColor:
-                                    FlutterFlowTheme.of(context).primary,
-                              ),
+                          StreamBuilder<List<AdminNotifRecord>>(
+                            stream: queryAdminNotifRecord(
+                              queryBuilder: (adminNotifRecord) =>
+                                  adminNotifRecord
+                                      .where(
+                                        'enforcer_id',
+                                        isEqualTo: currentUserReference,
+                                      )
+                                      .where(
+                                        'notif_type',
+                                        isEqualTo: 'assignment',
+                                      )
+                                      .orderBy('created_time',
+                                          descending: true),
                             ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 16.0, 0.0),
-                            child: wrapWithModel(
-                              model: _model.notificationCardModel2,
-                              updateCallback: () => safeSetState(() {}),
-                              child: NotificationCardWidget(
-                                title: 'Palengke daan',
-                                subtitle: 'Assignment',
-                                pupose: 'Dakop',
-                                date: getCurrentTimestamp,
-                                titleColor:
-                                    FlutterFlowTheme.of(context).success,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 16.0, 0.0),
-                            child: wrapWithModel(
-                              model: _model.notificationCardModel3,
-                              updateCallback: () => safeSetState(() {}),
-                              child: NotificationCardWidget(
-                                title: 'Lubong',
-                                subtitle: 'Assignment',
-                                pupose: 'Convoy',
-                                date: getCurrentTimestamp,
-                                titleColor:
-                                    FlutterFlowTheme.of(context).success,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 16.0, 0.0),
-                            child: wrapWithModel(
-                              model: _model.notificationCardModel4,
-                              updateCallback: () => safeSetState(() {}),
-                              child: NotificationCardWidget(
-                                title: 'Lubong',
-                                subtitle: 'Assignment',
-                                pupose: 'Convoy',
-                                date: getCurrentTimestamp,
-                                titleColor:
-                                    FlutterFlowTheme.of(context).success,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 16.0, 0.0),
-                            child: wrapWithModel(
-                              model: _model.notificationCardModel5,
-                              updateCallback: () => safeSetState(() {}),
-                              child: NotificationCardWidget(
-                                title: 'Lubong',
-                                subtitle: 'Assignment',
-                                pupose: 'Convoy',
-                                date: getCurrentTimestamp,
-                                titleColor:
-                                    FlutterFlowTheme.of(context).success,
-                              ),
-                            ),
+                            builder: (context, snapshot) {
+                              // Customize what your widget looks like when it's loading.
+                              if (!snapshot.hasData) {
+                                return Center(
+                                  child: SizedBox(
+                                    width: 50.0,
+                                    height: 50.0,
+                                    child: SpinKitRing(
+                                      color:
+                                          FlutterFlowTheme.of(context).tertiary,
+                                      size: 50.0,
+                                    ),
+                                  ),
+                                );
+                              }
+                              List<AdminNotifRecord>
+                                  assignmentNotifAdminNotifRecordList =
+                                  snapshot.data!;
+
+                              return ListView.separated(
+                                padding: EdgeInsets.zero,
+                                primary: false,
+                                shrinkWrap: true,
+                                scrollDirection: Axis.vertical,
+                                itemCount:
+                                    assignmentNotifAdminNotifRecordList.length,
+                                separatorBuilder: (_, __) =>
+                                    SizedBox(height: 6.0),
+                                itemBuilder: (context, assignmentNotifIndex) {
+                                  final assignmentNotifAdminNotifRecord =
+                                      assignmentNotifAdminNotifRecordList[
+                                          assignmentNotifIndex];
+                                  return Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        16.0, 0.0, 16.0, 0.0),
+                                    child: NotificationCardWidget(
+                                      key: Key(
+                                          'Key0xk_${assignmentNotifIndex}_of_${assignmentNotifAdminNotifRecordList.length}'),
+                                      title: valueOrDefault<String>(
+                                        assignmentNotifAdminNotifRecord.title,
+                                        'Title',
+                                      ),
+                                      subtitle: valueOrDefault<String>(
+                                        assignmentNotifAdminNotifRecord
+                                            .subtitle,
+                                        'Subtitle',
+                                      ),
+                                      pupose: valueOrDefault<String>(
+                                        assignmentNotifAdminNotifRecord.type,
+                                        'Type',
+                                      ),
+                                      date: assignmentNotifAdminNotifRecord
+                                          .createdTime,
+                                      titleColor:
+                                          FlutterFlowTheme.of(context).success,
+                                    ),
+                                  );
+                                },
+                              );
+                            },
                           ),
                         ]
                             .divide(SizedBox(height: 16.0))

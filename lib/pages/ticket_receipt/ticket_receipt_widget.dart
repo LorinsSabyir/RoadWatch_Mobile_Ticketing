@@ -4,7 +4,6 @@ import '/components/violation_card/violation_card_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -508,11 +507,7 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                                   ),
                             ),
                             Text(
-                              functions
-                                  .totalFines(FFAppState()
-                                      .selectedViolationFine
-                                      .toList())
-                                  .toString(),
+                              FFAppState().violationTotalFine.toString(),
                               style: FlutterFlowTheme.of(context)
                                   .displaySmall
                                   .override(
@@ -646,6 +641,7 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                                   FFAppState().violationTotalFine,
                               violatorGender: FFAppState().violatorAddGender,
                               confUnitType: FFAppState().vehicleAddType,
+                              appreEnfId: currentUserReference,
                             ),
                             ...mapToFirestore(
                               {

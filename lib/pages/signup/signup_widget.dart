@@ -1311,7 +1311,6 @@ class _SignupWidgetState extends State<SignupWidget>
                                                 .text,
                                             badgeNumber: _model
                                                 .badgeNumTextController.text,
-                                            password: 'user123',
                                             phoneNumber: _model
                                                 .phoneNumTextController.text,
                                             status: false,

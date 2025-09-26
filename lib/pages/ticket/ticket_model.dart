@@ -33,23 +33,19 @@ class TicketModel extends FlutterFlowModel<TicketWidget> {
   TextEditingController? violatorLicenseNumTextController;
   String? Function(BuildContext, String?)?
       violatorLicenseNumTextControllerValidator;
+  // State field(s) for violatorProvince widget.
+  String? violatorProvinceValue;
+  FormFieldController<String>? violatorProvinceValueController;
+  // State field(s) for violatorCity widget.
+  String? violatorCityValue;
+  FormFieldController<String>? violatorCityValueController;
+  // State field(s) for violatorBrgy widget.
+  String? violatorBrgyValue;
+  FormFieldController<String>? violatorBrgyValueController;
   // State field(s) for violatorPrk widget.
   FocusNode? violatorPrkFocusNode;
   TextEditingController? violatorPrkTextController;
   String? Function(BuildContext, String?)? violatorPrkTextControllerValidator;
-  // State field(s) for violatorBrgy widget.
-  FocusNode? violatorBrgyFocusNode;
-  TextEditingController? violatorBrgyTextController;
-  String? Function(BuildContext, String?)? violatorBrgyTextControllerValidator;
-  // State field(s) for violatorCity widget.
-  FocusNode? violatorCityFocusNode;
-  TextEditingController? violatorCityTextController;
-  String? Function(BuildContext, String?)? violatorCityTextControllerValidator;
-  // State field(s) for violatorProvince widget.
-  FocusNode? violatorProvinceFocusNode;
-  TextEditingController? violatorProvinceTextController;
-  String? Function(BuildContext, String?)?
-      violatorProvinceTextControllerValidator;
   // State field(s) for vehiclePlateNum widget.
   FocusNode? vehiclePlateNumFocusNode;
   TextEditingController? vehiclePlateNumTextController;
@@ -92,15 +88,6 @@ class TicketModel extends FlutterFlowModel<TicketWidget> {
 
     violatorPrkFocusNode?.dispose();
     violatorPrkTextController?.dispose();
-
-    violatorBrgyFocusNode?.dispose();
-    violatorBrgyTextController?.dispose();
-
-    violatorCityFocusNode?.dispose();
-    violatorCityTextController?.dispose();
-
-    violatorProvinceFocusNode?.dispose();
-    violatorProvinceTextController?.dispose();
 
     vehiclePlateNumFocusNode?.dispose();
     vehiclePlateNumTextController?.dispose();

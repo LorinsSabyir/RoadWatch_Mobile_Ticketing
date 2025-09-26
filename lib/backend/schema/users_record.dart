@@ -35,11 +35,6 @@ class UsersRecord extends FirestoreRecord {
   DateTime? get createdTime => _createdTime;
   bool hasCreatedTime() => _createdTime != null;
 
-  // "password" field.
-  String? _password;
-  String get password => _password ?? '';
-  bool hasPassword() => _password != null;
-
   // "uid" field.
   String? _uid;
   String get uid => _uid ?? '';
@@ -115,7 +110,6 @@ class UsersRecord extends FirestoreRecord {
     _displayName = snapshotData['display_name'] as String?;
     _photoUrl = snapshotData['photo_url'] as String?;
     _createdTime = snapshotData['created_time'] as DateTime?;
-    _password = snapshotData['password'] as String?;
     _uid = snapshotData['uid'] as String?;
     _badgeNumber = snapshotData['badge_number'] as String?;
     _phoneNumber = snapshotData['phone_number'] as String?;
@@ -170,7 +164,6 @@ Map<String, dynamic> createUsersRecordData({
   String? displayName,
   String? photoUrl,
   DateTime? createdTime,
-  String? password,
   String? uid,
   String? badgeNumber,
   String? phoneNumber,
@@ -192,7 +185,6 @@ Map<String, dynamic> createUsersRecordData({
       'display_name': displayName,
       'photo_url': photoUrl,
       'created_time': createdTime,
-      'password': password,
       'uid': uid,
       'badge_number': badgeNumber,
       'phone_number': phoneNumber,
@@ -222,7 +214,6 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.displayName == e2?.displayName &&
         e1?.photoUrl == e2?.photoUrl &&
         e1?.createdTime == e2?.createdTime &&
-        e1?.password == e2?.password &&
         e1?.uid == e2?.uid &&
         e1?.badgeNumber == e2?.badgeNumber &&
         e1?.phoneNumber == e2?.phoneNumber &&
@@ -245,7 +236,6 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.displayName,
         e?.photoUrl,
         e?.createdTime,
-        e?.password,
         e?.uid,
         e?.badgeNumber,
         e?.phoneNumber,

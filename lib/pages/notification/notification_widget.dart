@@ -1,8 +1,10 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/components/notification_card/notification_card_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'notification_model.dart';
 export 'notification_model.dart';
@@ -26,8 +28,6 @@ class _NotificationWidgetState extends State<NotificationWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => NotificationModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -39,141 +39,166 @@ class _NotificationWidgetState extends State<NotificationWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primary,
-        automaticallyImplyLeading: false,
-        title: Text(
-          'Notification',
-          style: FlutterFlowTheme.of(context).displaySmall.override(
-                font: GoogleFonts.urbanist(
-                  fontWeight:
-                      FlutterFlowTheme.of(context).displaySmall.fontWeight,
-                  fontStyle:
-                      FlutterFlowTheme.of(context).displaySmall.fontStyle,
-                ),
-                color: FlutterFlowTheme.of(context).primaryText,
-                letterSpacing: 0.0,
-                fontWeight:
-                    FlutterFlowTheme.of(context).displaySmall.fontWeight,
-                fontStyle: FlutterFlowTheme.of(context).displaySmall.fontStyle,
-              ),
-        ),
-        actions: [],
-        centerTitle: false,
-        elevation: 0.0,
+    return StreamBuilder<List<AdminNotifRecord>>(
+      stream: queryAdminNotifRecord(
+        queryBuilder: (adminNotifRecord) => adminNotifRecord
+            .where(
+              'enforcer_id',
+              isEqualTo: currentUserReference,
+            )
+            .orderBy('created_time', descending: true)
+            .orderBy('edited_time', descending: true),
       ),
-      body: SafeArea(
-        top: true,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 12.0),
-                child: Material(
-                  color: Colors.transparent,
-                  elevation: 4.0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(16.0),
-                      bottomRight: Radius.circular(16.0),
-                      topLeft: Radius.circular(0.0),
-                      topRight: Radius.circular(0.0),
-                    ),
-                  ),
-                  child: Container(
-                    width: MediaQuery.sizeOf(context).width * 1.0,
-                    height: MediaQuery.sizeOf(context).height * 0.02,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).primary,
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 5.0,
-                          color: Color(0x32171717),
-                          offset: Offset(
-                            0.0,
-                            2.0,
-                          ),
-                        )
-                      ],
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(16.0),
-                        bottomRight: Radius.circular(16.0),
-                        topLeft: Radius.circular(0.0),
-                        topRight: Radius.circular(0.0),
-                      ),
-                    ),
-                  ),
+      builder: (context, snapshot) {
+        // Customize what your widget looks like when it's loading.
+        if (!snapshot.hasData) {
+          return Scaffold(
+            backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+            body: Center(
+              child: SizedBox(
+                width: 50.0,
+                height: 50.0,
+                child: SpinKitRing(
+                  color: FlutterFlowTheme.of(context).tertiary,
+                  size: 50.0,
                 ),
               ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
-                      child: Text(
-                        'April 1',
-                        style:
-                            FlutterFlowTheme.of(context).labelMedium.override(
-                                  font: GoogleFonts.manrope(
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .fontStyle,
-                                  ),
-                                  letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .fontStyle,
-                                ),
+            ),
+          );
+        }
+        List<AdminNotifRecord> notificationAdminNotifRecordList =
+            snapshot.data!;
+
+        return Scaffold(
+          key: scaffoldKey,
+          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+          appBar: AppBar(
+            backgroundColor: FlutterFlowTheme.of(context).primary,
+            automaticallyImplyLeading: false,
+            title: Text(
+              'Notification',
+              style: FlutterFlowTheme.of(context).displaySmall.override(
+                    font: GoogleFonts.urbanist(
+                      fontWeight:
+                          FlutterFlowTheme.of(context).displaySmall.fontWeight,
+                      fontStyle:
+                          FlutterFlowTheme.of(context).displaySmall.fontStyle,
+                    ),
+                    color: FlutterFlowTheme.of(context).primaryText,
+                    letterSpacing: 0.0,
+                    fontWeight:
+                        FlutterFlowTheme.of(context).displaySmall.fontWeight,
+                    fontStyle:
+                        FlutterFlowTheme.of(context).displaySmall.fontStyle,
+                  ),
+            ),
+            actions: [],
+            centerTitle: false,
+            elevation: 0.0,
+          ),
+          body: SafeArea(
+            top: true,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 12.0),
+                    child: Material(
+                      color: Colors.transparent,
+                      elevation: 4.0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(16.0),
+                          bottomRight: Radius.circular(16.0),
+                          topLeft: Radius.circular(0.0),
+                          topRight: Radius.circular(0.0),
+                        ),
+                      ),
+                      child: Container(
+                        width: MediaQuery.sizeOf(context).width * 1.0,
+                        height: MediaQuery.sizeOf(context).height * 0.02,
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).primary,
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 5.0,
+                              color: Color(0x32171717),
+                              offset: Offset(
+                                0.0,
+                                2.0,
+                              ),
+                            )
+                          ],
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(16.0),
+                            bottomRight: Radius.circular(16.0),
+                            topLeft: Radius.circular(0.0),
+                            topRight: Radius.circular(0.0),
+                          ),
+                        ),
                       ),
                     ),
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 24.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          ListView(
+                  ),
+                  Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
+                    child: Container(
+                      decoration: BoxDecoration(),
+                      child: Builder(
+                        builder: (context) {
+                          final card =
+                              notificationAdminNotifRecordList.toList();
+
+                          return ListView.separated(
                             padding: EdgeInsets.zero,
                             primary: false,
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
-                            children: [
-                              wrapWithModel(
-                                model: _model.notificationCardModel,
+                            itemCount: card.length,
+                            separatorBuilder: (_, __) => SizedBox(height: 8.0),
+                            itemBuilder: (context, cardIndex) {
+                              final cardItem = card[cardIndex];
+                              return wrapWithModel(
+                                model: _model.notificationCardModels.getModel(
+                                  cardItem.reference.id,
+                                  cardIndex,
+                                ),
                                 updateCallback: () => safeSetState(() {}),
                                 child: NotificationCardWidget(
-                                  title: 'Reasign location',
-                                  subtitle: 'Maryknoll crossing',
-                                  pupose: 'Dakop',
-                                  date: random_data.randomDate(),
+                                  key: Key(
+                                    'Key33e_${cardItem.reference.id}',
+                                  ),
+                                  title: valueOrDefault<String>(
+                                    cardItem.title,
+                                    'Title',
+                                  ),
+                                  subtitle: valueOrDefault<String>(
+                                    cardItem.subtitle,
+                                    'Subtitle',
+                                  ),
+                                  pupose: valueOrDefault<String>(
+                                    cardItem.type,
+                                    'Type',
+                                  ),
+                                  date: cardItem.createdTime,
+                                  titleColor:
+                                      FlutterFlowTheme.of(context).primary,
                                 ),
-                              ),
-                            ].divide(SizedBox(height: 8.0)),
-                          ),
-                        ],
+                              );
+                            },
+                          );
+                        },
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

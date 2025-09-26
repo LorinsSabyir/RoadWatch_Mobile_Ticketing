@@ -1,13 +1,15 @@
+import '/backend/backend.dart';
 import '/components/violation_card/violation_card_widget.dart';
-import '/flutter_flow/flutter_flow_choice_chips.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'ticket_model.dart';
@@ -33,40 +35,29 @@ class _TicketWidgetState extends State<TicketWidget> {
     super.initState();
     _model = createModel(context, () => TicketModel());
 
-    _model.violatorNameCreateTextController ??= TextEditingController();
-    _model.violatorNameCreateFocusNode ??= FocusNode();
+    _model.violatorNameTextController ??= TextEditingController();
+    _model.violatorNameFocusNode ??= FocusNode();
 
-    _model.violatorContactNumCreateTextController ??= TextEditingController();
-    _model.violatorContactNumCreateFocusNode ??= FocusNode();
+    _model.violatorContactNumTextController ??= TextEditingController();
+    _model.violatorContactNumFocusNode ??= FocusNode();
 
-    _model.violatorLicenseNumCreateTextController ??= TextEditingController();
-    _model.violatorLicenseNumCreateFocusNode ??= FocusNode();
+    _model.violatorLicenseNumTextController ??= TextEditingController();
+    _model.violatorLicenseNumFocusNode ??= FocusNode();
 
-    _model.violatorAddPrkCreateTextController ??= TextEditingController();
-    _model.violatorAddPrkCreateFocusNode ??= FocusNode();
+    _model.violatorPrkTextController ??= TextEditingController();
+    _model.violatorPrkFocusNode ??= FocusNode();
 
-    _model.violatorAddBrgyCreateTextController ??= TextEditingController();
-    _model.violatorAddBrgyCreateFocusNode ??= FocusNode();
+    _model.vehiclePlateNumTextController ??= TextEditingController();
+    _model.vehiclePlateNumFocusNode ??= FocusNode();
 
-    _model.violatorAddCityCreateTextController ??= TextEditingController();
-    _model.violatorAddCityCreateFocusNode ??= FocusNode();
+    _model.vehicleSerialNumTextController ??= TextEditingController();
+    _model.vehicleSerialNumFocusNode ??= FocusNode();
 
-    _model.violatorAddProvinceCreateTextController ??= TextEditingController();
-    _model.violatorAddProvinceCreateFocusNode ??= FocusNode();
+    _model.vehicleBrandTextController ??= TextEditingController();
+    _model.vehicleBrandFocusNode ??= FocusNode();
 
-    _model.vehiclePlateNumCreateTextController ??= TextEditingController();
-    _model.vehiclePlateNumCreateFocusNode ??= FocusNode();
-
-    _model.vehicleSerialNumCreateTextController ??= TextEditingController();
-    _model.vehicleSerialNumCreateFocusNode ??= FocusNode();
-
-    _model.vehicleBrandCreateTextController ??= TextEditingController();
-    _model.vehicleBrandCreateFocusNode ??= FocusNode();
-
-    _model.vehicleModelCreateTextController ??= TextEditingController();
-    _model.vehicleModelCreateFocusNode ??= FocusNode();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
+    _model.vehicleModelTextController ??= TextEditingController();
+    _model.vehicleModelFocusNode ??= FocusNode();
   }
 
   @override
@@ -252,7 +243,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                 Icons.qr_code_scanner,
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
+                                                        .primaryText,
                                                 size: 24.0,
                                               ),
                                               onPressed: () async {
@@ -273,9 +264,6 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                       .width *
                                                   1.0,
                                               decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
                                                 boxShadow: [
                                                   BoxShadow(
                                                     blurRadius: 3.0,
@@ -296,9 +284,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         1.0,
                                                 child: TextFormField(
                                                   controller: _model
-                                                      .violatorNameCreateTextController,
+                                                      .violatorNameTextController,
                                                   focusNode: _model
-                                                      .violatorNameCreateFocusNode,
+                                                      .violatorNameFocusNode,
                                                   autofocus: true,
                                                   obscureText: false,
                                                   decoration: InputDecoration(
@@ -424,7 +412,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                 .fontStyle,
                                                       ),
                                                   validator: _model
-                                                      .violatorNameCreateTextControllerValidator
+                                                      .violatorNameTextControllerValidator
                                                       .asValidator(context),
                                                 ),
                                               ),
@@ -436,9 +424,103 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                       .width *
                                                   1.0,
                                               decoration: BoxDecoration(
-                                                color:
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    blurRadius: 3.0,
+                                                    color: Color(0x35000000),
+                                                    offset: Offset(
+                                                      0.0,
+                                                      1.0,
+                                                    ),
+                                                  )
+                                                ],
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                              ),
+                                              child:
+                                                  FlutterFlowDropDown<String>(
+                                                controller: _model
+                                                        .violatorGenderValueController ??=
+                                                    FormFieldController<String>(
+                                                        null),
+                                                options: [
+                                                  'Male',
+                                                  'Female',
+                                                  'Others'
+                                                ],
+                                                onChanged: (val) =>
+                                                    safeSetState(() => _model
+                                                            .violatorGenderValue =
+                                                        val),
+                                                width:
+                                                    MediaQuery.sizeOf(context)
+                                                            .width *
+                                                        1.0,
+                                                height: 57.0,
+                                                textStyle: FlutterFlowTheme.of(
+                                                        context)
+                                                    .bodyMedium
+                                                    .override(
+                                                      font: GoogleFonts.manrope(
+                                                        fontWeight:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .fontWeight,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .fontStyle,
+                                                      ),
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .textboxTextHollow,
+                                                      fontSize: 15.0,
+                                                      letterSpacing: 0.0,
+                                                      fontWeight:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .fontWeight,
+                                                      fontStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .fontStyle,
+                                                    ),
+                                                hintText: 'Gender',
+                                                icon: Icon(
+                                                  Icons
+                                                      .keyboard_arrow_down_rounded,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .textboxTextHollow,
+                                                  size: 24.0,
+                                                ),
+                                                fillColor:
                                                     FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
+                                                        .textbox,
+                                                elevation: 0.0,
+                                                borderColor: Colors.transparent,
+                                                borderWidth: 0.0,
+                                                borderRadius: 12.0,
+                                                margin: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        16.0, 0.0, 12.0, 0.0),
+                                                hidesUnderline: true,
+                                                isOverButton: false,
+                                                isSearchable: false,
+                                                isMultiSelect: false,
+                                              ),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Container(
+                                              width: MediaQuery.sizeOf(context)
+                                                      .width *
+                                                  1.0,
+                                              decoration: BoxDecoration(
                                                 boxShadow: [
                                                   BoxShadow(
                                                     blurRadius: 3.0,
@@ -459,9 +541,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         1.0,
                                                 child: TextFormField(
                                                   controller: _model
-                                                      .violatorContactNumCreateTextController,
+                                                      .violatorContactNumTextController,
                                                   focusNode: _model
-                                                      .violatorContactNumCreateFocusNode,
+                                                      .violatorContactNumFocusNode,
                                                   autofocus: false,
                                                   obscureText: false,
                                                   decoration: InputDecoration(
@@ -587,7 +669,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                 .fontStyle,
                                                       ),
                                                   validator: _model
-                                                      .violatorContactNumCreateTextControllerValidator
+                                                      .violatorContactNumTextControllerValidator
                                                       .asValidator(context),
                                                 ),
                                               ),
@@ -599,9 +681,6 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                       .width *
                                                   1.0,
                                               decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
                                                 boxShadow: [
                                                   BoxShadow(
                                                     blurRadius: 3.0,
@@ -622,9 +701,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         1.0,
                                                 child: TextFormField(
                                                   controller: _model
-                                                      .violatorLicenseNumCreateTextController,
+                                                      .violatorLicenseNumTextController,
                                                   focusNode: _model
-                                                      .violatorLicenseNumCreateFocusNode,
+                                                      .violatorLicenseNumFocusNode,
                                                   autofocus: false,
                                                   obscureText: false,
                                                   decoration: InputDecoration(
@@ -750,7 +829,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                 .fontStyle,
                                                       ),
                                                   validator: _model
-                                                      .violatorLicenseNumCreateTextControllerValidator
+                                                      .violatorLicenseNumTextControllerValidator
                                                       .asValidator(context),
                                                 ),
                                               ),
@@ -762,9 +841,399 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                       .width *
                                                   1.0,
                                               decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    blurRadius: 3.0,
+                                                    color: Color(0x35000000),
+                                                    offset: Offset(
+                                                      0.0,
+                                                      1.0,
+                                                    ),
+                                                  )
+                                                ],
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                              ),
+                                              child: StreamBuilder<
+                                                  List<AddressProvinceRecord>>(
+                                                stream:
+                                                    queryAddressProvinceRecord(),
+                                                builder: (context, snapshot) {
+                                                  // Customize what your widget looks like when it's loading.
+                                                  if (!snapshot.hasData) {
+                                                    return Center(
+                                                      child: SizedBox(
+                                                        width: 50.0,
+                                                        height: 50.0,
+                                                        child: SpinKitRing(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .tertiary,
+                                                          size: 50.0,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  }
+                                                  List<AddressProvinceRecord>
+                                                      violatorProvinceAddressProvinceRecordList =
+                                                      snapshot.data!;
+
+                                                  return FlutterFlowDropDown<
+                                                      String>(
+                                                    controller: _model
+                                                            .violatorProvinceValueController ??=
+                                                        FormFieldController<
+                                                            String>(null),
+                                                    options:
+                                                        violatorProvinceAddressProvinceRecordList
+                                                            .map((e) =>
+                                                                e.province)
+                                                            .toList(),
+                                                    onChanged: (val) =>
+                                                        safeSetState(() => _model
+                                                                .violatorProvinceValue =
+                                                            val),
+                                                    width: 100.0,
+                                                    height: 57.0,
+                                                    textStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .override(
+                                                              font: GoogleFonts
+                                                                  .manrope(
+                                                                fontWeight: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontWeight,
+                                                                fontStyle: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontStyle,
+                                                              ),
+                                                              letterSpacing:
+                                                                  0.0,
+                                                              fontWeight:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontWeight,
+                                                              fontStyle:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontStyle,
+                                                            ),
+                                                    hintText: 'Province',
+                                                    icon: Icon(
+                                                      Icons
+                                                          .keyboard_arrow_down_rounded,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondaryText,
+                                                      size: 24.0,
+                                                    ),
+                                                    fillColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .textbox,
+                                                    elevation: 0.0,
+                                                    borderColor:
+                                                        Colors.transparent,
+                                                    borderWidth: 0.0,
+                                                    borderRadius: 12.0,
+                                                    margin:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(16.0, 0.0,
+                                                                12.0, 0.0),
+                                                    hidesUnderline: true,
+                                                    isOverButton: false,
+                                                    isSearchable: false,
+                                                    isMultiSelect: false,
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Container(
+                                              width: MediaQuery.sizeOf(context)
+                                                      .width *
+                                                  1.0,
+                                              decoration: BoxDecoration(
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    blurRadius: 3.0,
+                                                    color: Color(0x35000000),
+                                                    offset: Offset(
+                                                      0.0,
+                                                      1.0,
+                                                    ),
+                                                  )
+                                                ],
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                              ),
+                                              child: StreamBuilder<
+                                                  List<AddressCityRecord>>(
+                                                stream: queryAddressCityRecord(
+                                                  queryBuilder:
+                                                      (addressCityRecord) =>
+                                                          addressCityRecord
+                                                              .where(
+                                                    'provinceRef',
+                                                    isEqualTo: _model
+                                                        .violatorProvinceValue,
+                                                  ),
+                                                ),
+                                                builder: (context, snapshot) {
+                                                  // Customize what your widget looks like when it's loading.
+                                                  if (!snapshot.hasData) {
+                                                    return Center(
+                                                      child: SizedBox(
+                                                        width: 50.0,
+                                                        height: 50.0,
+                                                        child: SpinKitRing(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .tertiary,
+                                                          size: 50.0,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  }
+                                                  List<AddressCityRecord>
+                                                      violatorCityAddressCityRecordList =
+                                                      snapshot.data!;
+
+                                                  return FlutterFlowDropDown<
+                                                      String>(
+                                                    controller: _model
+                                                            .violatorCityValueController ??=
+                                                        FormFieldController<
+                                                            String>(null),
+                                                    options:
+                                                        violatorCityAddressCityRecordList
+                                                            .map((e) => e.city)
+                                                            .toList(),
+                                                    onChanged: (val) =>
+                                                        safeSetState(() => _model
+                                                                .violatorCityValue =
+                                                            val),
+                                                    width: 100.0,
+                                                    height: 57.0,
+                                                    textStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .override(
+                                                              font: GoogleFonts
+                                                                  .manrope(
+                                                                fontWeight: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontWeight,
+                                                                fontStyle: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontStyle,
+                                                              ),
+                                                              letterSpacing:
+                                                                  0.0,
+                                                              fontWeight:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontWeight,
+                                                              fontStyle:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontStyle,
+                                                            ),
+                                                    hintText:
+                                                        'City/Municipality',
+                                                    icon: Icon(
+                                                      Icons
+                                                          .keyboard_arrow_down_rounded,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondaryText,
+                                                      size: 24.0,
+                                                    ),
+                                                    fillColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .textbox,
+                                                    elevation: 0.0,
+                                                    borderColor:
+                                                        Colors.transparent,
+                                                    borderWidth: 0.0,
+                                                    borderRadius: 12.0,
+                                                    margin:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(16.0, 0.0,
+                                                                12.0, 0.0),
+                                                    hidesUnderline: true,
+                                                    disabled: _model
+                                                                .violatorProvinceValue ==
+                                                            null ||
+                                                        _model.violatorProvinceValue ==
+                                                            '',
+                                                    isOverButton: false,
+                                                    isSearchable: false,
+                                                    isMultiSelect: false,
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Container(
+                                              width: MediaQuery.sizeOf(context)
+                                                      .width *
+                                                  1.0,
+                                              decoration: BoxDecoration(
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    blurRadius: 3.0,
+                                                    color: Color(0x35000000),
+                                                    offset: Offset(
+                                                      0.0,
+                                                      1.0,
+                                                    ),
+                                                  )
+                                                ],
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                              ),
+                                              child: StreamBuilder<
+                                                  List<AddressBrgyRecord>>(
+                                                stream: queryAddressBrgyRecord(
+                                                  queryBuilder:
+                                                      (addressBrgyRecord) =>
+                                                          addressBrgyRecord
+                                                              .where(
+                                                    'cityRef',
+                                                    isEqualTo: _model
+                                                        .violatorCityValue,
+                                                  ),
+                                                ),
+                                                builder: (context, snapshot) {
+                                                  // Customize what your widget looks like when it's loading.
+                                                  if (!snapshot.hasData) {
+                                                    return Center(
+                                                      child: SizedBox(
+                                                        width: 50.0,
+                                                        height: 50.0,
+                                                        child: SpinKitRing(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .tertiary,
+                                                          size: 50.0,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  }
+                                                  List<AddressBrgyRecord>
+                                                      violatorBrgyAddressBrgyRecordList =
+                                                      snapshot.data!;
+
+                                                  return FlutterFlowDropDown<
+                                                      String>(
+                                                    controller: _model
+                                                            .violatorBrgyValueController ??=
+                                                        FormFieldController<
+                                                            String>(null),
+                                                    options:
+                                                        violatorBrgyAddressBrgyRecordList
+                                                            .map((e) =>
+                                                                e.barangay)
+                                                            .toList(),
+                                                    onChanged: (val) =>
+                                                        safeSetState(() => _model
+                                                                .violatorBrgyValue =
+                                                            val),
+                                                    width: 100.0,
+                                                    height: 57.0,
+                                                    textStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .override(
+                                                              font: GoogleFonts
+                                                                  .manrope(
+                                                                fontWeight: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontWeight,
+                                                                fontStyle: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontStyle,
+                                                              ),
+                                                              letterSpacing:
+                                                                  0.0,
+                                                              fontWeight:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontWeight,
+                                                              fontStyle:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontStyle,
+                                                            ),
+                                                    hintText: 'Barangay',
+                                                    icon: Icon(
+                                                      Icons
+                                                          .keyboard_arrow_down_rounded,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondaryText,
+                                                      size: 24.0,
+                                                    ),
+                                                    fillColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .textbox,
+                                                    elevation: 0.0,
+                                                    borderColor:
+                                                        Colors.transparent,
+                                                    borderWidth: 0.0,
+                                                    borderRadius: 12.0,
+                                                    margin:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(16.0, 0.0,
+                                                                12.0, 0.0),
+                                                    hidesUnderline: true,
+                                                    disabled: (_model
+                                                                    .violatorCityValue ==
+                                                                null ||
+                                                            _model.violatorCityValue ==
+                                                                '') &&
+                                                        (_model.violatorProvinceValue ==
+                                                                null ||
+                                                            _model.violatorProvinceValue ==
+                                                                ''),
+                                                    isOverButton: false,
+                                                    isSearchable: false,
+                                                    isMultiSelect: false,
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Container(
+                                              width: MediaQuery.sizeOf(context)
+                                                      .width *
+                                                  1.0,
+                                              decoration: BoxDecoration(
                                                 boxShadow: [
                                                   BoxShadow(
                                                     blurRadius: 3.0,
@@ -785,9 +1254,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         1.0,
                                                 child: TextFormField(
                                                   controller: _model
-                                                      .violatorAddPrkCreateTextController,
+                                                      .violatorPrkTextController,
                                                   focusNode: _model
-                                                      .violatorAddPrkCreateFocusNode,
+                                                      .violatorPrkFocusNode,
                                                   autofocus: false,
                                                   obscureText: false,
                                                   decoration: InputDecoration(
@@ -913,497 +1382,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                 .fontStyle,
                                                       ),
                                                   validator: _model
-                                                      .violatorAddPrkCreateTextControllerValidator
-                                                      .asValidator(context),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Container(
-                                              width: MediaQuery.sizeOf(context)
-                                                      .width *
-                                                  1.0,
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    blurRadius: 3.0,
-                                                    color: Color(0x35000000),
-                                                    offset: Offset(
-                                                      0.0,
-                                                      1.0,
-                                                    ),
-                                                  )
-                                                ],
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                              ),
-                                              child: Container(
-                                                width:
-                                                    MediaQuery.sizeOf(context)
-                                                            .width *
-                                                        1.0,
-                                                child: TextFormField(
-                                                  controller: _model
-                                                      .violatorAddBrgyCreateTextController,
-                                                  focusNode: _model
-                                                      .violatorAddBrgyCreateFocusNode,
-                                                  autofocus: false,
-                                                  obscureText: false,
-                                                  decoration: InputDecoration(
-                                                    labelText: 'Barangay',
-                                                    labelStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .labelLarge
-                                                            .override(
-                                                              font: GoogleFonts
-                                                                  .manrope(
-                                                                fontWeight: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelLarge
-                                                                    .fontWeight,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelLarge
-                                                                    .fontStyle,
-                                                              ),
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .textboxTextHollow,
-                                                              letterSpacing:
-                                                                  0.0,
-                                                              fontWeight:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .labelLarge
-                                                                      .fontWeight,
-                                                              fontStyle:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .labelLarge
-                                                                      .fontStyle,
-                                                            ),
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            Color(0x00000000),
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12.0),
-                                                    ),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12.0),
-                                                    ),
-                                                    errorBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .error,
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12.0),
-                                                    ),
-                                                    focusedErrorBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .error,
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12.0),
-                                                    ),
-                                                    filled: true,
-                                                    fillColor:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .textbox,
-                                                  ),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyLarge
-                                                      .override(
-                                                        font:
-                                                            GoogleFonts.manrope(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyLarge
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyLarge
-                                                                  .fontStyle,
-                                                        ),
-                                                        color: FlutterFlowTheme
-                                                                .of(context)
-                                                            .textboxTextActive,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyLarge
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyLarge
-                                                                .fontStyle,
-                                                      ),
-                                                  validator: _model
-                                                      .violatorAddBrgyCreateTextControllerValidator
-                                                      .asValidator(context),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Container(
-                                              width: MediaQuery.sizeOf(context)
-                                                      .width *
-                                                  1.0,
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    blurRadius: 3.0,
-                                                    color: Color(0x35000000),
-                                                    offset: Offset(
-                                                      0.0,
-                                                      1.0,
-                                                    ),
-                                                  )
-                                                ],
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                              ),
-                                              child: Container(
-                                                width:
-                                                    MediaQuery.sizeOf(context)
-                                                            .width *
-                                                        1.0,
-                                                child: TextFormField(
-                                                  controller: _model
-                                                      .violatorAddCityCreateTextController,
-                                                  focusNode: _model
-                                                      .violatorAddCityCreateFocusNode,
-                                                  autofocus: false,
-                                                  obscureText: false,
-                                                  decoration: InputDecoration(
-                                                    labelText:
-                                                        'City / Municipality',
-                                                    labelStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .labelLarge
-                                                            .override(
-                                                              font: GoogleFonts
-                                                                  .manrope(
-                                                                fontWeight: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelLarge
-                                                                    .fontWeight,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelLarge
-                                                                    .fontStyle,
-                                                              ),
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .textboxTextHollow,
-                                                              letterSpacing:
-                                                                  0.0,
-                                                              fontWeight:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .labelLarge
-                                                                      .fontWeight,
-                                                              fontStyle:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .labelLarge
-                                                                      .fontStyle,
-                                                            ),
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            Color(0x00000000),
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12.0),
-                                                    ),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12.0),
-                                                    ),
-                                                    errorBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .error,
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12.0),
-                                                    ),
-                                                    focusedErrorBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .error,
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12.0),
-                                                    ),
-                                                    filled: true,
-                                                    fillColor:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .textbox,
-                                                  ),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyLarge
-                                                      .override(
-                                                        font:
-                                                            GoogleFonts.manrope(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyLarge
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyLarge
-                                                                  .fontStyle,
-                                                        ),
-                                                        color: FlutterFlowTheme
-                                                                .of(context)
-                                                            .textboxTextActive,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyLarge
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyLarge
-                                                                .fontStyle,
-                                                      ),
-                                                  validator: _model
-                                                      .violatorAddCityCreateTextControllerValidator
-                                                      .asValidator(context),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Container(
-                                              width: MediaQuery.sizeOf(context)
-                                                      .width *
-                                                  1.0,
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    blurRadius: 3.0,
-                                                    color: Color(0x35000000),
-                                                    offset: Offset(
-                                                      0.0,
-                                                      1.0,
-                                                    ),
-                                                  )
-                                                ],
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                              ),
-                                              child: Container(
-                                                width:
-                                                    MediaQuery.sizeOf(context)
-                                                            .width *
-                                                        1.0,
-                                                child: TextFormField(
-                                                  controller: _model
-                                                      .violatorAddProvinceCreateTextController,
-                                                  focusNode: _model
-                                                      .violatorAddProvinceCreateFocusNode,
-                                                  autofocus: false,
-                                                  obscureText: false,
-                                                  decoration: InputDecoration(
-                                                    labelText: 'Province',
-                                                    labelStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .labelLarge
-                                                            .override(
-                                                              font: GoogleFonts
-                                                                  .manrope(
-                                                                fontWeight: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelLarge
-                                                                    .fontWeight,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelLarge
-                                                                    .fontStyle,
-                                                              ),
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .textboxTextHollow,
-                                                              letterSpacing:
-                                                                  0.0,
-                                                              fontWeight:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .labelLarge
-                                                                      .fontWeight,
-                                                              fontStyle:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .labelLarge
-                                                                      .fontStyle,
-                                                            ),
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            Color(0x00000000),
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12.0),
-                                                    ),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12.0),
-                                                    ),
-                                                    errorBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .error,
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12.0),
-                                                    ),
-                                                    focusedErrorBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .error,
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12.0),
-                                                    ),
-                                                    filled: true,
-                                                    fillColor:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .textbox,
-                                                  ),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyLarge
-                                                      .override(
-                                                        font:
-                                                            GoogleFonts.manrope(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyLarge
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyLarge
-                                                                  .fontStyle,
-                                                        ),
-                                                        color: FlutterFlowTheme
-                                                                .of(context)
-                                                            .textboxTextActive,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyLarge
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyLarge
-                                                                .fontStyle,
-                                                      ),
-                                                  validator: _model
-                                                      .violatorAddProvinceCreateTextControllerValidator
+                                                      .violatorPrkTextControllerValidator
                                                       .asValidator(context),
                                                 ),
                                               ),
@@ -1424,28 +1403,27 @@ class _TicketWidgetState extends State<TicketWidget> {
                                       children: [
                                         FFButtonWidget(
                                           onPressed: () async {
-                                            FFAppState().violatorName = _model
-                                                .violatorNameCreateTextController
-                                                .text;
-                                            FFAppState().violatorContact = _model
-                                                .violatorContactNumCreateTextController
-                                                .text;
-                                            FFAppState().violatorLicenseNum = _model
-                                                .violatorLicenseNumCreateTextController
-                                                .text;
-                                            FFAppState().violatorAddProvince =
+                                            FFAppState().violatorAddName =
                                                 _model
-                                                    .violatorAddProvinceCreateTextController
+                                                    .violatorNameTextController
                                                     .text;
-                                            FFAppState().violatorAddCity = _model
-                                                .violatorAddCityCreateTextController
+                                            FFAppState().violatorAddContact = _model
+                                                .violatorContactNumTextController
                                                 .text;
-                                            FFAppState().violatorAddBrgy = _model
-                                                .violatorAddBrgyCreateTextController
-                                                .text;
+                                            FFAppState().violatorAddLicenseNum =
+                                                _model
+                                                    .violatorLicenseNumTextController
+                                                    .text;
+                                            FFAppState().violatorAddProvince =
+                                                _model.violatorProvinceValue!;
+                                            FFAppState().violatorAddCity =
+                                                _model.violatorCityValue!;
+                                            FFAppState().violatorAddBrgy =
+                                                _model.violatorBrgyValue!;
                                             FFAppState().violatorAddPrk = _model
-                                                .violatorAddPrkCreateTextController
-                                                .text;
+                                                .violatorPrkTextController.text;
+                                            FFAppState().violatorAddGender =
+                                                _model.violatorGenderValue!;
                                             safeSetState(() {});
                                             await _model.pageViewController
                                                 ?.nextPage(
@@ -1483,9 +1461,10 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                 .titleSmall
                                                                 .fontStyle,
                                                       ),
-                                                      color: FlutterFlowTheme
-                                                              .of(context)
-                                                          .secondaryBackground,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText,
                                                       letterSpacing: 0.0,
                                                       fontWeight:
                                                           FlutterFlowTheme.of(
@@ -1510,7 +1489,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                       ],
                                     ),
                                   ),
-                                ].divide(SizedBox(height: 64.0)),
+                                ].divide(SizedBox(height: 4.0)),
                               ),
                             ),
                             Padding(
@@ -1564,9 +1543,6 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                       .width *
                                                   1.0,
                                               decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
                                                 boxShadow: [
                                                   BoxShadow(
                                                     blurRadius: 3.0,
@@ -1587,9 +1563,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         1.0,
                                                 child: TextFormField(
                                                   controller: _model
-                                                      .vehiclePlateNumCreateTextController,
+                                                      .vehiclePlateNumTextController,
                                                   focusNode: _model
-                                                      .vehiclePlateNumCreateFocusNode,
+                                                      .vehiclePlateNumFocusNode,
                                                   autofocus: false,
                                                   obscureText: false,
                                                   decoration: InputDecoration(
@@ -1715,7 +1691,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                 .fontStyle,
                                                       ),
                                                   validator: _model
-                                                      .vehiclePlateNumCreateTextControllerValidator
+                                                      .vehiclePlateNumTextControllerValidator
                                                       .asValidator(context),
                                                 ),
                                               ),
@@ -1727,9 +1703,6 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                       .width *
                                                   1.0,
                                               decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
                                                 boxShadow: [
                                                   BoxShadow(
                                                     blurRadius: 3.0,
@@ -1750,9 +1723,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         1.0,
                                                 child: TextFormField(
                                                   controller: _model
-                                                      .vehicleSerialNumCreateTextController,
+                                                      .vehicleSerialNumTextController,
                                                   focusNode: _model
-                                                      .vehicleSerialNumCreateFocusNode,
+                                                      .vehicleSerialNumFocusNode,
                                                   autofocus: false,
                                                   obscureText: false,
                                                   decoration: InputDecoration(
@@ -1878,7 +1851,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                 .fontStyle,
                                                       ),
                                                   validator: _model
-                                                      .vehicleSerialNumCreateTextControllerValidator
+                                                      .vehicleSerialNumTextControllerValidator
                                                       .asValidator(context),
                                                 ),
                                               ),
@@ -1890,9 +1863,6 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                       .width *
                                                   1.0,
                                               decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
                                                 boxShadow: [
                                                   BoxShadow(
                                                     blurRadius: 3.0,
@@ -1909,9 +1879,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                               child:
                                                   FlutterFlowDropDown<String>(
                                                 controller: _model
-                                                        .vehicleTypeCreateValueController ??=
+                                                        .vehicleTypeValueController ??=
                                                     FormFieldController<String>(
-                                                  _model.vehicleTypeCreateValue ??=
+                                                  _model.vehicleTypeValue ??=
                                                       '',
                                                 ),
                                                 options: List<String>.from([
@@ -1930,7 +1900,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                 ],
                                                 onChanged: (val) =>
                                                     safeSetState(() => _model
-                                                            .vehicleTypeCreateValue =
+                                                            .vehicleTypeValue =
                                                         val),
                                                 width:
                                                     MediaQuery.sizeOf(context)
@@ -2001,9 +1971,6 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                       .width *
                                                   1.0,
                                               decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
                                                 boxShadow: [
                                                   BoxShadow(
                                                     blurRadius: 3.0,
@@ -2024,9 +1991,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         1.0,
                                                 child: TextFormField(
                                                   controller: _model
-                                                      .vehicleBrandCreateTextController,
+                                                      .vehicleBrandTextController,
                                                   focusNode: _model
-                                                      .vehicleBrandCreateFocusNode,
+                                                      .vehicleBrandFocusNode,
                                                   autofocus: false,
                                                   obscureText: false,
                                                   decoration: InputDecoration(
@@ -2152,7 +2119,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                 .fontStyle,
                                                       ),
                                                   validator: _model
-                                                      .vehicleBrandCreateTextControllerValidator
+                                                      .vehicleBrandTextControllerValidator
                                                       .asValidator(context),
                                                 ),
                                               ),
@@ -2164,9 +2131,6 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                       .width *
                                                   1.0,
                                               decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
                                                 boxShadow: [
                                                   BoxShadow(
                                                     blurRadius: 3.0,
@@ -2187,9 +2151,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         1.0,
                                                 child: TextFormField(
                                                   controller: _model
-                                                      .vehicleModelCreateTextController,
+                                                      .vehicleModelTextController,
                                                   focusNode: _model
-                                                      .vehicleModelCreateFocusNode,
+                                                      .vehicleModelFocusNode,
                                                   autofocus: false,
                                                   obscureText: false,
                                                   decoration: InputDecoration(
@@ -2315,7 +2279,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                 .fontStyle,
                                                       ),
                                                   validator: _model
-                                                      .vehicleModelCreateTextControllerValidator
+                                                      .vehicleModelTextControllerValidator
                                                       .asValidator(context),
                                                 ),
                                               ),
@@ -2400,19 +2364,23 @@ class _TicketWidgetState extends State<TicketWidget> {
                                         Expanded(
                                           child: FFButtonWidget(
                                             onPressed: () async {
-                                              FFAppState().vehiclePlateNum = _model
-                                                  .vehiclePlateNumCreateTextController
-                                                  .text;
-                                              FFAppState().vehicleType = _model
-                                                  .vehicleTypeCreateValue!;
-                                              FFAppState().vehicleBrand = _model
-                                                  .vehicleBrandCreateTextController
-                                                  .text;
-                                              FFAppState().vehicleModel = _model
-                                                  .vehicleModelCreateTextController
-                                                  .text;
-                                              FFAppState().vehicleSerialNum =
-                                                  FFAppState().vehicleSerialNum;
+                                              FFAppState().vehicleAddPlateNum =
+                                                  _model
+                                                      .vehiclePlateNumTextController
+                                                      .text;
+                                              FFAppState().vehicleAddType =
+                                                  _model.vehicleTypeValue!;
+                                              FFAppState().vehicleAddBrand =
+                                                  _model
+                                                      .vehicleBrandTextController
+                                                      .text;
+                                              FFAppState().vehicleAddModel =
+                                                  _model
+                                                      .vehicleModelTextController
+                                                      .text;
+                                              FFAppState().vehicleAddSerialNum =
+                                                  FFAppState()
+                                                      .vehicleAddSerialNum;
                                               safeSetState(() {});
                                               await _model.pageViewController
                                                   ?.nextPage(
@@ -2450,7 +2418,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                     ),
                                                     color: FlutterFlowTheme.of(
                                                             context)
-                                                        .secondaryBackground,
+                                                        .primaryText,
                                                     letterSpacing: 0.0,
                                                     fontWeight:
                                                         FlutterFlowTheme.of(
@@ -2546,7 +2514,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                           icon: Icon(
                                             Icons.search,
                                             color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
+                                                .primaryText,
                                             size: 24.0,
                                           ),
                                           onPressed: () async {
@@ -2565,128 +2533,13 @@ class _TicketWidgetState extends State<TicketWidget> {
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           16.0, 0.0, 16.0, 0.0),
-                                      child: FlutterFlowChoiceChips(
-                                        options: [
-                                          ChipData('All'),
-                                          ChipData('Motorcycle'),
-                                          ChipData('Tricycle'),
-                                          ChipData('PUV')
-                                        ],
-                                        onChanged: (val) => safeSetState(() =>
-                                            _model.choiceChipsValues = val),
-                                        selectedChipStyle: ChipStyle(
-                                          backgroundColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .primary,
-                                          textStyle: FlutterFlowTheme.of(
-                                                  context)
-                                              .bodyMedium
-                                              .override(
-                                                font: GoogleFonts.manrope(
-                                                  fontWeight:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontWeight,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontStyle,
-                                                ),
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .info,
-                                                letterSpacing: 0.0,
-                                                fontWeight:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontWeight,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontStyle,
-                                              ),
-                                          iconColor:
-                                              FlutterFlowTheme.of(context).info,
-                                          iconSize: 18.0,
-                                          elevation: 2.0,
-                                          borderColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .primaryBackground,
-                                          borderWidth: 1.0,
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        unselectedChipStyle: ChipStyle(
-                                          backgroundColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .alternate,
-                                          textStyle: FlutterFlowTheme.of(
-                                                  context)
-                                              .bodyMedium
-                                              .override(
-                                                font: GoogleFonts.manrope(
-                                                  fontWeight:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontWeight,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontStyle,
-                                                ),
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
-                                                letterSpacing: 0.0,
-                                                fontWeight:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontWeight,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontStyle,
-                                              ),
-                                          iconColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .secondaryText,
-                                          iconSize: 18.0,
-                                          elevation: 0.0,
-                                          borderColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .primaryBackground,
-                                          borderWidth: 1.0,
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        chipSpacing: 4.0,
-                                        rowSpacing: 4.0,
-                                        multiselect: true,
-                                        initialized:
-                                            _model.choiceChipsValues != null,
-                                        alignment: WrapAlignment.start,
-                                        controller: _model
-                                                .choiceChipsValueController ??=
-                                            FormFieldController<List<String>>(
-                                          ['All'],
-                                        ),
-                                        wrapped: true,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          16.0, 0.0, 16.0, 0.0),
                                       child: Container(
                                         width:
                                             MediaQuery.sizeOf(context).width *
                                                 1.0,
                                         height:
                                             MediaQuery.sizeOf(context).height *
-                                                0.54,
+                                                0.59,
                                         decoration: BoxDecoration(
                                           color: FlutterFlowTheme.of(context)
                                               .primaryBackground,
@@ -2767,11 +2620,11 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                     'Key4b8_${selectedIndex.toString()}',
                                                                   ),
                                                                   title: FFAppState()
-                                                                      .selectedViolation
+                                                                      .selectedViolationName
                                                                       .elementAtOrNull(
                                                                           selectedIndex)!,
                                                                   subtitle: FFAppState()
-                                                                      .selectedViolationSub
+                                                                      .selectedViolationSection
                                                                       .elementAtOrNull(
                                                                           selectedIndex),
                                                                   fine:
@@ -2793,7 +2646,8 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                               ),
                                                             ),
                                                             FlutterFlowIconButton(
-                                                              borderRadius: 8.0,
+                                                              borderRadius:
+                                                                  50.0,
                                                               buttonSize: 40.0,
                                                               icon: Icon(
                                                                 Icons
@@ -2805,18 +2659,20 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                               ),
                                                               onPressed:
                                                                   () async {
-                                                                FFAppState().removeFromSelectedViolation(
-                                                                    selectedIndex
-                                                                        .toString());
+                                                                FFAppState()
+                                                                    .removeFromSelectedViolationName(
+                                                                        selectedItem);
                                                                 FFAppState().removeFromSelectedViolationFine(
                                                                     selectedIndex
                                                                         .toDouble());
-                                                                FFAppState().removeFromSelectedViolationSub(
-                                                                    selectedIndex
-                                                                        .toString());
                                                                 FFAppState()
-                                                                    .update(
-                                                                        () {});
+                                                                    .removeFromSelectedViolationSection(
+                                                                        selectedItem);
+                                                                FFAppState()
+                                                                    .removeFromCitationRef(
+                                                                        selectedItem);
+                                                                safeSetState(
+                                                                    () {});
                                                               },
                                                             ),
                                                           ].divide(SizedBox(
@@ -2911,6 +2767,13 @@ class _TicketWidgetState extends State<TicketWidget> {
                                       Expanded(
                                         child: FFButtonWidget(
                                           onPressed: () async {
+                                            FFAppState().violationTotalFine =
+                                                functions.totalFines(
+                                                    FFAppState()
+                                                        .selectedViolationFine
+                                                        .toList());
+                                            safeSetState(() {});
+
                                             context.pushNamed(
                                                 TicketReceiptWidget.routeName);
                                           },
@@ -2942,9 +2805,10 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                 .titleSmall
                                                                 .fontStyle,
                                                       ),
-                                                      color: FlutterFlowTheme
-                                                              .of(context)
-                                                          .secondaryBackground,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText,
                                                       letterSpacing: 0.0,
                                                       fontWeight:
                                                           FlutterFlowTheme.of(

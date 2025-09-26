@@ -76,8 +76,6 @@ class _SigninWidgetState extends State<SigninWidget>
         ],
       ),
     });
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -108,7 +106,7 @@ class _SigninWidgetState extends State<SigninWidget>
                   gradient: LinearGradient(
                     colors: [
                       FlutterFlowTheme.of(context).primary,
-                      FlutterFlowTheme.of(context).secondaryBackground
+                      FlutterFlowTheme.of(context).primaryBackground
                     ],
                     stops: [0.0, 1.0],
                     begin: AlignmentDirectional(0.0, -1.0),
@@ -537,14 +535,40 @@ class _SigninWidgetState extends State<SigninWidget>
                                               return;
                                             }
 
-                                            context.goNamedAuth(
-                                                HomeWidget.routeName,
-                                                context.mounted);
+                                            if ((valueOrDefault(
+                                                        currentUserDocument
+                                                            ?.accStatus,
+                                                        '') ==
+                                                    'pending') &&
+                                                (valueOrDefault(
+                                                        currentUserDocument
+                                                            ?.accStatus,
+                                                        '') !=
+                                                    'active')) {
+                                              await currentUserReference!
+                                                  .update(createUsersRecordData(
+                                                status: false,
+                                                lastActive: getCurrentTimestamp,
+                                              ));
+                                              GoRouter.of(context)
+                                                  .prepareAuthEvent();
+                                              await authManager.signOut();
+                                              GoRouter.of(context)
+                                                  .clearRedirectLocation();
 
-                                            await currentUserReference!
-                                                .update(createUsersRecordData(
-                                              status: true,
-                                            ));
+                                              context.goNamedAuth(
+                                                  ApprovalAwaitWidget.routeName,
+                                                  context.mounted);
+                                            } else {
+                                              await currentUserReference!
+                                                  .update(createUsersRecordData(
+                                                status: true,
+                                              ));
+
+                                              context.goNamedAuth(
+                                                  HomeWidget.routeName,
+                                                  context.mounted);
+                                            }
                                           },
                                           text: 'Sign In',
                                           options: FFButtonOptions(

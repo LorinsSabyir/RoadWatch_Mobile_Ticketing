@@ -34,8 +34,6 @@ class _ViolationCardWidgetState extends State<ViolationCardWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => ViolationCardModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -56,19 +54,19 @@ class _ViolationCardWidgetState extends State<ViolationCardWidget> {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Flexible(
+            Expanded(
+              flex: 4,
               child: Container(
-                width: 250.0,
                 decoration: BoxDecoration(),
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
+                  mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       valueOrDefault<String>(
                         widget.title,
-                        'Violation Title',
+                        'Violation Section',
                       ).maybeHandleOverflow(
                         maxChars: 35,
                         replacement: '…',
@@ -95,7 +93,7 @@ class _ViolationCardWidgetState extends State<ViolationCardWidget> {
                     Text(
                       valueOrDefault<String>(
                         widget.subtitle,
-                        'violation subtitle',
+                        'violation Name',
                       ).maybeHandleOverflow(
                         maxChars: 40,
                         replacement: '…',
@@ -123,7 +121,8 @@ class _ViolationCardWidgetState extends State<ViolationCardWidget> {
                 ),
               ),
             ),
-            Flexible(
+            Expanded(
+              flex: 1,
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
                 child: Container(

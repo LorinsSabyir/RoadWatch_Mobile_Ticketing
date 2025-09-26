@@ -32,33 +32,33 @@ class FFAppState extends ChangeNotifier {
     _searchActive = value;
   }
 
-  List<String> _selectedViolation = [];
-  List<String> get selectedViolation => _selectedViolation;
-  set selectedViolation(List<String> value) {
-    _selectedViolation = value;
+  List<String> _selectedViolationName = [];
+  List<String> get selectedViolationName => _selectedViolationName;
+  set selectedViolationName(List<String> value) {
+    _selectedViolationName = value;
   }
 
-  void addToSelectedViolation(String value) {
-    selectedViolation.add(value);
+  void addToSelectedViolationName(String value) {
+    selectedViolationName.add(value);
   }
 
-  void removeFromSelectedViolation(String value) {
-    selectedViolation.remove(value);
+  void removeFromSelectedViolationName(String value) {
+    selectedViolationName.remove(value);
   }
 
-  void removeAtIndexFromSelectedViolation(int index) {
-    selectedViolation.removeAt(index);
+  void removeAtIndexFromSelectedViolationName(int index) {
+    selectedViolationName.removeAt(index);
   }
 
-  void updateSelectedViolationAtIndex(
+  void updateSelectedViolationNameAtIndex(
     int index,
     String Function(String) updateFn,
   ) {
-    selectedViolation[index] = updateFn(_selectedViolation[index]);
+    selectedViolationName[index] = updateFn(_selectedViolationName[index]);
   }
 
-  void insertAtIndexInSelectedViolation(int index, String value) {
-    selectedViolation.insert(index, value);
+  void insertAtIndexInSelectedViolationName(int index, String value) {
+    selectedViolationName.insert(index, value);
   }
 
   List<double> _selectedViolationFine = [];
@@ -90,87 +90,88 @@ class FFAppState extends ChangeNotifier {
     selectedViolationFine.insert(index, value);
   }
 
-  List<String> _selectedViolationSub = [];
-  List<String> get selectedViolationSub => _selectedViolationSub;
-  set selectedViolationSub(List<String> value) {
-    _selectedViolationSub = value;
+  List<String> _selectedViolationSection = [];
+  List<String> get selectedViolationSection => _selectedViolationSection;
+  set selectedViolationSection(List<String> value) {
+    _selectedViolationSection = value;
   }
 
-  void addToSelectedViolationSub(String value) {
-    selectedViolationSub.add(value);
+  void addToSelectedViolationSection(String value) {
+    selectedViolationSection.add(value);
   }
 
-  void removeFromSelectedViolationSub(String value) {
-    selectedViolationSub.remove(value);
+  void removeFromSelectedViolationSection(String value) {
+    selectedViolationSection.remove(value);
   }
 
-  void removeAtIndexFromSelectedViolationSub(int index) {
-    selectedViolationSub.removeAt(index);
+  void removeAtIndexFromSelectedViolationSection(int index) {
+    selectedViolationSection.removeAt(index);
   }
 
-  void updateSelectedViolationSubAtIndex(
+  void updateSelectedViolationSectionAtIndex(
     int index,
     String Function(String) updateFn,
   ) {
-    selectedViolationSub[index] = updateFn(_selectedViolationSub[index]);
+    selectedViolationSection[index] =
+        updateFn(_selectedViolationSection[index]);
   }
 
-  void insertAtIndexInSelectedViolationSub(int index, String value) {
-    selectedViolationSub.insert(index, value);
+  void insertAtIndexInSelectedViolationSection(int index, String value) {
+    selectedViolationSection.insert(index, value);
   }
 
-  String _violatorName = '';
-  String get violatorName => _violatorName;
-  set violatorName(String value) {
-    _violatorName = value;
+  String _violatorAddName = '';
+  String get violatorAddName => _violatorAddName;
+  set violatorAddName(String value) {
+    _violatorAddName = value;
   }
 
-  String _violatorContact = '';
-  String get violatorContact => _violatorContact;
-  set violatorContact(String value) {
-    _violatorContact = value;
+  String _violatorAddContact = '';
+  String get violatorAddContact => _violatorAddContact;
+  set violatorAddContact(String value) {
+    _violatorAddContact = value;
   }
 
-  String _violatorLicenseNum = '';
-  String get violatorLicenseNum => _violatorLicenseNum;
-  set violatorLicenseNum(String value) {
-    _violatorLicenseNum = value;
+  String _violatorAddLicenseNum = '';
+  String get violatorAddLicenseNum => _violatorAddLicenseNum;
+  set violatorAddLicenseNum(String value) {
+    _violatorAddLicenseNum = value;
   }
 
-  String _vehiclePlateNum = '';
-  String get vehiclePlateNum => _vehiclePlateNum;
-  set vehiclePlateNum(String value) {
-    _vehiclePlateNum = value;
+  String _vehicleAddPlateNum = '';
+  String get vehicleAddPlateNum => _vehicleAddPlateNum;
+  set vehicleAddPlateNum(String value) {
+    _vehicleAddPlateNum = value;
   }
 
-  String _vehicleType = '';
-  String get vehicleType => _vehicleType;
-  set vehicleType(String value) {
-    _vehicleType = value;
+  String _vehicleAddType = '';
+  String get vehicleAddType => _vehicleAddType;
+  set vehicleAddType(String value) {
+    _vehicleAddType = value;
   }
 
-  String _vehicleBrand = '';
-  String get vehicleBrand => _vehicleBrand;
-  set vehicleBrand(String value) {
-    _vehicleBrand = value;
+  String _vehicleAddBrand = '';
+  String get vehicleAddBrand => _vehicleAddBrand;
+  set vehicleAddBrand(String value) {
+    _vehicleAddBrand = value;
   }
 
-  String _vehicleModel = '';
-  String get vehicleModel => _vehicleModel;
-  set vehicleModel(String value) {
-    _vehicleModel = value;
+  String _vehicleAddModel = '';
+  String get vehicleAddModel => _vehicleAddModel;
+  set vehicleAddModel(String value) {
+    _vehicleAddModel = value;
   }
 
-  String _apprePlace = '';
-  String get apprePlace => _apprePlace;
-  set apprePlace(String value) {
-    _apprePlace = value;
+  String _appreAddPlace = '';
+  String get appreAddPlace => _appreAddPlace;
+  set appreAddPlace(String value) {
+    _appreAddPlace = value;
   }
 
-  String _vehicleSerialNum = '';
-  String get vehicleSerialNum => _vehicleSerialNum;
-  set vehicleSerialNum(String value) {
-    _vehicleSerialNum = value;
+  String _vehicleAddSerialNum = '';
+  String get vehicleAddSerialNum => _vehicleAddSerialNum;
+  set vehicleAddSerialNum(String value) {
+    _vehicleAddSerialNum = value;
   }
 
   String _appreEnforcer = '';
@@ -244,32 +245,9 @@ class FFAppState extends ChangeNotifier {
     _violatorAddPrk = value;
   }
 
-  List<String> _violationSection = [];
-  List<String> get violationSection => _violationSection;
-  set violationSection(List<String> value) {
-    _violationSection = value;
-  }
-
-  void addToViolationSection(String value) {
-    violationSection.add(value);
-  }
-
-  void removeFromViolationSection(String value) {
-    violationSection.remove(value);
-  }
-
-  void removeAtIndexFromViolationSection(int index) {
-    violationSection.removeAt(index);
-  }
-
-  void updateViolationSectionAtIndex(
-    int index,
-    String Function(String) updateFn,
-  ) {
-    violationSection[index] = updateFn(_violationSection[index]);
-  }
-
-  void insertAtIndexInViolationSection(int index, String value) {
-    violationSection.insert(index, value);
+  String _violatorAddGender = '';
+  String get violatorAddGender => _violatorAddGender;
+  set violatorAddGender(String value) {
+    _violatorAddGender = value;
   }
 }

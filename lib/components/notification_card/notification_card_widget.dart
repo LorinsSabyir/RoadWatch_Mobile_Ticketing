@@ -12,12 +12,14 @@ class NotificationCardWidget extends StatefulWidget {
     this.subtitle,
     this.pupose,
     this.date,
-  });
+    Color? titleColor,
+  }) : this.titleColor = titleColor ?? const Color(0xFFFFD500);
 
   final String? title;
   final String? subtitle;
   final String? pupose;
   final DateTime? date;
+  final Color titleColor;
 
   @override
   State<NotificationCardWidget> createState() => _NotificationCardWidgetState();
@@ -36,8 +38,6 @@ class _NotificationCardWidgetState extends State<NotificationCardWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => NotificationCardModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -57,7 +57,7 @@ class _NotificationCardWidgetState extends State<NotificationCardWidget> {
         boxShadow: [
           BoxShadow(
             blurRadius: 3.0,
-            color: Color(0x35000000),
+            color: Color(0x33000000),
             offset: Offset(
               0.0,
               1.0,
@@ -71,25 +71,6 @@ class _NotificationCardWidgetState extends State<NotificationCardWidget> {
         child: Row(
           mainAxisSize: MainAxisSize.max,
           children: [
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
-              child: Card(
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                color: FlutterFlowTheme.of(context).accent1,
-                elevation: 0.0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(40.0),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Icon(
-                    Icons.person,
-                    color: FlutterFlowTheme.of(context).primary,
-                    size: 24.0,
-                  ),
-                ),
-              ),
-            ),
             Expanded(
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 0.0, 0.0),
@@ -174,7 +155,10 @@ class _NotificationCardWidgetState extends State<NotificationCardWidget> {
                                 .titleLarge
                                 .fontStyle,
                           ),
-                          color: FlutterFlowTheme.of(context).primary,
+                          color: valueOrDefault<Color>(
+                            widget.titleColor,
+                            FlutterFlowTheme.of(context).primary,
+                          ),
                           letterSpacing: 0.0,
                           fontWeight: FlutterFlowTheme.of(context)
                               .titleLarge

@@ -5,12 +5,56 @@
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "appre_enforcer",
+          "fieldPath": "appre_enforcer_id",
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "appre_time",
+          "fieldPath": "appre_date_month",
+          "order": "DESCENDING"
+        },
+        {
+          "fieldPath": "appre_date_day",
+          "order": "DESCENDING"
+        },
+        {
+          "fieldPath": "appre_date_year",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "adminNotif",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "enforcer_id",
           "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "notif_type",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "created_time",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "adminNotif",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "enforcer_id",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "created_time",
+          "order": "DESCENDING"
+        },
+        {
+          "fieldPath": "edited_time",
+          "order": "DESCENDING"
         }
       ]
     }

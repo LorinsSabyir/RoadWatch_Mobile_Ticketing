@@ -4,7 +4,6 @@ import '/components/violation_card/violation_card_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,7 +14,7 @@ export 'ticket_receipt_model.dart';
 class TicketReceiptWidget extends StatefulWidget {
   const TicketReceiptWidget({super.key});
 
-  static String routeName = 'Ticket_Receipt';
+  static String routeName = 'TicketReceipt';
   static String routePath = '/ticketReceipt';
 
   @override
@@ -31,8 +30,6 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => TicketReceiptModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -123,12 +120,26 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                                           .fontStyle,
                                     ),
                               ),
-                              Text(
-                                'Purok Pinya, New Visayas',
-                                style: FlutterFlowTheme.of(context)
-                                    .displaySmall
-                                    .override(
-                                      font: GoogleFonts.urbanist(
+                              AuthUserStreamWidget(
+                                builder: (context) => Text(
+                                  valueOrDefault(
+                                      currentUserDocument?.assignmentLandmark,
+                                      ''),
+                                  style: FlutterFlowTheme.of(context)
+                                      .displaySmall
+                                      .override(
+                                        font: GoogleFonts.urbanist(
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .displaySmall
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .displaySmall
+                                                  .fontStyle,
+                                        ),
+                                        fontSize: 16.0,
+                                        letterSpacing: 0.0,
                                         fontWeight: FlutterFlowTheme.of(context)
                                             .displaySmall
                                             .fontWeight,
@@ -136,15 +147,7 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                                             .displaySmall
                                             .fontStyle,
                                       ),
-                                      fontSize: 16.0,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .displaySmall
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .displaySmall
-                                          .fontStyle,
-                                    ),
+                                ),
                               ),
                             ],
                           ),
@@ -235,7 +238,7 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                                     ),
                               ),
                               Text(
-                                FFAppState().violatorName,
+                                FFAppState().violatorAddName,
                                 style: FlutterFlowTheme.of(context)
                                     .displaySmall
                                     .override(
@@ -286,7 +289,7 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                                     ),
                               ),
                               Text(
-                                FFAppState().violatorLicenseNum,
+                                FFAppState().violatorAddLicenseNum,
                                 style: FlutterFlowTheme.of(context)
                                     .displaySmall
                                     .override(
@@ -337,7 +340,7 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                                     ),
                               ),
                               Text(
-                                FFAppState().vehiclePlateNum,
+                                FFAppState().vehicleAddPlateNum,
                                 style: FlutterFlowTheme.of(context)
                                     .displaySmall
                                     .override(
@@ -417,10 +420,10 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                                           'Keyvnb_${selectedItem}',
                                         ),
                                         title: FFAppState()
-                                            .selectedViolation
+                                            .selectedViolationName
                                             .elementAtOrNull(selectedIndex)!,
                                         subtitle: FFAppState()
-                                            .selectedViolationSub
+                                            .selectedViolationSection
                                             .elementAtOrNull(selectedIndex),
                                         fine: formatNumber(
                                           FFAppState()
@@ -504,11 +507,7 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                                   ),
                             ),
                             Text(
-                              functions
-                                  .totalFines(FFAppState()
-                                      .selectedViolationFine
-                                      .toList())
-                                  .toString(),
+                              FFAppState().violationTotalFine.toString(),
                               style: FlutterFlowTheme.of(context)
                                   .displaySmall
                                   .override(
@@ -594,22 +593,22 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                         onPressed: () async {
                           await CitationRecord.collection.doc().set({
                             ...createCitationRecordData(
-                              confUnitSerialNum: FFAppState().vehicleSerialNum,
-                              confUnitPlateNum: FFAppState().vehiclePlateNum,
-                              confUnitBrand: FFAppState().vehicleBrand,
-                              confUnitModel: FFAppState().vehicleModel,
+                              confUnitSerialNum:
+                                  FFAppState().vehicleAddSerialNum,
+                              confUnitPlateNum: FFAppState().vehicleAddPlateNum,
+                              confUnitBrand: FFAppState().vehicleAddBrand,
+                              confUnitModel: FFAppState().vehicleAddModel,
                               appreTime: dateTimeFormat(
                                 "jm",
                                 getCurrentTimestamp,
                                 locale:
                                     FFLocalizations.of(context).languageCode,
                               ),
-                              apprePlace: FFAppState().apprePlace,
-                              violatorName: FFAppState().violatorName,
+                              apprePlace: FFAppState().appreAddPlace,
+                              violatorName: FFAppState().violatorAddName,
                               appreEnforcer: currentUserDisplayName,
-                              violationTotalFine: functions.totalFines(
-                                  FFAppState().selectedViolationFine.toList()),
-                              confUnitDesc: '',
+                              confUnitDesc:
+                                  FFAppState().violationTotalFine.toString(),
                               violatorAddressProvince:
                                   FFAppState().violatorAddProvince,
                               violatorAddressCity: FFAppState().violatorAddCity,
@@ -617,7 +616,7 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                               violatorAddressPrk: FFAppState().violatorAddPrk,
                               appreEnforcerId: currentUserUid,
                               violatorLicenseNum:
-                                  FFAppState().violatorLicenseNum,
+                                  FFAppState().violatorAddLicenseNum,
                               appreDateMonth: dateTimeFormat(
                                 "MMMM",
                                 getCurrentTimestamp,
@@ -636,27 +635,37 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                                 locale:
                                     FFLocalizations.of(context).languageCode,
                               ),
+                              citationNumber: '',
+                              createdTime: getCurrentTimestamp,
+                              violationTotalFine:
+                                  FFAppState().violationTotalFine,
+                              violatorGender: FFAppState().violatorAddGender,
+                              confUnitType: FFAppState().vehicleAddType,
+                              appreEnfId: currentUserReference,
                             ),
                             ...mapToFirestore(
                               {
-                                'violation': FFAppState().selectedViolationSub,
                                 'violation_section':
-                                    FFAppState().selectedViolation,
+                                    FFAppState().selectedViolationSection,
+                                'violation_fine':
+                                    FFAppState().selectedViolationFine,
+                                'violation_name':
+                                    FFAppState().selectedViolationName,
                               },
                             ),
                           });
-                          FFAppState().selectedViolation = [];
+                          FFAppState().selectedViolationName = [];
                           FFAppState().selectedViolationFine = [];
-                          FFAppState().selectedViolationSub = [];
-                          FFAppState().violatorName = '';
-                          FFAppState().violatorContact = '';
-                          FFAppState().violatorLicenseNum = '';
-                          FFAppState().vehiclePlateNum = '';
-                          FFAppState().vehicleType = '';
-                          FFAppState().vehicleBrand = '';
-                          FFAppState().vehicleModel = '';
-                          FFAppState().apprePlace = '';
-                          FFAppState().vehicleSerialNum = '';
+                          FFAppState().selectedViolationSection = [];
+                          FFAppState().violatorAddName = '';
+                          FFAppState().violatorAddContact = '';
+                          FFAppState().violatorAddLicenseNum = '';
+                          FFAppState().vehicleAddPlateNum = '';
+                          FFAppState().vehicleAddType = '';
+                          FFAppState().vehicleAddBrand = '';
+                          FFAppState().vehicleAddModel = '';
+                          FFAppState().appreAddPlace = '';
+                          FFAppState().vehicleAddSerialNum = '';
                           FFAppState().violationTotalFine = 0.0;
                           FFAppState().citationNumber = 0;
                           FFAppState().citationRef = [];
@@ -664,6 +673,7 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                           FFAppState().violatorAddCity = '';
                           FFAppState().violatorAddBrgy = '';
                           FFAppState().violatorAddPrk = '';
+                          FFAppState().violatorAddGender = '';
                           FFAppState().update(() {});
 
                           context.goNamed(TicketWidget.routeName);

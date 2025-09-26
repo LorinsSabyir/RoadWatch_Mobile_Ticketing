@@ -1,6 +1,5 @@
 import '/backend/backend.dart';
 import '/components/violation_card/violation_card_widget.dart';
-import '/flutter_flow/flutter_flow_autocomplete_options_list.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -41,8 +40,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
     });
 
     _model.searchbarTextController ??= TextEditingController();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
+    _model.searchbarFocusNode ??= FocusNode();
   }
 
   @override
@@ -57,9 +55,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
     context.watch<FFAppState>();
 
     return StreamBuilder<List<ViolationRecord>>(
-      stream: queryViolationRecord(
-        queryBuilder: (violationRecord) => violationRecord.orderBy('code'),
-      ),
+      stream: queryViolationRecord(),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -188,269 +184,166 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                             width: MediaQuery.sizeOf(context)
                                                     .width *
                                                 1.0,
-                                            child: Autocomplete<String>(
-                                              initialValue: TextEditingValue(),
-                                              optionsBuilder:
-                                                  (textEditingValue) {
-                                                if (textEditingValue.text ==
-                                                    '') {
-                                                  return const Iterable<
-                                                      String>.empty();
-                                                }
-                                                return searchPageViolationRecordList
-                                                    .map((e) => e.code)
-                                                    .toList()
-                                                    .where((option) {
-                                                  final lowercaseOption =
-                                                      option.toLowerCase();
-                                                  return lowercaseOption
-                                                      .contains(textEditingValue
-                                                          .text
-                                                          .toLowerCase());
-                                                });
-                                              },
-                                              optionsViewBuilder: (context,
-                                                  onSelected, options) {
-                                                return AutocompleteOptionsList(
-                                                  textFieldKey:
-                                                      _model.searchbarKey,
-                                                  textController: _model
-                                                      .searchbarTextController!,
-                                                  options: options.toList(),
-                                                  onSelected: onSelected,
-                                                  textStyle: FlutterFlowTheme
-                                                          .of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        font:
-                                                            GoogleFonts.manrope(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontStyle,
-                                                        ),
-                                                        letterSpacing: 0.0,
+                                            child: TextFormField(
+                                              controller: _model
+                                                  .searchbarTextController,
+                                              focusNode:
+                                                  _model.searchbarFocusNode,
+                                              onChanged: (_) =>
+                                                  EasyDebounce.debounce(
+                                                '_model.searchbarTextController',
+                                                Duration(milliseconds: 2000),
+                                                () async {
+                                                  safeSetState(() {
+                                                    _model.simpleSearchResults =
+                                                        TextSearch(
+                                                      searchPageViolationRecordList
+                                                          .map(
+                                                            (record) =>
+                                                                TextSearchItem
+                                                                    .fromTerms(
+                                                                        record,
+                                                                        [
+                                                                  record
+                                                                      .violationName,
+                                                                  record
+                                                                      .violationTitle
+                                                                ]),
+                                                          )
+                                                          .toList(),
+                                                    )
+                                                            .search(_model
+                                                                .searchbarTextController
+                                                                .text)
+                                                            .map(
+                                                                (r) => r.object)
+                                                            .toList();
+                                                    ;
+                                                  });
+                                                  FFAppState().searchActive =
+                                                      true;
+                                                  safeSetState(() {});
+                                                },
+                                              ),
+                                              autofocus: false,
+                                              obscureText: false,
+                                              decoration: InputDecoration(
+                                                hintText: 'Search...',
+                                                hintStyle: FlutterFlowTheme.of(
+                                                        context)
+                                                    .bodyLarge
+                                                    .override(
+                                                      font: GoogleFonts.manrope(
                                                         fontWeight:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyMedium
+                                                                .bodyLarge
                                                                 .fontWeight,
                                                         fontStyle:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyMedium
+                                                                .bodyLarge
                                                                 .fontStyle,
                                                       ),
-                                                  textHighlightStyle:
-                                                      TextStyle(),
-                                                  elevation: 4.0,
-                                                  optionBackgroundColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .primaryBackground,
-                                                  optionHighlightColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .secondaryBackground,
-                                                  maxHeight: 200.0,
-                                                );
-                                              },
-                                              onSelected: (String selection) {
-                                                safeSetState(() => _model
-                                                        .searchbarSelectedOption =
-                                                    selection);
-                                                FocusScope.of(context)
-                                                    .unfocus();
-                                              },
-                                              fieldViewBuilder: (
-                                                context,
-                                                textEditingController,
-                                                focusNode,
-                                                onEditingComplete,
-                                              ) {
-                                                _model.searchbarFocusNode =
-                                                    focusNode;
-
-                                                _model.searchbarTextController =
-                                                    textEditingController;
-                                                return TextFormField(
-                                                  key: _model.searchbarKey,
-                                                  controller:
-                                                      textEditingController,
-                                                  focusNode: focusNode,
-                                                  onEditingComplete:
-                                                      onEditingComplete,
-                                                  onChanged: (_) =>
-                                                      EasyDebounce.debounce(
-                                                    '_model.searchbarTextController',
-                                                    Duration(
-                                                        milliseconds: 2000),
-                                                    () async {
-                                                      safeSetState(() {
-                                                        _model.simpleSearchResults =
-                                                            TextSearch(
-                                                          searchPageViolationRecordList
-                                                              .map(
-                                                                (record) =>
-                                                                    TextSearchItem
-                                                                        .fromTerms(
-                                                                            record,
-                                                                            [
-                                                                      record
-                                                                          .violationName,
-                                                                      record
-                                                                          .code
-                                                                    ]),
-                                                              )
-                                                              .toList(),
-                                                        )
-                                                                .search(_model
-                                                                    .searchbarTextController
-                                                                    .text)
-                                                                .map((r) =>
-                                                                    r.object)
-                                                                .toList();
-                                                        ;
-                                                      });
-                                                      FFAppState()
-                                                          .searchActive = true;
-                                                      safeSetState(() {});
-                                                    },
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .textboxTextHollow,
+                                                      fontSize: 14.0,
+                                                      letterSpacing: 0.0,
+                                                      fontWeight:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyLarge
+                                                              .fontWeight,
+                                                      fontStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyLarge
+                                                              .fontStyle,
+                                                    ),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color(0x00000000),
+                                                    width: 1.0,
                                                   ),
-                                                  autofocus: false,
-                                                  obscureText: false,
-                                                  decoration: InputDecoration(
-                                                    hintText: 'Search...',
-                                                    hintStyle:
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12.0),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color(0x00000000),
+                                                    width: 1.0,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12.0),
+                                                ),
+                                                errorBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .alternate,
+                                                    width: 1.0,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12.0),
+                                                ),
+                                                focusedErrorBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .alternate,
+                                                    width: 1.0,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12.0),
+                                                ),
+                                              ),
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyLarge
+                                                  .override(
+                                                    font: GoogleFonts.manrope(
+                                                      fontWeight:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyLarge
+                                                              .fontWeight,
+                                                      fontStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyLarge
+                                                              .fontStyle,
+                                                    ),
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .textboxTextActive,
+                                                    letterSpacing: 0.0,
+                                                    fontWeight:
                                                         FlutterFlowTheme.of(
                                                                 context)
                                                             .bodyLarge
-                                                            .override(
-                                                              font: GoogleFonts
-                                                                  .manrope(
-                                                                fontWeight: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyLarge
-                                                                    .fontWeight,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyLarge
-                                                                    .fontStyle,
-                                                              ),
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .textboxTextHollow,
-                                                              fontSize: 14.0,
-                                                              letterSpacing:
-                                                                  0.0,
-                                                              fontWeight:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyLarge
-                                                                      .fontWeight,
-                                                              fontStyle:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyLarge
-                                                                      .fontStyle,
-                                                            ),
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            Color(0x00000000),
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12.0),
-                                                    ),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            Color(0x00000000),
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12.0),
-                                                    ),
-                                                    errorBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .alternate,
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12.0),
-                                                    ),
-                                                    focusedErrorBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .alternate,
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12.0),
-                                                    ),
+                                                            .fontWeight,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyLarge
+                                                            .fontStyle,
                                                   ),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyLarge
-                                                      .override(
-                                                        font:
-                                                            GoogleFonts.manrope(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyLarge
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyLarge
-                                                                  .fontStyle,
-                                                        ),
-                                                        color: FlutterFlowTheme
-                                                                .of(context)
-                                                            .textboxTextActive,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyLarge
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyLarge
-                                                                .fontStyle,
-                                                      ),
-                                                  validator: _model
-                                                      .searchbarTextControllerValidator
-                                                      .asValidator(context),
-                                                );
-                                              },
+                                              validator: _model
+                                                  .searchbarTextControllerValidator
+                                                  .asValidator(context),
                                             ),
                                           ),
                                         ),
                                         FlutterFlowIconButton(
-                                          borderRadius: 8.0,
+                                          borderRadius: 50.0,
                                           buttonSize: 40.0,
                                           icon: Icon(
                                             Icons.close,
@@ -484,342 +377,360 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 0.0, 0.0),
-                            child: Text(
-                              'Searched results',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    font: GoogleFonts.manrope(
-                                      fontWeight: FontWeight.w600,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
-                                    fontSize: 12.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w600,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
-                                  ),
-                            ),
-                          ),
                           if (!FFAppState().searchActive)
-                            Builder(
-                              builder: (context) {
-                                final violationSearch =
-                                    searchPageViolationRecordList.toList();
+                            Container(
+                              decoration: BoxDecoration(),
+                              child: Builder(
+                                builder: (context) {
+                                  final noSearch =
+                                      searchPageViolationRecordList.toList();
 
-                                return ListView.builder(
-                                  padding: EdgeInsets.zero,
-                                  primary: false,
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: violationSearch.length,
-                                  itemBuilder: (context, violationSearchIndex) {
-                                    final violationSearchItem =
-                                        violationSearch[violationSearchIndex];
-                                    return Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          16.0, 0.0, 16.0, 0.0),
-                                      child: Container(
-                                        width: 100.0,
-                                        decoration: BoxDecoration(),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children: [
-                                            Expanded(
-                                              child: wrapWithModel(
-                                                model: _model
-                                                    .violationCardModels1
-                                                    .getModel(
-                                                  violationSearchItem.id,
-                                                  violationSearchIndex,
-                                                ),
-                                                updateCallback: () =>
-                                                    safeSetState(() {}),
-                                                child: ViolationCardWidget(
-                                                  key: Key(
-                                                    'Keyhxz_${violationSearchItem.id}',
+                                  return ListView.builder(
+                                    padding: EdgeInsets.zero,
+                                    primary: false,
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: noSearch.length,
+                                    itemBuilder: (context, noSearchIndex) {
+                                      final noSearchItem =
+                                          noSearch[noSearchIndex];
+                                      return Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 0.0, 16.0, 0.0),
+                                        child: Container(
+                                          width: 100.0,
+                                          decoration: BoxDecoration(),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Expanded(
+                                                child: wrapWithModel(
+                                                  model: _model
+                                                      .violationCardModels1
+                                                      .getModel(
+                                                    noSearchItem.id,
+                                                    noSearchIndex,
                                                   ),
-                                                  title:
-                                                      violationSearchItem.code,
-                                                  subtitle: violationSearchItem
-                                                      .violationName,
-                                                  fine: formatNumber(
-                                                    violationSearchItem.fines,
-                                                    formatType:
-                                                        FormatType.decimal,
-                                                    decimalType:
-                                                        DecimalType.automatic,
-                                                    currency: '₱',
+                                                  updateCallback: () =>
+                                                      safeSetState(() {}),
+                                                  child: ViolationCardWidget(
+                                                    key: Key(
+                                                      'Keyhxz_${noSearchItem.id}',
+                                                    ),
+                                                    title: noSearchItem.section,
+                                                    subtitle: noSearchItem
+                                                        .violationName,
+                                                    fine: formatNumber(
+                                                      noSearchItem.fines,
+                                                      formatType:
+                                                          FormatType.decimal,
+                                                      decimalType:
+                                                          DecimalType.automatic,
+                                                      currency: '₱',
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Container(
+                                                width: 40.0,
+                                                height: 40.0,
+                                                decoration: BoxDecoration(),
+                                                child: Visibility(
+                                                  visible: FFAppState()
+                                                          .citationRef
+                                                          .contains(noSearchItem
+                                                              .id) ==
+                                                      false,
+                                                  child: FlutterFlowIconButton(
+                                                    borderRadius: 50.0,
+                                                    buttonSize: 40.0,
+                                                    icon: Icon(
+                                                      Icons.add,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary,
+                                                      size: 24.0,
+                                                    ),
+                                                    onPressed: () async {
+                                                      if (FFAppState()
+                                                              .citationRef
+                                                              .contains(
+                                                                  noSearchItem
+                                                                      .id) ==
+                                                          true) {
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .showSnackBar(
+                                                          SnackBar(
+                                                            content: Text(
+                                                              'Violation already exist',
+                                                              style: TextStyle(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryBackground,
+                                                              ),
+                                                            ),
+                                                            duration: Duration(
+                                                                milliseconds:
+                                                                    4000),
+                                                            backgroundColor:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .error,
+                                                          ),
+                                                        );
+                                                      } else {
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .showSnackBar(
+                                                          SnackBar(
+                                                            content: Text(
+                                                              'Sucessfully added',
+                                                              style: TextStyle(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText,
+                                                              ),
+                                                            ),
+                                                            duration: Duration(
+                                                                milliseconds:
+                                                                    4000),
+                                                            backgroundColor:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondary,
+                                                          ),
+                                                        );
+                                                        FFAppState()
+                                                            .addToSelectedViolationName(
+                                                                noSearchItem
+                                                                    .violationName);
+                                                        FFAppState()
+                                                            .addToSelectedViolationFine(
+                                                                noSearchItem
+                                                                    .fines);
+                                                        FFAppState()
+                                                            .addToSelectedViolationSection(
+                                                                noSearchItem
+                                                                    .section);
+                                                        FFAppState()
+                                                            .addToCitationRef(
+                                                                noSearchItem
+                                                                    .id);
+                                                        safeSetState(() {});
+                                                      }
+                                                    },
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                            Container(
-                                              width: 40.0,
-                                              height: 40.0,
-                                              decoration: BoxDecoration(),
-                                              child: Visibility(
-                                                visible: FFAppState()
-                                                        .citationRef
-                                                        .contains(
-                                                            violationSearchItem
-                                                                .id) ==
-                                                    false,
-                                                child: FlutterFlowIconButton(
-                                                  borderRadius: 8.0,
-                                                  buttonSize: 40.0,
-                                                  icon: Icon(
-                                                    Icons.add,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primary,
-                                                    size: 24.0,
-                                                  ),
-                                                  onPressed: () async {
-                                                    if (FFAppState()
-                                                            .citationRef
-                                                            .contains(
-                                                                violationSearchItem
-                                                                    .id) ==
-                                                        true) {
-                                                      ScaffoldMessenger.of(
-                                                              context)
-                                                          .showSnackBar(
-                                                        SnackBar(
-                                                          content: Text(
-                                                            'Violation already exist',
-                                                            style: TextStyle(
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .secondaryBackground,
-                                                            ),
-                                                          ),
-                                                          duration: Duration(
-                                                              milliseconds:
-                                                                  4000),
-                                                          backgroundColor:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .error,
-                                                        ),
-                                                      );
-                                                    } else {
-                                                      ScaffoldMessenger.of(
-                                                              context)
-                                                          .showSnackBar(
-                                                        SnackBar(
-                                                          content: Text(
-                                                            'Sucessfully added',
-                                                            style: TextStyle(
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryText,
-                                                            ),
-                                                          ),
-                                                          duration: Duration(
-                                                              milliseconds:
-                                                                  4000),
-                                                          backgroundColor:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .secondary,
-                                                        ),
-                                                      );
-                                                      FFAppState()
-                                                          .addToSelectedViolation(
-                                                              violationSearchItem
-                                                                  .code);
-                                                      FFAppState()
-                                                          .addToSelectedViolationFine(
-                                                              violationSearchItem
-                                                                  .fines
-                                                                  .toDouble());
-                                                      FFAppState()
-                                                          .addToSelectedViolationSub(
-                                                              violationSearchItem
-                                                                  .violationName);
-                                                      FFAppState()
-                                                          .addToCitationRef(
-                                                              violationSearchItem
-                                                                  .id);
-                                                      safeSetState(() {});
-                                                    }
-                                                  },
-                                                ),
-                                              ),
-                                            ),
-                                          ].divide(SizedBox(width: 4.0)),
+                                            ].divide(SizedBox(width: 4.0)),
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
                             ),
                           if (FFAppState().searchActive)
-                            Builder(
-                              builder: (context) {
-                                final violationSearch =
-                                    _model.simpleSearchResults.toList();
+                            Container(
+                              decoration: BoxDecoration(),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        16.0, 0.0, 0.0, 0.0),
+                                    child: Text(
+                                      'Searched results',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            font: GoogleFonts.manrope(
+                                              fontWeight: FontWeight.w600,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                            ),
+                                            fontSize: 12.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w600,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
+                                          ),
+                                    ),
+                                  ),
+                                  Builder(
+                                    builder: (context) {
+                                      final search =
+                                          _model.simpleSearchResults.toList();
 
-                                return ListView.builder(
-                                  padding: EdgeInsets.zero,
-                                  primary: false,
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: violationSearch.length,
-                                  itemBuilder: (context, violationSearchIndex) {
-                                    final violationSearchItem =
-                                        violationSearch[violationSearchIndex];
-                                    return Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          16.0, 0.0, 16.0, 0.0),
-                                      child: Container(
-                                        width: 100.0,
-                                        decoration: BoxDecoration(),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children: [
-                                            Expanded(
-                                              child: wrapWithModel(
-                                                model: _model
-                                                    .violationCardModels2
-                                                    .getModel(
-                                                  violationSearchItem.id,
-                                                  violationSearchIndex,
-                                                ),
-                                                updateCallback: () =>
-                                                    safeSetState(() {}),
-                                                child: ViolationCardWidget(
-                                                  key: Key(
-                                                    'Keyqt1_${violationSearchItem.id}',
-                                                  ),
-                                                  title:
-                                                      violationSearchItem.code,
-                                                  subtitle: violationSearchItem
-                                                      .violationName,
-                                                  fine: formatNumber(
-                                                    violationSearchItem.fines,
-                                                    formatType:
-                                                        FormatType.decimal,
-                                                    decimalType:
-                                                        DecimalType.automatic,
-                                                    currency: '₱',
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              width: 40.0,
-                                              height: 40.0,
+                                      return ListView.builder(
+                                        padding: EdgeInsets.zero,
+                                        primary: false,
+                                        shrinkWrap: true,
+                                        scrollDirection: Axis.vertical,
+                                        itemCount: search.length,
+                                        itemBuilder: (context, searchIndex) {
+                                          final searchItem =
+                                              search[searchIndex];
+                                          return Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    16.0, 0.0, 16.0, 0.0),
+                                            child: Container(
+                                              width: 100.0,
                                               decoration: BoxDecoration(),
-                                              child: Visibility(
-                                                visible: FFAppState()
-                                                        .citationRef
-                                                        .contains(
-                                                            violationSearchItem
-                                                                .id) ==
-                                                    false,
-                                                child: FlutterFlowIconButton(
-                                                  borderRadius: 8.0,
-                                                  buttonSize: 40.0,
-                                                  icon: Icon(
-                                                    Icons.add,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primary,
-                                                    size: 24.0,
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceAround,
+                                                children: [
+                                                  Expanded(
+                                                    child: wrapWithModel(
+                                                      model: _model
+                                                          .violationCardModels2
+                                                          .getModel(
+                                                        searchItem.id,
+                                                        searchIndex,
+                                                      ),
+                                                      updateCallback: () =>
+                                                          safeSetState(() {}),
+                                                      child:
+                                                          ViolationCardWidget(
+                                                        key: Key(
+                                                          'Keyqt1_${searchItem.id}',
+                                                        ),
+                                                        title:
+                                                            searchItem.section,
+                                                        subtitle: searchItem
+                                                            .violationName,
+                                                        fine: formatNumber(
+                                                          searchItem.fines,
+                                                          formatType: FormatType
+                                                              .decimal,
+                                                          decimalType:
+                                                              DecimalType
+                                                                  .automatic,
+                                                          currency: '₱',
+                                                        ),
+                                                      ),
+                                                    ),
                                                   ),
-                                                  onPressed: () async {
-                                                    if (FFAppState()
-                                                            .citationRef
-                                                            .contains(
-                                                                violationSearchItem
-                                                                    .id) ==
-                                                        true) {
-                                                      ScaffoldMessenger.of(
-                                                              context)
-                                                          .showSnackBar(
-                                                        SnackBar(
-                                                          content: Text(
-                                                            'Violation already exist',
-                                                            style: TextStyle(
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .secondaryBackground,
-                                                            ),
-                                                          ),
-                                                          duration: Duration(
-                                                              milliseconds:
-                                                                  4000),
-                                                          backgroundColor:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .error,
+                                                  Container(
+                                                    width: 40.0,
+                                                    height: 40.0,
+                                                    decoration: BoxDecoration(),
+                                                    child: Visibility(
+                                                      visible: FFAppState()
+                                                              .citationRef
+                                                              .contains(
+                                                                  searchItem
+                                                                      .id) ==
+                                                          false,
+                                                      child:
+                                                          FlutterFlowIconButton(
+                                                        borderRadius: 50.0,
+                                                        buttonSize: 40.0,
+                                                        icon: Icon(
+                                                          Icons.add,
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primary,
+                                                          size: 24.0,
                                                         ),
-                                                      );
-                                                    } else {
-                                                      ScaffoldMessenger.of(
-                                                              context)
-                                                          .showSnackBar(
-                                                        SnackBar(
-                                                          content: Text(
-                                                            'Sucessfully added',
-                                                            style: TextStyle(
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryText,
-                                                            ),
-                                                          ),
-                                                          duration: Duration(
-                                                              milliseconds:
-                                                                  4000),
-                                                          backgroundColor:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .secondary,
-                                                        ),
-                                                      );
-                                                      FFAppState()
-                                                          .addToSelectedViolation(
-                                                              violationSearchItem
-                                                                  .code);
-                                                      FFAppState()
-                                                          .addToSelectedViolationFine(
-                                                              violationSearchItem
-                                                                  .fines
-                                                                  .toDouble());
-                                                      FFAppState()
-                                                          .addToSelectedViolationSub(
-                                                              violationSearchItem
-                                                                  .violationName);
-                                                      FFAppState()
-                                                          .addToCitationRef(
-                                                              violationSearchItem
-                                                                  .id);
-                                                      safeSetState(() {});
-                                                    }
-                                                  },
-                                                ),
+                                                        onPressed: () async {
+                                                          if (FFAppState()
+                                                                  .citationRef
+                                                                  .contains(
+                                                                      searchItem
+                                                                          .id) ==
+                                                              true) {
+                                                            ScaffoldMessenger
+                                                                    .of(context)
+                                                                .showSnackBar(
+                                                              SnackBar(
+                                                                content: Text(
+                                                                  'Violation already exist',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .secondaryBackground,
+                                                                  ),
+                                                                ),
+                                                                duration: Duration(
+                                                                    milliseconds:
+                                                                        4000),
+                                                                backgroundColor:
+                                                                    FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .error,
+                                                              ),
+                                                            );
+                                                          } else {
+                                                            ScaffoldMessenger
+                                                                    .of(context)
+                                                                .showSnackBar(
+                                                              SnackBar(
+                                                                content: Text(
+                                                                  'Sucessfully added',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primaryText,
+                                                                  ),
+                                                                ),
+                                                                duration: Duration(
+                                                                    milliseconds:
+                                                                        4000),
+                                                                backgroundColor:
+                                                                    FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .secondary,
+                                                              ),
+                                                            );
+                                                            FFAppState()
+                                                                .addToSelectedViolationName(
+                                                                    searchItem
+                                                                        .violationName);
+                                                            FFAppState()
+                                                                .addToSelectedViolationFine(
+                                                                    searchItem
+                                                                        .fines);
+                                                            FFAppState()
+                                                                .addToSelectedViolationSection(
+                                                                    searchItem
+                                                                        .section);
+                                                            FFAppState()
+                                                                .addToCitationRef(
+                                                                    searchItem
+                                                                        .id);
+                                                            safeSetState(() {});
+                                                          }
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ].divide(SizedBox(width: 4.0)),
                                               ),
                                             ),
-                                          ].divide(SizedBox(width: 4.0)),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
                             ),
                         ],
                       ),

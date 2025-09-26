@@ -16,69 +16,57 @@ class TicketModel extends FlutterFlowModel<TicketWidget> {
           pageViewController!.page != null
       ? pageViewController!.page!.round()
       : 0;
-  // State field(s) for violatorName_create widget.
-  FocusNode? violatorNameCreateFocusNode;
-  TextEditingController? violatorNameCreateTextController;
+  // State field(s) for violatorName widget.
+  FocusNode? violatorNameFocusNode;
+  TextEditingController? violatorNameTextController;
+  String? Function(BuildContext, String?)? violatorNameTextControllerValidator;
+  // State field(s) for violatorGender widget.
+  String? violatorGenderValue;
+  FormFieldController<String>? violatorGenderValueController;
+  // State field(s) for violatorContactNum widget.
+  FocusNode? violatorContactNumFocusNode;
+  TextEditingController? violatorContactNumTextController;
   String? Function(BuildContext, String?)?
-      violatorNameCreateTextControllerValidator;
-  // State field(s) for violatorContactNum_create widget.
-  FocusNode? violatorContactNumCreateFocusNode;
-  TextEditingController? violatorContactNumCreateTextController;
+      violatorContactNumTextControllerValidator;
+  // State field(s) for violatorLicenseNum widget.
+  FocusNode? violatorLicenseNumFocusNode;
+  TextEditingController? violatorLicenseNumTextController;
   String? Function(BuildContext, String?)?
-      violatorContactNumCreateTextControllerValidator;
-  // State field(s) for violatorLicenseNum_create widget.
-  FocusNode? violatorLicenseNumCreateFocusNode;
-  TextEditingController? violatorLicenseNumCreateTextController;
+      violatorLicenseNumTextControllerValidator;
+  // State field(s) for violatorProvince widget.
+  String? violatorProvinceValue;
+  FormFieldController<String>? violatorProvinceValueController;
+  // State field(s) for violatorCity widget.
+  String? violatorCityValue;
+  FormFieldController<String>? violatorCityValueController;
+  // State field(s) for violatorBrgy widget.
+  String? violatorBrgyValue;
+  FormFieldController<String>? violatorBrgyValueController;
+  // State field(s) for violatorPrk widget.
+  FocusNode? violatorPrkFocusNode;
+  TextEditingController? violatorPrkTextController;
+  String? Function(BuildContext, String?)? violatorPrkTextControllerValidator;
+  // State field(s) for vehiclePlateNum widget.
+  FocusNode? vehiclePlateNumFocusNode;
+  TextEditingController? vehiclePlateNumTextController;
   String? Function(BuildContext, String?)?
-      violatorLicenseNumCreateTextControllerValidator;
-  // State field(s) for violatorAddPrk_create widget.
-  FocusNode? violatorAddPrkCreateFocusNode;
-  TextEditingController? violatorAddPrkCreateTextController;
+      vehiclePlateNumTextControllerValidator;
+  // State field(s) for vehicleSerialNum widget.
+  FocusNode? vehicleSerialNumFocusNode;
+  TextEditingController? vehicleSerialNumTextController;
   String? Function(BuildContext, String?)?
-      violatorAddPrkCreateTextControllerValidator;
-  // State field(s) for violatorAddBrgy_create widget.
-  FocusNode? violatorAddBrgyCreateFocusNode;
-  TextEditingController? violatorAddBrgyCreateTextController;
-  String? Function(BuildContext, String?)?
-      violatorAddBrgyCreateTextControllerValidator;
-  // State field(s) for violatorAddCity_create widget.
-  FocusNode? violatorAddCityCreateFocusNode;
-  TextEditingController? violatorAddCityCreateTextController;
-  String? Function(BuildContext, String?)?
-      violatorAddCityCreateTextControllerValidator;
-  // State field(s) for violatorAddProvince_create widget.
-  FocusNode? violatorAddProvinceCreateFocusNode;
-  TextEditingController? violatorAddProvinceCreateTextController;
-  String? Function(BuildContext, String?)?
-      violatorAddProvinceCreateTextControllerValidator;
-  // State field(s) for vehiclePlateNum_create widget.
-  FocusNode? vehiclePlateNumCreateFocusNode;
-  TextEditingController? vehiclePlateNumCreateTextController;
-  String? Function(BuildContext, String?)?
-      vehiclePlateNumCreateTextControllerValidator;
-  // State field(s) for vehicleSerialNum_create widget.
-  FocusNode? vehicleSerialNumCreateFocusNode;
-  TextEditingController? vehicleSerialNumCreateTextController;
-  String? Function(BuildContext, String?)?
-      vehicleSerialNumCreateTextControllerValidator;
-  // State field(s) for vehicleType_create widget.
-  String? vehicleTypeCreateValue;
-  FormFieldController<String>? vehicleTypeCreateValueController;
-  // State field(s) for vehicleBrand_create widget.
-  FocusNode? vehicleBrandCreateFocusNode;
-  TextEditingController? vehicleBrandCreateTextController;
-  String? Function(BuildContext, String?)?
-      vehicleBrandCreateTextControllerValidator;
-  // State field(s) for vehicleModel_create widget.
-  FocusNode? vehicleModelCreateFocusNode;
-  TextEditingController? vehicleModelCreateTextController;
-  String? Function(BuildContext, String?)?
-      vehicleModelCreateTextControllerValidator;
-  // State field(s) for ChoiceChips widget.
-  FormFieldController<List<String>>? choiceChipsValueController;
-  List<String>? get choiceChipsValues => choiceChipsValueController?.value;
-  set choiceChipsValues(List<String>? val) =>
-      choiceChipsValueController?.value = val;
+      vehicleSerialNumTextControllerValidator;
+  // State field(s) for vehicleType widget.
+  String? vehicleTypeValue;
+  FormFieldController<String>? vehicleTypeValueController;
+  // State field(s) for vehicleBrand widget.
+  FocusNode? vehicleBrandFocusNode;
+  TextEditingController? vehicleBrandTextController;
+  String? Function(BuildContext, String?)? vehicleBrandTextControllerValidator;
+  // State field(s) for vehicleModel widget.
+  FocusNode? vehicleModelFocusNode;
+  TextEditingController? vehicleModelTextController;
+  String? Function(BuildContext, String?)? vehicleModelTextControllerValidator;
   // Models for ViolationCard dynamic component.
   late FlutterFlowDynamicModels<ViolationCardModel> violationCardModels;
 
@@ -89,38 +77,29 @@ class TicketModel extends FlutterFlowModel<TicketWidget> {
 
   @override
   void dispose() {
-    violatorNameCreateFocusNode?.dispose();
-    violatorNameCreateTextController?.dispose();
+    violatorNameFocusNode?.dispose();
+    violatorNameTextController?.dispose();
 
-    violatorContactNumCreateFocusNode?.dispose();
-    violatorContactNumCreateTextController?.dispose();
+    violatorContactNumFocusNode?.dispose();
+    violatorContactNumTextController?.dispose();
 
-    violatorLicenseNumCreateFocusNode?.dispose();
-    violatorLicenseNumCreateTextController?.dispose();
+    violatorLicenseNumFocusNode?.dispose();
+    violatorLicenseNumTextController?.dispose();
 
-    violatorAddPrkCreateFocusNode?.dispose();
-    violatorAddPrkCreateTextController?.dispose();
+    violatorPrkFocusNode?.dispose();
+    violatorPrkTextController?.dispose();
 
-    violatorAddBrgyCreateFocusNode?.dispose();
-    violatorAddBrgyCreateTextController?.dispose();
+    vehiclePlateNumFocusNode?.dispose();
+    vehiclePlateNumTextController?.dispose();
 
-    violatorAddCityCreateFocusNode?.dispose();
-    violatorAddCityCreateTextController?.dispose();
+    vehicleSerialNumFocusNode?.dispose();
+    vehicleSerialNumTextController?.dispose();
 
-    violatorAddProvinceCreateFocusNode?.dispose();
-    violatorAddProvinceCreateTextController?.dispose();
+    vehicleBrandFocusNode?.dispose();
+    vehicleBrandTextController?.dispose();
 
-    vehiclePlateNumCreateFocusNode?.dispose();
-    vehiclePlateNumCreateTextController?.dispose();
-
-    vehicleSerialNumCreateFocusNode?.dispose();
-    vehicleSerialNumCreateTextController?.dispose();
-
-    vehicleBrandCreateFocusNode?.dispose();
-    vehicleBrandCreateTextController?.dispose();
-
-    vehicleModelCreateFocusNode?.dispose();
-    vehicleModelCreateTextController?.dispose();
+    vehicleModelFocusNode?.dispose();
+    vehicleModelTextController?.dispose();
 
     violationCardModels.dispose();
   }

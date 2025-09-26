@@ -1,7 +1,7 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/notification_card/notification_card_widget.dart';
-import '/components/sidebar/sidebar_widget.dart';
+import '/components/user_option/user_option_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -35,12 +35,15 @@ class _HomeWidgetState extends State<HomeWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      if (valueOrDefault(currentUserDocument?.accStatus, '') == 'pending') {
+      if ((valueOrDefault(currentUserDocument?.accStatus, '') == 'pending') &&
+          (valueOrDefault(currentUserDocument?.accStatus, '') != 'active')) {
         context.goNamed(ApprovalAwaitWidget.routeName);
+      } else {
+        await currentUserReference!.update(createUsersRecordData(
+          lastActive: getCurrentTimestamp,
+        ));
       }
     });
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -301,10 +304,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         .headlineMedium
                                         .override(
                                           font: GoogleFonts.urbanist(
-                                            fontWeight:
-                                                FlutterFlowTheme.of(context)
-                                                    .headlineMedium
-                                                    .fontWeight,
+                                            fontWeight: FontWeight.w600,
                                             fontStyle:
                                                 FlutterFlowTheme.of(context)
                                                     .headlineMedium
@@ -314,10 +314,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                               .primaryText,
                                           fontSize: 28.0,
                                           letterSpacing: 0.0,
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .headlineMedium
-                                                  .fontWeight,
+                                          fontWeight: FontWeight.w600,
                                           fontStyle:
                                               FlutterFlowTheme.of(context)
                                                   .headlineMedium
@@ -329,7 +326,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                             ),
                             Builder(
                               builder: (context) => FlutterFlowIconButton(
-                                borderRadius: 8.0,
+                                borderRadius: 50.0,
                                 buttonSize: 40.0,
                                 icon: Icon(
                                   Icons.menu,
@@ -349,11 +346,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                             AlignmentDirectional(0.0, 0.0)
                                                 .resolve(
                                                     Directionality.of(context)),
-                                        child: Container(
-                                          height: 250.0,
-                                          width: 320.0,
-                                          child: SidebarWidget(),
-                                        ),
+                                        child: UserOptionWidget(),
                                       );
                                     },
                                   );
@@ -375,7 +368,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 16.0, 0.0, 0.0, 0.0),
                             child: Container(
                               decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context).tertiary,
+                                color: FlutterFlowTheme.of(context).primary,
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
                               child: Padding(
@@ -407,69 +400,59 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           8.0, 0.0, 0.0, 0.0),
-                                      child: AuthUserStreamWidget(
-                                        builder: (context) =>
-                                            FutureBuilder<int>(
-                                          future: queryCitationRecordCount(
-                                            queryBuilder: (citationRecord) =>
-                                                citationRecord
-                                                    .where(
-                                                      'appre_enforcer',
-                                                      isEqualTo:
-                                                          currentUserDisplayName,
-                                                    )
-                                                    .where(
-                                                      'appre_date_day',
-                                                      isEqualTo: dateTimeFormat(
-                                                        "d",
-                                                        getCurrentTimestamp,
-                                                        locale:
-                                                            FFLocalizations.of(
-                                                                    context)
-                                                                .languageCode,
-                                                      ),
-                                                    ),
-                                          ),
-                                          builder: (context, snapshot) {
-                                            // Customize what your widget looks like when it's loading.
-                                            if (!snapshot.hasData) {
-                                              return Center(
-                                                child: SizedBox(
-                                                  width: 50.0,
-                                                  height: 50.0,
-                                                  child: SpinKitRing(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .tertiary,
-                                                    size: 50.0,
-                                                  ),
-                                                ),
-                                              );
-                                            }
-                                            int textCount = snapshot.data!;
-
-                                            return Text(
-                                              valueOrDefault<String>(
-                                                textCount.toString(),
-                                                '0',
-                                              ),
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .headlineLarge
-                                                  .override(
-                                                    font: GoogleFonts.urbanist(
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontStyle:
-                                                          FlutterFlowTheme.of(
+                                      child: FutureBuilder<int>(
+                                        future: queryCitationRecordCount(
+                                          queryBuilder: (citationRecord) =>
+                                              citationRecord
+                                                  .where(
+                                                    'appre_enforcer_id',
+                                                    isEqualTo: currentUserUid,
+                                                  )
+                                                  .where(
+                                                    'appre_date_day',
+                                                    isEqualTo: dateTimeFormat(
+                                                      "d",
+                                                      getCurrentTimestamp,
+                                                      locale:
+                                                          FFLocalizations.of(
                                                                   context)
-                                                              .headlineLarge
-                                                              .fontStyle,
+                                                              .languageCode,
                                                     ),
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryText,
-                                                    letterSpacing: 0.0,
+                                                  ),
+                                        ),
+                                        builder: (context, snapshot) {
+                                          // Customize what your widget looks like when it's loading.
+                                          if (!snapshot.hasData) {
+                                            return Center(
+                                              child: SizedBox(
+                                                width: 50.0,
+                                                height: 50.0,
+                                                child: SpinKitRing(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .tertiary,
+                                                  size: 50.0,
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                          int ticketsTodayCount =
+                                              snapshot.data!;
+
+                                          return Text(
+                                            valueOrDefault<String>(
+                                              formatNumber(
+                                                ticketsTodayCount,
+                                                formatType: FormatType.decimal,
+                                                decimalType:
+                                                    DecimalType.periodDecimal,
+                                              ),
+                                              '0',
+                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .headlineLarge
+                                                .override(
+                                                  font: GoogleFonts.urbanist(
                                                     fontWeight: FontWeight.w600,
                                                     fontStyle:
                                                         FlutterFlowTheme.of(
@@ -477,9 +460,19 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                             .headlineLarge
                                                             .fontStyle,
                                                   ),
-                                            );
-                                          },
-                                        ),
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .headlineLarge
+                                                          .fontStyle,
+                                                ),
+                                          );
+                                        },
                                       ),
                                     ),
                                   ],
@@ -495,7 +488,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 0.0, 0.0, 16.0, 0.0),
                             child: Container(
                               decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context).tertiary,
+                                color: FlutterFlowTheme.of(context).primary,
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
                               child: Padding(
@@ -527,56 +520,47 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           8.0, 0.0, 0.0, 0.0),
-                                      child: AuthUserStreamWidget(
-                                        builder: (context) =>
-                                            FutureBuilder<int>(
-                                          future: queryCitationRecordCount(
-                                            queryBuilder: (citationRecord) =>
-                                                citationRecord.where(
-                                              'appre_enforcer',
-                                              isEqualTo: currentUserDisplayName,
-                                            ),
+                                      child: FutureBuilder<int>(
+                                        future: queryCitationRecordCount(
+                                          queryBuilder: (citationRecord) =>
+                                              citationRecord.where(
+                                            'appre_enforcer_id',
+                                            isEqualTo: currentUserUid,
                                           ),
-                                          builder: (context, snapshot) {
-                                            // Customize what your widget looks like when it's loading.
-                                            if (!snapshot.hasData) {
-                                              return Center(
-                                                child: SizedBox(
-                                                  width: 50.0,
-                                                  height: 50.0,
-                                                  child: SpinKitRing(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .tertiary,
-                                                    size: 50.0,
-                                                  ),
+                                        ),
+                                        builder: (context, snapshot) {
+                                          // Customize what your widget looks like when it's loading.
+                                          if (!snapshot.hasData) {
+                                            return Center(
+                                              child: SizedBox(
+                                                width: 50.0,
+                                                height: 50.0,
+                                                child: SpinKitRing(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .tertiary,
+                                                  size: 50.0,
                                                 ),
-                                              );
-                                            }
-                                            int textCount = snapshot.data!;
-
-                                            return Text(
-                                              valueOrDefault<String>(
-                                                textCount.toString(),
-                                                '0',
                                               ),
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .headlineLarge
-                                                  .override(
-                                                    font: GoogleFonts.urbanist(
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .headlineLarge
-                                                              .fontStyle,
-                                                    ),
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryText,
-                                                    letterSpacing: 0.0,
+                                            );
+                                          }
+                                          int totalTicketsCount =
+                                              snapshot.data!;
+
+                                          return Text(
+                                            valueOrDefault<String>(
+                                              formatNumber(
+                                                totalTicketsCount,
+                                                formatType: FormatType.decimal,
+                                                decimalType:
+                                                    DecimalType.periodDecimal,
+                                              ),
+                                              '0',
+                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .headlineLarge
+                                                .override(
+                                                  font: GoogleFonts.urbanist(
                                                     fontWeight: FontWeight.w600,
                                                     fontStyle:
                                                         FlutterFlowTheme.of(
@@ -584,9 +568,19 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                             .headlineLarge
                                                             .fontStyle,
                                                   ),
-                                            );
-                                          },
-                                        ),
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .headlineLarge
+                                                          .fontStyle,
+                                                ),
+                                          );
+                                        },
                                       ),
                                     ),
                                   ],
@@ -600,7 +594,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                     Container(
                       width: MediaQuery.sizeOf(context).width * 1.0,
                       decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).accent1,
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: Column(
@@ -611,7 +604,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 16.0, 0.0, 0.0, 0.0),
                             child: Text(
-                              'Notification Today',
+                              'Assignment Notification',
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
@@ -632,82 +625,88 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   ),
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 16.0, 0.0),
-                            child: wrapWithModel(
-                              model: _model.notificationCardModel1,
-                              updateCallback: () => safeSetState(() {}),
-                              child: NotificationCardWidget(
-                                title: 'DNSC',
-                                subtitle: 'Assignment',
-                                pupose: 'Dakop',
-                                date: getCurrentTimestamp,
-                              ),
+                          StreamBuilder<List<AdminNotifRecord>>(
+                            stream: queryAdminNotifRecord(
+                              queryBuilder: (adminNotifRecord) =>
+                                  adminNotifRecord
+                                      .where(
+                                        'enforcer_id',
+                                        isEqualTo: currentUserReference,
+                                      )
+                                      .where(
+                                        'notif_type',
+                                        isEqualTo: 'assignment',
+                                      )
+                                      .orderBy('created_time',
+                                          descending: true),
                             ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 16.0, 0.0),
-                            child: wrapWithModel(
-                              model: _model.notificationCardModel2,
-                              updateCallback: () => safeSetState(() {}),
-                              child: NotificationCardWidget(
-                                title: 'Palengke daan',
-                                subtitle: 'Assignment',
-                                pupose: 'Dakop',
-                                date: getCurrentTimestamp,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 16.0, 0.0),
-                            child: wrapWithModel(
-                              model: _model.notificationCardModel3,
-                              updateCallback: () => safeSetState(() {}),
-                              child: NotificationCardWidget(
-                                title: 'Lubong',
-                                subtitle: 'Assignment',
-                                pupose: 'Convoy',
-                                date: getCurrentTimestamp,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 16.0, 0.0),
-                            child: wrapWithModel(
-                              model: _model.notificationCardModel4,
-                              updateCallback: () => safeSetState(() {}),
-                              child: NotificationCardWidget(
-                                title: 'Lubong',
-                                subtitle: 'Assignment',
-                                pupose: 'Convoy',
-                                date: getCurrentTimestamp,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 16.0, 0.0),
-                            child: wrapWithModel(
-                              model: _model.notificationCardModel5,
-                              updateCallback: () => safeSetState(() {}),
-                              child: NotificationCardWidget(
-                                title: 'Lubong',
-                                subtitle: 'Assignment',
-                                pupose: 'Convoy',
-                                date: getCurrentTimestamp,
-                              ),
-                            ),
+                            builder: (context, snapshot) {
+                              // Customize what your widget looks like when it's loading.
+                              if (!snapshot.hasData) {
+                                return Center(
+                                  child: SizedBox(
+                                    width: 50.0,
+                                    height: 50.0,
+                                    child: SpinKitRing(
+                                      color:
+                                          FlutterFlowTheme.of(context).tertiary,
+                                      size: 50.0,
+                                    ),
+                                  ),
+                                );
+                              }
+                              List<AdminNotifRecord>
+                                  assignmentNotifAdminNotifRecordList =
+                                  snapshot.data!;
+
+                              return ListView.separated(
+                                padding: EdgeInsets.zero,
+                                primary: false,
+                                shrinkWrap: true,
+                                scrollDirection: Axis.vertical,
+                                itemCount:
+                                    assignmentNotifAdminNotifRecordList.length,
+                                separatorBuilder: (_, __) =>
+                                    SizedBox(height: 6.0),
+                                itemBuilder: (context, assignmentNotifIndex) {
+                                  final assignmentNotifAdminNotifRecord =
+                                      assignmentNotifAdminNotifRecordList[
+                                          assignmentNotifIndex];
+                                  return Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        16.0, 0.0, 16.0, 0.0),
+                                    child: NotificationCardWidget(
+                                      key: Key(
+                                          'Key0xk_${assignmentNotifIndex}_of_${assignmentNotifAdminNotifRecordList.length}'),
+                                      title: valueOrDefault<String>(
+                                        assignmentNotifAdminNotifRecord.title,
+                                        'Title',
+                                      ),
+                                      subtitle: valueOrDefault<String>(
+                                        assignmentNotifAdminNotifRecord
+                                            .subtitle,
+                                        'Subtitle',
+                                      ),
+                                      pupose: valueOrDefault<String>(
+                                        assignmentNotifAdminNotifRecord.type,
+                                        'Type',
+                                      ),
+                                      date: assignmentNotifAdminNotifRecord
+                                          .createdTime,
+                                      titleColor:
+                                          FlutterFlowTheme.of(context).success,
+                                    ),
+                                  );
+                                },
+                              );
+                            },
                           ),
                         ]
                             .divide(SizedBox(height: 16.0))
                             .around(SizedBox(height: 16.0)),
                       ),
                     ),
-                  ].divide(SizedBox(height: 32.0)),
+                  ].divide(SizedBox(height: 16.0)),
                 ),
               ),
             ],

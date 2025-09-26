@@ -6,16 +6,17 @@ import 'package:flutter/material.dart';
 class NotificationModel extends FlutterFlowModel<NotificationWidget> {
   ///  State fields for stateful widgets in this page.
 
-  // Model for NotificationCard component.
-  late NotificationCardModel notificationCardModel;
+  // Models for NotificationCard dynamic component.
+  late FlutterFlowDynamicModels<NotificationCardModel> notificationCardModels;
 
   @override
   void initState(BuildContext context) {
-    notificationCardModel = createModel(context, () => NotificationCardModel());
+    notificationCardModels =
+        FlutterFlowDynamicModels(() => NotificationCardModel());
   }
 
   @override
   void dispose() {
-    notificationCardModel.dispose();
+    notificationCardModels.dispose();
   }
 }

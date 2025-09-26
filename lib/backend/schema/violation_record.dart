@@ -15,20 +15,10 @@ class ViolationRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "code" field.
-  String? _code;
-  String get code => _code ?? '';
-  bool hasCode() => _code != null;
-
   // "violation_name" field.
   String? _violationName;
   String get violationName => _violationName ?? '';
   bool hasViolationName() => _violationName != null;
-
-  // "fines" field.
-  int? _fines;
-  int get fines => _fines ?? 0;
-  bool hasFines() => _fines != null;
 
   // "penalty" field.
   String? _penalty;
@@ -45,13 +35,23 @@ class ViolationRecord extends FirestoreRecord {
   String get violationTitle => _violationTitle ?? '';
   bool hasViolationTitle() => _violationTitle != null;
 
+  // "fines" field.
+  double? _fines;
+  double get fines => _fines ?? 0.0;
+  bool hasFines() => _fines != null;
+
+  // "section" field.
+  String? _section;
+  String get section => _section ?? '';
+  bool hasSection() => _section != null;
+
   void _initializeFields() {
-    _code = snapshotData['code'] as String?;
     _violationName = snapshotData['violation_name'] as String?;
-    _fines = castToType<int>(snapshotData['fines']);
     _penalty = snapshotData['penalty'] as String?;
     _id = snapshotData['id'] as String?;
     _violationTitle = snapshotData['violation_title'] as String?;
+    _fines = castToType<double>(snapshotData['fines']);
+    _section = snapshotData['section'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -89,21 +89,21 @@ class ViolationRecord extends FirestoreRecord {
 }
 
 Map<String, dynamic> createViolationRecordData({
-  String? code,
   String? violationName,
-  int? fines,
   String? penalty,
   String? id,
   String? violationTitle,
+  double? fines,
+  String? section,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
-      'code': code,
       'violation_name': violationName,
-      'fines': fines,
       'penalty': penalty,
       'id': id,
       'violation_title': violationTitle,
+      'fines': fines,
+      'section': section,
     }.withoutNulls,
   );
 
@@ -115,22 +115,22 @@ class ViolationRecordDocumentEquality implements Equality<ViolationRecord> {
 
   @override
   bool equals(ViolationRecord? e1, ViolationRecord? e2) {
-    return e1?.code == e2?.code &&
-        e1?.violationName == e2?.violationName &&
-        e1?.fines == e2?.fines &&
+    return e1?.violationName == e2?.violationName &&
         e1?.penalty == e2?.penalty &&
         e1?.id == e2?.id &&
-        e1?.violationTitle == e2?.violationTitle;
+        e1?.violationTitle == e2?.violationTitle &&
+        e1?.fines == e2?.fines &&
+        e1?.section == e2?.section;
   }
 
   @override
   int hash(ViolationRecord? e) => const ListEquality().hash([
-        e?.code,
         e?.violationName,
-        e?.fines,
         e?.penalty,
         e?.id,
-        e?.violationTitle
+        e?.violationTitle,
+        e?.fines,
+        e?.section
       ]);
 
   @override

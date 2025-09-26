@@ -8,10 +8,8 @@ class SearchPageModel extends FlutterFlowModel<SearchPageWidget> {
   ///  State fields for stateful widgets in this page.
 
   // State field(s) for searchbar widget.
-  final searchbarKey = GlobalKey();
   FocusNode? searchbarFocusNode;
   TextEditingController? searchbarTextController;
-  String? searchbarSelectedOption;
   String? Function(BuildContext, String?)? searchbarTextControllerValidator;
   List<ViolationRecord> simpleSearchResults = [];
   // Models for ViolationCard dynamic component.
@@ -28,6 +26,7 @@ class SearchPageModel extends FlutterFlowModel<SearchPageWidget> {
   @override
   void dispose() {
     searchbarFocusNode?.dispose();
+    searchbarTextController?.dispose();
 
     violationCardModels1.dispose();
     violationCardModels2.dispose();

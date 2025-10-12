@@ -189,6 +189,8 @@ class _HistoryWidgetState extends State<HistoryWidget> {
                                   titleColor:
                                       FlutterFlowTheme.of(context).success,
                                   date: cardItem.createdTime,
+                                  status:
+                                      FlutterFlowTheme.of(context).transparent,
                                 ),
                               );
                             },

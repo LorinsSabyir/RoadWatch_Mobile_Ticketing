@@ -60,6 +60,7 @@ abstract class FlutterFlowTheme {
   late Color textbox;
   late Color textboxTextHollow;
   late Color textboxTextActive;
+  late Color transparent;
 
   @Deprecated('Use displaySmallFamily instead')
   String get title1Family => displaySmallFamily;
@@ -168,6 +169,7 @@ class LightModeTheme extends FlutterFlowTheme {
   late Color textbox = const Color(0xFFFFFFFF);
   late Color textboxTextHollow = const Color(0xFF536880);
   late Color textboxTextActive = const Color(0xFF0D2F60);
+  late Color transparent = const Color(0x0034D2A9);
 }
 
 abstract class Typography {
@@ -358,6 +360,7 @@ class DarkModeTheme extends FlutterFlowTheme {
   late Color textbox = const Color(0xFFFFFFFF);
   late Color textboxTextHollow = const Color(0xFF536880);
   late Color textboxTextActive = const Color(0xFF0D2F60);
+  late Color transparent = const Color(0x0034D2A9);
 }
 
 extension TextStyleHelper on TextStyle {

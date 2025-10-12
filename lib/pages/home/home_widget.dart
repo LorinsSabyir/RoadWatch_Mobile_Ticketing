@@ -695,6 +695,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                           .createdTime,
                                       titleColor:
                                           FlutterFlowTheme.of(context).success,
+                                      status: FlutterFlowTheme.of(context)
+                                          .transparent,
                                     ),
                                   );
                                 },

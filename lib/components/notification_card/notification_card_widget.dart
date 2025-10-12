@@ -13,6 +13,7 @@ class NotificationCardWidget extends StatefulWidget {
     this.pupose,
     this.date,
     Color? titleColor,
+    this.status,
   }) : this.titleColor = titleColor ?? const Color(0xFFFFD500);
 
   final String? title;
@@ -20,6 +21,7 @@ class NotificationCardWidget extends StatefulWidget {
   final String? pupose;
   final DateTime? date;
   final Color titleColor;
+  final Color? status;
 
   @override
   State<NotificationCardWidget> createState() => _NotificationCardWidgetState();
@@ -65,6 +67,13 @@ class _NotificationCardWidgetState extends State<NotificationCardWidget> {
           )
         ],
         borderRadius: BorderRadius.circular(12.0),
+        border: Border.all(
+          color: valueOrDefault<Color>(
+            widget.status,
+            FlutterFlowTheme.of(context).primary,
+          ),
+          width: 1.0,
+        ),
       ),
       child: Padding(
         padding: EdgeInsets.all(4.0),

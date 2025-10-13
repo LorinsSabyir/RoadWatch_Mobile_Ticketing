@@ -71,6 +71,7 @@
         "path_provider_platform_interface",
         "path_provider_windows",
         "plugin_platform_interface",
+        "print_bluetooth_thermal",
         "provider",
         "rxdart",
         "shared_preferences",
@@ -180,6 +181,16 @@
         "json_annotation",
         "path",
         "yaml"
+      ]
+    },
+    {
+      "name": "print_bluetooth_thermal",
+      "version": "1.1.6",
+      "dependencies": [
+        "flutter",
+        "flutter_web_plugins",
+        "plugin_platform_interface",
+        "win_ble"
       ]
     },
     {
@@ -1250,6 +1261,14 @@
       "name": "args",
       "version": "2.7.0",
       "dependencies": []
+    },
+    {
+      "name": "win_ble",
+      "version": "1.1.1",
+      "dependencies": [
+        "flutter",
+        "path_provider"
+      ]
     },
     {
       "name": "tuple",

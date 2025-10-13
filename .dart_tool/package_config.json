@@ -650,6 +650,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "print_bluetooth_thermal",
+      "rootUri": "file:///C:/Users/Denji%20Ticong/AppData/Local/Pub/Cache/hosted/pub.dev/print_bluetooth_thermal-1.1.6",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
       "name": "provider",
       "rootUri": "file:///C:/Users/Denji%20Ticong/AppData/Local/Pub/Cache/hosted/pub.dev/provider-6.1.5",
       "packageUri": "lib/",
@@ -930,6 +936,12 @@
       "rootUri": "file:///C:/Users/Denji%20Ticong/AppData/Local/Pub/Cache/hosted/pub.dev/win32-5.13.0",
       "packageUri": "lib/",
       "languageVersion": "3.7"
+    },
+    {
+      "name": "win_ble",
+      "rootUri": "file:///C:/Users/Denji%20Ticong/AppData/Local/Pub/Cache/hosted/pub.dev/win_ble-1.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
     },
     {
       "name": "xdg_directories",

@@ -1,3 +1,5 @@
+import 'package:road_watch_mobile_ticketing/pages/ticket_receipt/bluetooth_print_service.dart';
+
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/violation_card/violation_card_widget.dart';
@@ -586,6 +588,86 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                           ),
                           borderRadius: BorderRadius.circular(12.0),
                         ),
+                      ),
+                    ),
+                    FFButtonWidget(
+                      text: 'Connect Printer',
+                      onPressed: () async {
+                        final devices =
+                            await BluetoothPrintService.getPairedDevices();
+
+                        if (devices.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                                content: Text(
+                                    "No paired Bluetooth printers found.")),
+                          );
+                          return;
+                        }
+
+                        // Show printer list in a bottom sheet
+                        showModalBottomSheet(
+                          context: context,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.vertical(top: Radius.circular(16)),
+                          ),
+                          builder: (context) {
+                            return Container(
+                              padding: const EdgeInsets.all(16),
+                              child: ListView(
+                                children: [
+                                  const Text(
+                                    "Select Bluetooth Printer",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const SizedBox(height: 12),
+                                  for (final device in devices)
+                                    ListTile(
+                                      leading: const Icon(Icons.print),
+                                      title: Text(device),
+                                      onTap: () async {
+                                        Navigator.pop(
+                                            context); // close the sheet
+                                        final connected =
+                                            await BluetoothPrintService.connect(
+                                                device);
+
+                                        if (connected) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                                content: Text(
+                                                    "Connected to $device")),
+                                          );
+                                        } else {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                                content: Text(
+                                                    "Failed to connect to $device. Try again.")),
+                                          );
+                                        }
+                                      },
+                                    ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      options: FFButtonOptions(
+                        height: 50,
+                        color: Colors.blueGrey,
+                        textStyle:
+                            FlutterFlowTheme.of(context).titleSmall.override(
+                                  fontFamily: 'Readex Pro',
+                                  color: Colors.white,
+                                ),
+                        elevation: 3,
+                        borderRadius: BorderRadius.circular(8),
                       ),
                     ),
                     Expanded(

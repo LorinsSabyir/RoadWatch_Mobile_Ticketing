@@ -985,6 +985,68 @@ class _SignupWidgetState extends State<SignupWidget>
                                         ],
                                       ),
                                     ),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        FFButtonWidget(
+                                          onPressed: () {
+                                            print('selfieButton pressed ...');
+                                          },
+                                          text: 'Take a Selfie',
+                                          icon: Icon(
+                                            Icons.camera_alt,
+                                            size: 25.0,
+                                          ),
+                                          options: FFButtonOptions(
+                                            height: 40.0,
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    16.0, 0.0, 16.0, 0.0),
+                                            iconAlignment: IconAlignment.end,
+                                            iconPadding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 0.0),
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                            textStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleSmall
+                                                    .override(
+                                                      font: GoogleFonts.manrope(
+                                                        fontWeight:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleSmall
+                                                                .fontWeight,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleSmall
+                                                                .fontStyle,
+                                                      ),
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText,
+                                                      letterSpacing: 0.0,
+                                                      fontWeight:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .titleSmall
+                                                              .fontWeight,
+                                                      fontStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .titleSmall
+                                                              .fontStyle,
+                                                    ),
+                                            elevation: 0.0,
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                     if (responsiveVisibility(
                                       context: context,
                                       phone: false,
@@ -1321,6 +1383,7 @@ class _SignupWidgetState extends State<SignupWidget>
                                             accStatus: 'pending',
                                             displayName: _model
                                                 .firstNameTextController.text,
+                                            role: 'user',
                                           ),
                                           ...mapToFirestore(
                                             {
@@ -1496,7 +1559,7 @@ class _SignupWidgetState extends State<SignupWidget>
                         ).animateOnPageLoad(
                             animationsMap['containerOnPageLoadAnimation']!),
                       ),
-                    ].divide(SizedBox(height: 6.0)),
+                    ],
                   ),
                 ),
               ),

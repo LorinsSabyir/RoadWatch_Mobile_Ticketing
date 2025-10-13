@@ -158,6 +158,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: ProfileEditWidget.routePath,
           requireAuth: true,
           builder: (context, params) => ProfileEditWidget(),
+        ),
+        FFRoute(
+          name: EnforcerSelfieWidget.routeName,
+          path: EnforcerSelfieWidget.routePath,
+          requireAuth: true,
+          builder: (context, params) => EnforcerSelfieWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

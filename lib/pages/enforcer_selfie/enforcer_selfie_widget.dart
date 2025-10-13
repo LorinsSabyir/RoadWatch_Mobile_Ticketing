@@ -5,28 +5,28 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'scan_license_model.dart';
-export 'scan_license_model.dart';
+import 'enforcer_selfie_model.dart';
+export 'enforcer_selfie_model.dart';
 
-class ScanLicenseWidget extends StatefulWidget {
-  const ScanLicenseWidget({super.key});
+class EnforcerSelfieWidget extends StatefulWidget {
+  const EnforcerSelfieWidget({super.key});
 
-  static String routeName = 'ScanLicense';
-  static String routePath = '/scanLicense';
+  static String routeName = 'EnforcerSelfie';
+  static String routePath = '/enforcerSelfie';
 
   @override
-  State<ScanLicenseWidget> createState() => _ScanLicenseWidgetState();
+  State<EnforcerSelfieWidget> createState() => _EnforcerSelfieWidgetState();
 }
 
-class _ScanLicenseWidgetState extends State<ScanLicenseWidget> {
-  late ScanLicenseModel _model;
+class _EnforcerSelfieWidgetState extends State<EnforcerSelfieWidget> {
+  late EnforcerSelfieModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => ScanLicenseModel());
+    _model = createModel(context, () => EnforcerSelfieModel());
   }
 
   @override
@@ -64,7 +64,7 @@ class _ScanLicenseWidgetState extends State<ScanLicenseWidget> {
             },
           ),
           title: Text(
-            'Scan License',
+            'Upload an Image',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
                   font: GoogleFonts.urbanist(
                     fontWeight: FontWeight.w600,
@@ -144,16 +144,11 @@ class _ScanLicenseWidgetState extends State<ScanLicenseWidget> {
                       if (selectedMedia != null &&
                           selectedMedia.every((m) =>
                               validateFileFormat(m.storagePath, context))) {
-                        safeSetState(() =>
-                            _model.isDataUploading_uploadEnforcerSelfie = true);
+                        safeSetState(
+                            () => _model.isDataUploading_uploadLicense = true);
                         var selectedUploadedFiles = <FFUploadedFile>[];
 
                         try {
-                          showUploadMessage(
-                            context,
-                            'Uploading file...',
-                            showLoading: true,
-                          );
                           selectedUploadedFiles = selectedMedia
                               .map((m) => FFUploadedFile(
                                     name: m.storagePath.split('/').last,
@@ -164,19 +159,16 @@ class _ScanLicenseWidgetState extends State<ScanLicenseWidget> {
                                   ))
                               .toList();
                         } finally {
-                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                          _model.isDataUploading_uploadEnforcerSelfie = false;
+                          _model.isDataUploading_uploadLicense = false;
                         }
                         if (selectedUploadedFiles.length ==
                             selectedMedia.length) {
                           safeSetState(() {
-                            _model.uploadedLocalFile_uploadEnforcerSelfie =
+                            _model.uploadedLocalFile_uploadLicense =
                                 selectedUploadedFiles.first;
                           });
-                          showUploadMessage(context, 'Success!');
                         } else {
                           safeSetState(() {});
-                          showUploadMessage(context, 'Failed to upload data');
                           return;
                         }
                       }
@@ -190,14 +182,13 @@ class _ScanLicenseWidgetState extends State<ScanLicenseWidget> {
                       child: Stack(
                         alignment: AlignmentDirectional(0.0, 0.0),
                         children: [
-                          if ((_model.uploadedLocalFile_uploadEnforcerSelfie
-                                      .bytes?.isNotEmpty ??
+                          if ((_model.uploadedLocalFile_uploadLicense.bytes
+                                      ?.isNotEmpty ??
                                   false))
                             ClipRRect(
                               borderRadius: BorderRadius.circular(12.0),
                               child: Image.memory(
-                                _model.uploadedLocalFile_uploadEnforcerSelfie
-                                        .bytes ??
+                                _model.uploadedLocalFile_uploadLicense.bytes ??
                                     Uint8List.fromList([]),
                                 width: 400.0,
                                 height: 600.0,
@@ -244,7 +235,7 @@ class _ScanLicenseWidgetState extends State<ScanLicenseWidget> {
                             onPressed: () {
                               print('scanButton pressed ...');
                             },
-                            text: 'Scan License',
+                            text: 'Submit Selfie',
                             options: FFButtonOptions(
                               height: 60.0,
                               padding: EdgeInsetsDirectional.fromSTEB(

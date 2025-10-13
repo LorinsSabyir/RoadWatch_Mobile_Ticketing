@@ -185,6 +185,13 @@ class _NotificationWidgetState extends State<NotificationWidget> {
                                   date: cardItem.createdTime,
                                   titleColor:
                                       FlutterFlowTheme.of(context).primary,
+                                  status: valueOrDefault<Color>(
+                                    cardItem.status == 'pending'
+                                        ? FlutterFlowTheme.of(context).primary
+                                        : FlutterFlowTheme.of(context)
+                                            .textboxTextHollow,
+                                    FlutterFlowTheme.of(context).primary,
+                                  ),
                                 ),
                               );
                             },

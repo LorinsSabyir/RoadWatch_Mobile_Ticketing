@@ -535,39 +535,76 @@ class _SigninWidgetState extends State<SigninWidget>
                                               return;
                                             }
 
-                                            if ((valueOrDefault(
-                                                        currentUserDocument
-                                                            ?.accStatus,
-                                                        '') ==
-                                                    'pending') &&
-                                                (valueOrDefault(
-                                                        currentUserDocument
-                                                            ?.accStatus,
-                                                        '') !=
-                                                    'active')) {
-                                              await currentUserReference!
-                                                  .update(createUsersRecordData(
-                                                status: false,
-                                                lastActive: getCurrentTimestamp,
-                                              ));
-                                              GoRouter.of(context)
-                                                  .prepareAuthEvent();
-                                              await authManager.signOut();
-                                              GoRouter.of(context)
-                                                  .clearRedirectLocation();
+                                            if (valueOrDefault(
+                                                    currentUserDocument?.role,
+                                                    '') ==
+                                                'user') {
+                                              if ((valueOrDefault(
+                                                          currentUserDocument
+                                                              ?.accStatus,
+                                                          '') ==
+                                                      'pending') &&
+                                                  (valueOrDefault(
+                                                          currentUserDocument
+                                                              ?.accStatus,
+                                                          '') !=
+                                                      'active')) {
+                                                await currentUserReference!
+                                                    .update(
+                                                        createUsersRecordData(
+                                                  status: false,
+                                                  lastActive:
+                                                      getCurrentTimestamp,
+                                                ));
+                                                GoRouter.of(context)
+                                                    .prepareAuthEvent();
+                                                await authManager.signOut();
+                                                GoRouter.of(context)
+                                                    .clearRedirectLocation();
 
-                                              context.goNamedAuth(
-                                                  ApprovalAwaitWidget.routeName,
-                                                  context.mounted);
+                                                context.goNamedAuth(
+                                                    ApprovalAwaitWidget
+                                                        .routeName,
+                                                    context.mounted);
+                                              } else {
+                                                await currentUserReference!
+                                                    .update(
+                                                        createUsersRecordData(
+                                                  status: true,
+                                                ));
+
+                                                context.goNamedAuth(
+                                                    HomeWidget.routeName,
+                                                    context.mounted);
+                                              }
                                             } else {
-                                              await currentUserReference!
-                                                  .update(createUsersRecordData(
-                                                status: true,
-                                              ));
-
-                                              context.goNamedAuth(
-                                                  HomeWidget.routeName,
-                                                  context.mounted);
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  content: Text(
+                                                    'User does not exist!',
+                                                    style: TextStyle(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText,
+                                                    ),
+                                                  ),
+                                                  duration: Duration(
+                                                      milliseconds: 1000),
+                                                  backgroundColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .error,
+                                                ),
+                                              );
+                                              safeSetState(() {
+                                                _model.passwordTextController
+                                                    ?.clear();
+                                                _model
+                                                    .emailAddressTextController
+                                                    ?.clear();
+                                              });
                                             }
                                           },
                                           text: 'Sign In',

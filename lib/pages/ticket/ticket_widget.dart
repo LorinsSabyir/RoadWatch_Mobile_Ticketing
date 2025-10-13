@@ -911,6 +911,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                     .bodyMedium
                                                                     .fontStyle,
                                                               ),
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .textboxTextHollow,
                                                               letterSpacing:
                                                                   0.0,
                                                               fontWeight:
@@ -928,10 +931,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                     icon: Icon(
                                                       Icons
                                                           .keyboard_arrow_down_rounded,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .secondaryText,
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .textboxTextHollow,
                                                       size: 24.0,
                                                     ),
                                                     fillColor:
@@ -1039,6 +1041,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                     .bodyMedium
                                                                     .fontStyle,
                                                               ),
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .textboxTextHollow,
                                                               letterSpacing:
                                                                   0.0,
                                                               fontWeight:
@@ -1057,10 +1062,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                     icon: Icon(
                                                       Icons
                                                           .keyboard_arrow_down_rounded,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .secondaryText,
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .textboxTextHollow,
                                                       size: 24.0,
                                                     ),
                                                     fillColor:
@@ -1174,6 +1178,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                     .bodyMedium
                                                                     .fontStyle,
                                                               ),
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .textboxTextHollow,
                                                               letterSpacing:
                                                                   0.0,
                                                               fontWeight:
@@ -1191,10 +1198,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                     icon: Icon(
                                                       Icons
                                                           .keyboard_arrow_down_rounded,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .secondaryText,
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .textboxTextHollow,
                                                       size: 24.0,
                                                     ),
                                                     fillColor:

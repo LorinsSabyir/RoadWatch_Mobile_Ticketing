@@ -1521,11 +1521,7 @@ class _SignupWidgetState extends State<SignupWidget>
                                                 .bodyMedium
                                                 .override(
                                                   font: GoogleFonts.manrope(
-                                                    fontWeight:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontWeight,
+                                                    fontWeight: FontWeight.bold,
                                                     fontStyle:
                                                         FlutterFlowTheme.of(
                                                                 context)
@@ -1534,13 +1530,9 @@ class _SignupWidgetState extends State<SignupWidget>
                                                   ),
                                                   color: FlutterFlowTheme.of(
                                                           context)
-                                                      .primary,
+                                                      .primaryText,
                                                   letterSpacing: 0.0,
-                                                  fontWeight:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontWeight,
+                                                  fontWeight: FontWeight.bold,
                                                   fontStyle:
                                                       FlutterFlowTheme.of(
                                                               context)

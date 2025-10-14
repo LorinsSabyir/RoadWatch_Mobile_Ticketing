@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/violation_card/violation_card_widget.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
@@ -2778,6 +2779,8 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                     FFAppState()
                                                         .selectedViolationFine
                                                         .toList());
+                                            FFAppState().appreAddPlace =
+                                                '${valueOrDefault(currentUserDocument?.assignmentStreet, '')}${valueOrDefault(currentUserDocument?.assignmentPrk, '')}${valueOrDefault(currentUserDocument?.assignmentBrgy, '')}${valueOrDefault(currentUserDocument?.assignmentLandmark, '')}';
                                             safeSetState(() {});
 
                                             context.pushNamed(

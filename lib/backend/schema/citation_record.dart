@@ -16,11 +16,6 @@ class CitationRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "citation_number" field.
-  String? _citationNumber;
-  String get citationNumber => _citationNumber ?? '';
-  bool hasCitationNumber() => _citationNumber != null;
-
   // "conf_unit_serial_num" field.
   String? _confUnitSerialNum;
   String get confUnitSerialNum => _confUnitSerialNum ?? '';
@@ -172,7 +167,6 @@ class CitationRecord extends FirestoreRecord {
   bool hasAppreEnfId() => _appreEnfId != null;
 
   void _initializeFields() {
-    _citationNumber = snapshotData['citation_number'] as String?;
     _confUnitSerialNum = snapshotData['conf_unit_serial_num'] as String?;
     _confUnitPlateNum = snapshotData['conf_unit_plate_num'] as String?;
     _confUnitBrand = snapshotData['conf_unit_brand'] as String?;
@@ -242,7 +236,6 @@ class CitationRecord extends FirestoreRecord {
 }
 
 Map<String, dynamic> createCitationRecordData({
-  String? citationNumber,
   String? confUnitSerialNum,
   String? confUnitPlateNum,
   String? confUnitBrand,
@@ -273,7 +266,6 @@ Map<String, dynamic> createCitationRecordData({
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
-      'citation_number': citationNumber,
       'conf_unit_serial_num': confUnitSerialNum,
       'conf_unit_plate_num': confUnitPlateNum,
       'conf_unit_brand': confUnitBrand,
@@ -313,8 +305,7 @@ class CitationRecordDocumentEquality implements Equality<CitationRecord> {
   @override
   bool equals(CitationRecord? e1, CitationRecord? e2) {
     const listEquality = ListEquality();
-    return e1?.citationNumber == e2?.citationNumber &&
-        e1?.confUnitSerialNum == e2?.confUnitSerialNum &&
+    return e1?.confUnitSerialNum == e2?.confUnitSerialNum &&
         e1?.confUnitPlateNum == e2?.confUnitPlateNum &&
         e1?.confUnitBrand == e2?.confUnitBrand &&
         e1?.confUnitModel == e2?.confUnitModel &&
@@ -348,7 +339,6 @@ class CitationRecordDocumentEquality implements Equality<CitationRecord> {
 
   @override
   int hash(CitationRecord? e) => const ListEquality().hash([
-        e?.citationNumber,
         e?.confUnitSerialNum,
         e?.confUnitPlateNum,
         e?.confUnitBrand,

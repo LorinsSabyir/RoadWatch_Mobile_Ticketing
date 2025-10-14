@@ -2386,8 +2386,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                       .vehicleModelTextController
                                                       .text;
                                               FFAppState().vehicleAddSerialNum =
-                                                  FFAppState()
-                                                      .vehicleAddSerialNum;
+                                                  _model
+                                                      .vehicleSerialNumTextController
+                                                      .text;
                                               safeSetState(() {});
                                               await _model.pageViewController
                                                   ?.nextPage(

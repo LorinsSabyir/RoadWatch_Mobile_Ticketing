@@ -533,8 +533,6 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                         onPressed: () async {
                           await CitationRecord.collection.doc().set({
                             ...createCitationRecordData(
-                              confUnitSerialNum:
-                                  FFAppState().vehicleAddSerialNum,
                               confUnitPlateNum: FFAppState().vehicleAddPlateNum,
                               confUnitBrand: FFAppState().vehicleAddBrand,
                               confUnitModel: FFAppState().vehicleAddModel,
@@ -575,7 +573,6 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                                 locale:
                                     FFLocalizations.of(context).languageCode,
                               ),
-                              citationNumber: '',
                               createdTime: getCurrentTimestamp,
                               violationTotalFine:
                                   FFAppState().violationTotalFine,
@@ -607,7 +604,6 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                           FFAppState().appreAddPlace = '';
                           FFAppState().vehicleAddSerialNum = '';
                           FFAppState().violationTotalFine = 0.0;
-                          FFAppState().citationNumber = 0;
                           FFAppState().citationRef = [];
                           FFAppState().violatorAddProvince = '';
                           FFAppState().violatorAddCity = '';

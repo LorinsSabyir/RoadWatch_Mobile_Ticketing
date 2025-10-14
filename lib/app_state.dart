@@ -186,12 +186,6 @@ class FFAppState extends ChangeNotifier {
     _violationTotalFine = value;
   }
 
-  int _citationNumber = 0;
-  int get citationNumber => _citationNumber;
-  set citationNumber(int value) {
-    _citationNumber = value;
-  }
-
   List<String> _citationRef = [];
   List<String> get citationRef => _citationRef;
   set citationRef(List<String> value) {

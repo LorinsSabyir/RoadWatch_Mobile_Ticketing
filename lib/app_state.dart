@@ -244,4 +244,10 @@ class FFAppState extends ChangeNotifier {
   set violatorAddGender(String value) {
     _violatorAddGender = value;
   }
+
+  String _imagePath = '';
+  String get imagePath => _imagePath;
+  set imagePath(String value) {
+    _imagePath = value;
+  }
 }

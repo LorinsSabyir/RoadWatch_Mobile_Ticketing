@@ -200,7 +200,7 @@ class _SignupWidgetState extends State<SignupWidget>
                                   children: [
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 24.0),
+                                          0.0, 0.0, 0.0, 8.0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
@@ -985,68 +985,6 @@ class _SignupWidgetState extends State<SignupWidget>
                                         ],
                                       ),
                                     ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        FFButtonWidget(
-                                          onPressed: () {
-                                            print('selfieButton pressed ...');
-                                          },
-                                          text: 'Take a Selfie',
-                                          icon: Icon(
-                                            Icons.camera_alt,
-                                            size: 25.0,
-                                          ),
-                                          options: FFButtonOptions(
-                                            height: 40.0,
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    16.0, 0.0, 16.0, 0.0),
-                                            iconAlignment: IconAlignment.end,
-                                            iconPadding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary,
-                                            textStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .titleSmall
-                                                    .override(
-                                                      font: GoogleFonts.manrope(
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleSmall
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleSmall
-                                                                .fontStyle,
-                                                      ),
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                      letterSpacing: 0.0,
-                                                      fontWeight:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .titleSmall
-                                                              .fontWeight,
-                                                      fontStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .titleSmall
-                                                              .fontStyle,
-                                                    ),
-                                            elevation: 0.0,
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
                                     if (responsiveVisibility(
                                       context: context,
                                       phone: false,
@@ -1337,90 +1275,122 @@ class _SignupWidgetState extends State<SignupWidget>
                                       ),
                                     FFButtonWidget(
                                       onPressed: () async {
-                                        GoRouter.of(context).prepareAuthEvent();
-                                        if (_model
-                                                .passwordTextController.text !=
-                                            _model.confirmPasswordTextController
-                                                .text) {
+                                        if ((_model.emailAddressTextController
+                                                        .text !=
+                                                    '') &&
+                                            (_model.firstNameTextController
+                                                        .text !=
+                                                    '') &&
+                                            (_model.lastNameTextController
+                                                        .text !=
+                                                    '') &&
+                                            (_model.badgeNumTextController
+                                                        .text !=
+                                                    '') &&
+                                            (_model.phoneNumTextController
+                                                        .text !=
+                                                    '') &&
+                                            (_model.genderValue != null &&
+                                                _model.genderValue != '')) {
+                                          GoRouter.of(context)
+                                              .prepareAuthEvent();
+                                          if (_model.passwordTextController
+                                                  .text !=
+                                              _model
+                                                  .confirmPasswordTextController
+                                                  .text) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  'Passwords don\'t match!',
+                                                ),
+                                              ),
+                                            );
+                                            return;
+                                          }
+
+                                          final user = await authManager
+                                              .createAccountWithEmail(
+                                            context,
+                                            _model.emailAddressTextController
+                                                .text,
+                                            _model.passwordTextController.text,
+                                          );
+                                          if (user == null) {
+                                            return;
+                                          }
+
+                                          await UsersRecord.collection
+                                              .doc(user.uid)
+                                              .update({
+                                            ...createUsersRecordData(
+                                              email: _model
+                                                  .emailAddressTextController
+                                                  .text,
+                                              badgeNumber: _model
+                                                  .badgeNumTextController.text,
+                                              phoneNumber: _model
+                                                  .phoneNumTextController.text,
+                                              status: false,
+                                              lastName: _model
+                                                  .lastNameTextController.text,
+                                              lastActive: getCurrentTimestamp,
+                                              gender: _model.genderValue,
+                                              accStatus: 'pending',
+                                              displayName: _model
+                                                  .firstNameTextController.text,
+                                              role: 'user',
+                                            ),
+                                            ...mapToFirestore(
+                                              {
+                                                'created_time': FieldValue
+                                                    .serverTimestamp(),
+                                              },
+                                            ),
+                                          });
+
+                                          await AdminNotifRecord.collection
+                                              .doc()
+                                              .set(createAdminNotifRecordData(
+                                                title:
+                                                    'Enforcer Creation Attempt!',
+                                                type: 'System',
+                                                status: 'pending',
+                                                enforcerId:
+                                                    currentUserReference,
+                                                notifType: 'warning',
+                                                createdTime:
+                                                    getCurrentTimestamp,
+                                                subtitle: valueOrDefault(
+                                                    currentUserDocument
+                                                        ?.lastName,
+                                                    ''),
+                                              ));
+
+                                          context.goNamedAuth(
+                                              EnforcerSelfieWidget.routeName,
+                                              context.mounted);
+                                        } else {
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
                                             SnackBar(
                                               content: Text(
-                                                'Passwords don\'t match!',
+                                                'Please fill in all required fields before continuing.',
+                                                style: TextStyle(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .info,
+                                                ),
                                               ),
+                                              duration:
+                                                  Duration(milliseconds: 2000),
+                                              backgroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .error,
                                             ),
                                           );
-                                          return;
                                         }
-
-                                        final user = await authManager
-                                            .createAccountWithEmail(
-                                          context,
-                                          _model
-                                              .emailAddressTextController.text,
-                                          _model.passwordTextController.text,
-                                        );
-                                        if (user == null) {
-                                          return;
-                                        }
-
-                                        await UsersRecord.collection
-                                            .doc(user.uid)
-                                            .update({
-                                          ...createUsersRecordData(
-                                            email: _model
-                                                .emailAddressTextController
-                                                .text,
-                                            badgeNumber: _model
-                                                .badgeNumTextController.text,
-                                            phoneNumber: _model
-                                                .phoneNumTextController.text,
-                                            status: false,
-                                            lastName: _model
-                                                .lastNameTextController.text,
-                                            lastActive: getCurrentTimestamp,
-                                            gender: _model.genderValue,
-                                            accStatus: 'pending',
-                                            displayName: _model
-                                                .firstNameTextController.text,
-                                            role: 'user',
-                                          ),
-                                          ...mapToFirestore(
-                                            {
-                                              'created_time':
-                                                  FieldValue.serverTimestamp(),
-                                            },
-                                          ),
-                                        });
-
-                                        await AdminNotifRecord.collection
-                                            .doc()
-                                            .set(createAdminNotifRecordData(
-                                              title:
-                                                  'Enforcer Creation Attempt!',
-                                              type: 'System',
-                                              status: 'pending',
-                                              enforcerId: currentUserReference,
-                                              notifType: 'warning',
-                                              createdTime: getCurrentTimestamp,
-                                              subtitle: valueOrDefault(
-                                                  currentUserDocument?.lastName,
-                                                  ''),
-                                            ));
-
-                                        await currentUserReference!
-                                            .update(createUsersRecordData(
-                                          status: false,
-                                          lastActive: getCurrentTimestamp,
-                                        ));
-                                        GoRouter.of(context).prepareAuthEvent();
-                                        await authManager.signOut();
-                                        GoRouter.of(context)
-                                            .clearRedirectLocation();
-
-                                        context.goNamedAuth(
-                                            ApprovalPageWidget.routeName,
-                                            context.mounted);
                                       },
                                       text: 'Signup',
                                       options: FFButtonOptions(

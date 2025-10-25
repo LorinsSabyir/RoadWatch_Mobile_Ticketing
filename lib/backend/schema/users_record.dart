@@ -80,26 +80,6 @@ class UsersRecord extends FirestoreRecord {
   String get accStatus => _accStatus ?? '';
   bool hasAccStatus() => _accStatus != null;
 
-  // "assignment_prk" field.
-  String? _assignmentPrk;
-  String get assignmentPrk => _assignmentPrk ?? '';
-  bool hasAssignmentPrk() => _assignmentPrk != null;
-
-  // "assignment_brgy" field.
-  String? _assignmentBrgy;
-  String get assignmentBrgy => _assignmentBrgy ?? '';
-  bool hasAssignmentBrgy() => _assignmentBrgy != null;
-
-  // "assignment_street" field.
-  String? _assignmentStreet;
-  String get assignmentStreet => _assignmentStreet ?? '';
-  bool hasAssignmentStreet() => _assignmentStreet != null;
-
-  // "assignment_landmark" field.
-  String? _assignmentLandmark;
-  String get assignmentLandmark => _assignmentLandmark ?? '';
-  bool hasAssignmentLandmark() => _assignmentLandmark != null;
-
   // "assignment_time" field.
   DateTime? _assignmentTime;
   DateTime? get assignmentTime => _assignmentTime;
@@ -109,6 +89,11 @@ class UsersRecord extends FirestoreRecord {
   String? _role;
   String get role => _role ?? '';
   bool hasRole() => _role != null;
+
+  // "assignment_address" field.
+  String? _assignmentAddress;
+  String get assignmentAddress => _assignmentAddress ?? '';
+  bool hasAssignmentAddress() => _assignmentAddress != null;
 
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
@@ -124,12 +109,9 @@ class UsersRecord extends FirestoreRecord {
     _lastActive = snapshotData['last_active'] as DateTime?;
     _gender = snapshotData['gender'] as String?;
     _accStatus = snapshotData['acc_status'] as String?;
-    _assignmentPrk = snapshotData['assignment_prk'] as String?;
-    _assignmentBrgy = snapshotData['assignment_brgy'] as String?;
-    _assignmentStreet = snapshotData['assignment_street'] as String?;
-    _assignmentLandmark = snapshotData['assignment_landmark'] as String?;
     _assignmentTime = snapshotData['assignment_time'] as DateTime?;
     _role = snapshotData['role'] as String?;
+    _assignmentAddress = snapshotData['assignment_address'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -179,12 +161,9 @@ Map<String, dynamic> createUsersRecordData({
   DateTime? lastActive,
   String? gender,
   String? accStatus,
-  String? assignmentPrk,
-  String? assignmentBrgy,
-  String? assignmentStreet,
-  String? assignmentLandmark,
   DateTime? assignmentTime,
   String? role,
+  String? assignmentAddress,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -201,12 +180,9 @@ Map<String, dynamic> createUsersRecordData({
       'last_active': lastActive,
       'gender': gender,
       'acc_status': accStatus,
-      'assignment_prk': assignmentPrk,
-      'assignment_brgy': assignmentBrgy,
-      'assignment_street': assignmentStreet,
-      'assignment_landmark': assignmentLandmark,
       'assignment_time': assignmentTime,
       'role': role,
+      'assignment_address': assignmentAddress,
     }.withoutNulls,
   );
 
@@ -231,12 +207,9 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.lastActive == e2?.lastActive &&
         e1?.gender == e2?.gender &&
         e1?.accStatus == e2?.accStatus &&
-        e1?.assignmentPrk == e2?.assignmentPrk &&
-        e1?.assignmentBrgy == e2?.assignmentBrgy &&
-        e1?.assignmentStreet == e2?.assignmentStreet &&
-        e1?.assignmentLandmark == e2?.assignmentLandmark &&
         e1?.assignmentTime == e2?.assignmentTime &&
-        e1?.role == e2?.role;
+        e1?.role == e2?.role &&
+        e1?.assignmentAddress == e2?.assignmentAddress;
   }
 
   @override
@@ -254,12 +227,9 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.lastActive,
         e?.gender,
         e?.accStatus,
-        e?.assignmentPrk,
-        e?.assignmentBrgy,
-        e?.assignmentStreet,
-        e?.assignmentLandmark,
         e?.assignmentTime,
-        e?.role
+        e?.role,
+        e?.assignmentAddress
       ]);
 
   @override

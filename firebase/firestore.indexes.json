@@ -1,6 +1,34 @@
 {
   "indexes": [
     {
+      "collectionGroup": "addressCity",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "provinceRef",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "city",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "addressBrgy",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "cityRef",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "barangay",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
       "collectionGroup": "citation",
       "queryScope": "COLLECTION",
       "fields": [
@@ -49,12 +77,8 @@
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "created_time",
-          "order": "DESCENDING"
-        },
-        {
-          "fieldPath": "edited_time",
-          "order": "DESCENDING"
+          "fieldPath": "notif_type",
+          "order": "ASCENDING"
         }
       ]
     }

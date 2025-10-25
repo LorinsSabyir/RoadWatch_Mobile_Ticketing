@@ -133,12 +133,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => SearchPageWidget(),
         ),
         FFRoute(
-          name: ScanLicenseWidget.routeName,
-          path: ScanLicenseWidget.routePath,
-          requireAuth: true,
-          builder: (context, params) => ScanLicenseWidget(),
-        ),
-        FFRoute(
           name: SignupWidget.routeName,
           path: SignupWidget.routePath,
           builder: (context, params) => SignupWidget(),

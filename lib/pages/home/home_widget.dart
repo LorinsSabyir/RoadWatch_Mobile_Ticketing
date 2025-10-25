@@ -1,5 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/components/confirm_modal/confirm_modal_widget.dart';
 import '/components/notification_card/notification_card_widget.dart';
 import '/components/user_option/user_option_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -672,31 +673,107 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   final assignmentNotifAdminNotifRecord =
                                       assignmentNotifAdminNotifRecordList[
                                           assignmentNotifIndex];
-                                  return Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 0.0, 16.0, 0.0),
-                                    child: NotificationCardWidget(
-                                      key: Key(
-                                          'Key0xk_${assignmentNotifIndex}_of_${assignmentNotifAdminNotifRecordList.length}'),
-                                      title: valueOrDefault<String>(
-                                        assignmentNotifAdminNotifRecord.title,
-                                        'Title',
+                                  return Builder(
+                                    builder: (context) => Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 0.0, 16.0, 0.0),
+                                      child: InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
+                                        onTap: () async {
+                                          await showDialog(
+                                            context: context,
+                                            builder: (dialogContext) {
+                                              return Dialog(
+                                                elevation: 0,
+                                                insetPadding: EdgeInsets.zero,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                alignment: AlignmentDirectional(
+                                                        0.0, 0.0)
+                                                    .resolve(Directionality.of(
+                                                        context)),
+                                                child: ConfirmModalWidget(
+                                                  acceptButton: () async {
+                                                    await assignmentNotifAdminNotifRecord
+                                                        .reference
+                                                        .update(
+                                                            createAdminNotifRecordData(
+                                                      status: 'accepted',
+                                                    ));
+
+                                                    await assignmentNotifAdminNotifRecord
+                                                        .enforcerId!
+                                                        .update(
+                                                            createUsersRecordData(
+                                                      assignmentTime:
+                                                          getCurrentTimestamp,
+                                                    ));
+                                                    Navigator.pop(context);
+                                                  },
+                                                  cancelButton: () async {
+                                                    await assignmentNotifAdminNotifRecord
+                                                        .reference
+                                                        .update(
+                                                            createAdminNotifRecordData(
+                                                      status: 'rejected',
+                                                    ));
+                                                    Navigator.pop(context);
+                                                  },
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        },
+                                        child: wrapWithModel(
+                                          model: _model.notificationCardModels
+                                              .getModel(
+                                            assignmentNotifIndex.toString(),
+                                            assignmentNotifIndex,
+                                          ),
+                                          updateCallback: () =>
+                                              safeSetState(() {}),
+                                          child: NotificationCardWidget(
+                                            key: Key(
+                                              'Key0xk_${assignmentNotifIndex.toString()}',
+                                            ),
+                                            title: valueOrDefault<String>(
+                                              assignmentNotifAdminNotifRecord
+                                                  .title,
+                                              'Title',
+                                            ),
+                                            subtitle: valueOrDefault<String>(
+                                              assignmentNotifAdminNotifRecord
+                                                  .subtitle,
+                                              'Subtitle',
+                                            ),
+                                            type: valueOrDefault<String>(
+                                              assignmentNotifAdminNotifRecord
+                                                  .type,
+                                              'Type',
+                                            ),
+                                            date:
+                                                assignmentNotifAdminNotifRecord
+                                                    .createdTime,
+                                            titleColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .success,
+                                            status: valueOrDefault<Color>(
+                                              assignmentNotifAdminNotifRecord
+                                                          .status ==
+                                                      'unread'
+                                                  ? FlutterFlowTheme.of(context)
+                                                      .primary
+                                                  : FlutterFlowTheme.of(context)
+                                                      .alternate,
+                                              FlutterFlowTheme.of(context)
+                                                  .primary,
+                                            ),
+                                          ),
+                                        ),
                                       ),
-                                      subtitle: valueOrDefault<String>(
-                                        assignmentNotifAdminNotifRecord
-                                            .subtitle,
-                                        'Subtitle',
-                                      ),
-                                      pupose: valueOrDefault<String>(
-                                        assignmentNotifAdminNotifRecord.type,
-                                        'Type',
-                                      ),
-                                      date: assignmentNotifAdminNotifRecord
-                                          .createdTime,
-                                      titleColor:
-                                          FlutterFlowTheme.of(context).success,
-                                      status: FlutterFlowTheme.of(context)
-                                          .transparent,
                                     ),
                                   );
                                 },

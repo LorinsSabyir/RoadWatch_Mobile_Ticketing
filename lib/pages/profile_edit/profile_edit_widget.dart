@@ -85,15 +85,16 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget> {
           ),
           title: Text(
             'Edit Account',
-            style: FlutterFlowTheme.of(context).titleLarge.override(
-                  font: GoogleFonts.manrope(
-                    fontWeight: FontWeight.bold,
+            style: FlutterFlowTheme.of(context).headlineMedium.override(
+                  font: GoogleFonts.urbanist(
+                    fontWeight: FontWeight.w600,
                     fontStyle:
-                        FlutterFlowTheme.of(context).titleLarge.fontStyle,
+                        FlutterFlowTheme.of(context).headlineMedium.fontStyle,
                   ),
                   letterSpacing: 0.0,
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FlutterFlowTheme.of(context).titleLarge.fontStyle,
+                  fontWeight: FontWeight.w600,
+                  fontStyle:
+                      FlutterFlowTheme.of(context).headlineMedium.fontStyle,
                 ),
           ),
           actions: [],
@@ -1113,6 +1114,9 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget> {
                                       context: context,
                                     );
                                     safeSetState(() {});
+
+                                    context.goNamedAuth(
+                                        HomeWidget.routeName, context.mounted);
 
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(

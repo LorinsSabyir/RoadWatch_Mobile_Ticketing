@@ -7,7 +7,6 @@ export '/pages/ticket_receipt/ticket_receipt_widget.dart'
 export '/pages/home/home_widget.dart' show HomeWidget;
 export '/pages/notification/notification_widget.dart' show NotificationWidget;
 export '/pages/search_page/search_page_widget.dart' show SearchPageWidget;
-export '/pages/scan_license/scan_license_widget.dart' show ScanLicenseWidget;
 export '/pages/signup/signup_widget.dart' show SignupWidget;
 export '/pages/approval_page/approval_page_widget.dart' show ApprovalPageWidget;
 export '/pages/approval_await/approval_await_widget.dart'

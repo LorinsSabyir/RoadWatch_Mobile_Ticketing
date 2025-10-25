@@ -63,7 +63,7 @@ class _EnforcerSelfieWidgetState extends State<EnforcerSelfieWidget> {
                           FlutterFlowTheme.of(context).headlineMedium.fontStyle,
                     ),
                     color: FlutterFlowTheme.of(context).primaryText,
-                    fontSize: 22.0,
+                    fontSize: 28.0,
                     letterSpacing: 0.0,
                     fontWeight: FontWeight.w600,
                     fontStyle:

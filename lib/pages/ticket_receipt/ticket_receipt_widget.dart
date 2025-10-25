@@ -123,7 +123,7 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                               AuthUserStreamWidget(
                                 builder: (context) => Text(
                                   valueOrDefault(
-                                      currentUserDocument?.assignmentLandmark,
+                                      currentUserDocument?.assignmentAddress,
                                       ''),
                                   style: FlutterFlowTheme.of(context)
                                       .displaySmall
@@ -547,11 +547,6 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                               appreEnforcer: currentUserDisplayName,
                               confUnitDesc:
                                   FFAppState().violationTotalFine.toString(),
-                              violatorAddressProvince:
-                                  FFAppState().violatorAddProvince,
-                              violatorAddressCity: FFAppState().violatorAddCity,
-                              violatorAddressBrgy: FFAppState().violatorAddBrgy,
-                              violatorAddressPrk: FFAppState().violatorAddPrk,
                               appreEnforcerId: currentUserUid,
                               violatorLicenseNum:
                                   FFAppState().violatorAddLicenseNum,
@@ -579,6 +574,14 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                               violatorGender: FFAppState().violatorAddGender,
                               confUnitType: FFAppState().vehicleAddType,
                               appreEnfId: currentUserReference,
+                              confUnitSerialNum:
+                                  FFAppState().vehicleAddSerialNum,
+                              violatorAddressPrk: FFAppState().violatorAddPrk,
+                              violatorAddressBrgy: FFAppState().violatorAddBrgy,
+                              violatorAddressCity: FFAppState().violatorAddCity,
+                              violatorAddressProvince:
+                                  FFAppState().violatorAddProvince,
+                              receiptStatus: false,
                             ),
                             ...mapToFirestore(
                               {

@@ -1,0 +1,202 @@
+// Automatic FlutterFlow imports
+import '/backend/backend.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import 'index.dart'; // Imports other custom actions
+import '/flutter_flow/custom_functions.dart'; // Imports custom functions
+import 'package:flutter/material.dart';
+// Begin custom action code
+// DO NOT REMOVE OR MODIFY THE CODE ABOVE!
+
+// ignore_for_file: depend_on_referenced_packages
+import 'package:print_bluetooth_thermal/print_bluetooth_thermal.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+/// Main function to print using saved printer if available
+Future<void> connectPrinter(BuildContext context) async {
+  try {
+    // STEP 1: Ensure Bluetooth is enabled
+    bool bluetoothEnabled = await PrintBluetoothThermal.bluetoothEnabled;
+    if (!bluetoothEnabled) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            duration: const Duration(milliseconds: 1000),
+            content: Text('❌ Bluetooth is OFF. Please enable it.')),
+      );
+      return;
+    }
+
+    // STEP 2: Try connecting to a previously saved printer
+    final prefs = await SharedPreferences.getInstance();
+    final savedMac = prefs.getString('saved_printer_mac');
+    BluetoothInfo? selectedDevice;
+
+    if (savedMac != null) {
+      // Attempt automatic reconnection
+      bool connected =
+          await PrintBluetoothThermal.connect(macPrinterAddress: savedMac);
+      if (connected) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: FlutterFlowTheme.of(context).success,
+            duration: const Duration(milliseconds: 1000),
+            content: Text(
+              '✅ Reconnected to saved printer ($savedMac)',
+              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                    fontFamily: 'Poppins',
+                    color: Colors.white,
+                  ),
+            ),
+          ),
+        );
+        selectedDevice =
+            BluetoothInfo(name: "Saved Printer", macAdress: savedMac);
+      }
+    }
+
+    // STEP 3: If not connected, let user select a printer manually
+    if (selectedDevice == null) {
+      List<BluetoothInfo> devices =
+          await PrintBluetoothThermal.pairedBluetooths;
+
+      if (devices.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              duration: const Duration(milliseconds: 1000),
+              content: Text('⚠️ No paired Bluetooth printers found.')),
+        );
+        return;
+      }
+
+      selectedDevice = await showDialog<BluetoothInfo>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Select Bluetooth Printer'),
+          content: SizedBox(
+            width: double.maxFinite,
+            height: 250,
+            child: ListView.builder(
+              itemCount: devices.length,
+              itemBuilder: (context, index) {
+                final device = devices[index];
+                return ListTile(
+                  leading: const Icon(Icons.print),
+                  title: Text(device.name ?? 'Unknown Printer'),
+                  subtitle: Text(device.macAdress ?? 'No MAC Address'),
+                  onTap: () => Navigator.pop(context, device),
+                );
+              },
+            ),
+          ),
+        ),
+      );
+
+      if (selectedDevice == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              duration: const Duration(milliseconds: 1000),
+              content: Text('⚠️ No printer selected.')),
+        );
+        return;
+      }
+
+      // Connect to the newly selected printer
+      bool connectStatus = await PrintBluetoothThermal.connect(
+        macPrinterAddress: selectedDevice.macAdress!,
+      );
+
+      if (!connectStatus) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: FlutterFlowTheme.of(context).error,
+            duration: const Duration(milliseconds: 1000),
+            content: Text(
+              '❌ Failed to connect to ${selectedDevice.name ?? "Printer"}.',
+              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                    fontFamily: 'Poppins',
+                    color: Colors.white,
+                  ),
+            ),
+          ),
+        );
+        return;
+      }
+
+      // Save printer MAC for next time
+      await prefs.setString('saved_printer_mac', selectedDevice.macAdress!);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: FlutterFlowTheme.of(context).success,
+          duration: const Duration(milliseconds: 1000),
+          content: Text(
+            '✅ Connected and saved ${selectedDevice.name ?? "printer"} for future use.',
+            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                  fontFamily: 'Poppins',
+                  color: Colors.white,
+                ),
+          ),
+        ),
+      );
+    }
+
+    // STEP 4: Print sample text (works for test or real print)
+    bool connectionStatus = await PrintBluetoothThermal.connectionStatus;
+    if (connectionStatus) {
+      String enter = '\n';
+      await PrintBluetoothThermal.writeBytes(enter.codeUnits);
+
+      String text = "ROAD WATCH TEST PRINT$enter";
+      await PrintBluetoothThermal.writeString(
+        printText: PrintTextSize(size: 2, text: text + " Size 2\n"),
+      );
+      await PrintBluetoothThermal.writeString(
+        printText: PrintTextSize(size: 1, text: "Sample line size 1\n"),
+      );
+      await PrintBluetoothThermal.writeString(
+        printText: PrintTextSize(size: 3, text: "End of print$enter"),
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: FlutterFlowTheme.of(context).success,
+          duration: const Duration(milliseconds: 1000),
+          content: Text(
+            '✅ Printed successfully on ${selectedDevice?.name ?? "Saved Printer"}',
+            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                  fontFamily: 'Poppins',
+                  color: Colors.white,
+                ),
+          ),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: FlutterFlowTheme.of(context).error,
+          duration: const Duration(milliseconds: 1000),
+          content: Text(
+            '⚠️ Printer not connected.',
+            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                  fontFamily: 'Poppins',
+                  color: Colors.white,
+                ),
+          ),
+        ),
+      );
+    }
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: FlutterFlowTheme.of(context).error,
+        duration: const Duration(milliseconds: 1000),
+        content: Text(
+          '❌ Error: $e',
+          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                fontFamily: 'Poppins',
+                color: Colors.white,
+              ),
+        ),
+      ),
+    );
+  }
+}

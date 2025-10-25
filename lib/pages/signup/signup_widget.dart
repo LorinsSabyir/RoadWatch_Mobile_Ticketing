@@ -1355,7 +1355,7 @@ class _SignupWidgetState extends State<SignupWidget>
                                               .set(createAdminNotifRecordData(
                                                 title:
                                                     'Enforcer Creation Attempt!',
-                                                type: 'System',
+                                                type: 'system',
                                                 status: 'pending',
                                                 enforcerId:
                                                     currentUserReference,

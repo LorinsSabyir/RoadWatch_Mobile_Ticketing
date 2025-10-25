@@ -177,7 +177,7 @@ class _HistoryWidgetState extends State<HistoryWidget> {
                                     cardItem.confUnitPlateNum,
                                     'Plate #',
                                   ),
-                                  pupose: valueOrDefault<String>(
+                                  type: valueOrDefault<String>(
                                     formatNumber(
                                       cardItem.violationTotalFine,
                                       formatType: FormatType.decimal,

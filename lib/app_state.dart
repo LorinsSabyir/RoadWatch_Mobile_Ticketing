@@ -250,4 +250,51 @@ class FFAppState extends ChangeNotifier {
   set imagePath(String value) {
     _imagePath = value;
   }
+
+  String _selectedPrinterName = '';
+  String get selectedPrinterName => _selectedPrinterName;
+  set selectedPrinterName(String value) {
+    _selectedPrinterName = value;
+  }
+
+  String _selectedPrinterAddress = '';
+  String get selectedPrinterAddress => _selectedPrinterAddress;
+  set selectedPrinterAddress(String value) {
+    _selectedPrinterAddress = value;
+  }
+
+  bool _isPrinterConnected = false;
+  bool get isPrinterConnected => _isPrinterConnected;
+  set isPrinterConnected(bool value) {
+    _isPrinterConnected = value;
+  }
+
+  List<String> _printerList = ['Hello World'];
+  List<String> get printerList => _printerList;
+  set printerList(List<String> value) {
+    _printerList = value;
+  }
+
+  void addToPrinterList(String value) {
+    printerList.add(value);
+  }
+
+  void removeFromPrinterList(String value) {
+    printerList.remove(value);
+  }
+
+  void removeAtIndexFromPrinterList(int index) {
+    printerList.removeAt(index);
+  }
+
+  void updatePrinterListAtIndex(
+    int index,
+    String Function(String) updateFn,
+  ) {
+    printerList[index] = updateFn(_printerList[index]);
+  }
+
+  void insertAtIndexInPrinterList(int index, String value) {
+    printerList.insert(index, value);
+  }
 }

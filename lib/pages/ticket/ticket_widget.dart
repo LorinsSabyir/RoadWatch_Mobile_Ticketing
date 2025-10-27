@@ -7,7 +7,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
-import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:flutter/material.dart';
@@ -224,58 +223,6 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                           .labelLarge
                                                           .fontStyle,
                                                 ),
-                                          ),
-                                          FFButtonWidget(
-                                            onPressed: () async {
-                                              await actions.printTicket(
-                                                context,
-                                              );
-                                            },
-                                            text: 'Test Print',
-                                            options: FFButtonOptions(
-                                              height: 40.0,
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      16.0, 0.0, 16.0, 0.0),
-                                              iconPadding: EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
-                                              textStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .titleSmall
-                                                      .override(
-                                                        font:
-                                                            GoogleFonts.manrope(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleSmall
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleSmall
-                                                                  .fontStyle,
-                                                        ),
-                                                        color: Colors.white,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleSmall
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleSmall
-                                                                .fontStyle,
-                                                      ),
-                                              elevation: 0.0,
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                            ),
                                           ),
                                         ],
                                       ),
@@ -900,7 +847,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                 child: StreamBuilder<
                                                     List<
                                                         AddressProvinceRecord>>(
-                                                  stream: _model
+                                                  stream: FFAppState()
                                                       .violatorProvinceDropdownCache(
                                                     requestFn: () =>
                                                         queryAddressProvinceRecord(
@@ -1064,8 +1011,15 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                       child: StreamBuilder<
                                                           List<
                                                               AddressCityRecord>>(
-                                                        stream: _model
+                                                        stream: FFAppState()
                                                             .violatorCityDropdownCache(
+                                                          uniqueQueryKey:
+                                                              valueOrDefault<
+                                                                  String>(
+                                                            _model
+                                                                .violatorProvinceDropDownValue,
+                                                            '1',
+                                                          ),
                                                           requestFn: () =>
                                                               queryAddressCityRecord(
                                                             queryBuilder:
@@ -1222,8 +1176,15 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         child: StreamBuilder<
                                                             List<
                                                                 AddressBrgyRecord>>(
-                                                          stream: _model
+                                                          stream: FFAppState()
                                                               .violatorBrgyDropdownCache(
+                                                            uniqueQueryKey:
+                                                                valueOrDefault<
+                                                                    String>(
+                                                              _model
+                                                                  .violatorCityDropDownValue,
+                                                              '1',
+                                                            ),
                                                             requestFn: () =>
                                                                 queryAddressBrgyRecord(
                                                               queryBuilder: (addressBrgyRecord) =>
@@ -3286,25 +3247,15 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                 title: FFAppState()
                                                                     .selectedViolationName
                                                                     .elementAtOrNull(
-                                                                        selectedIndex)!,
+                                                                        selectedIndex),
                                                                 subtitle: FFAppState()
                                                                     .selectedViolationSection
                                                                     .elementAtOrNull(
                                                                         selectedIndex),
-                                                                fine:
-                                                                    formatNumber(
-                                                                  FFAppState()
-                                                                      .selectedViolationFine
-                                                                      .elementAtOrNull(
-                                                                          selectedIndex),
-                                                                  formatType:
-                                                                      FormatType
-                                                                          .decimal,
-                                                                  decimalType:
-                                                                      DecimalType
-                                                                          .automatic,
-                                                                  currency: '₱',
-                                                                ),
+                                                                fine: FFAppState()
+                                                                    .selectedViolationFine
+                                                                    .elementAtOrNull(
+                                                                        selectedIndex),
                                                               ),
                                                             ),
                                                           ),
@@ -3435,6 +3386,36 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                   currentUserDocument
                                                       ?.assignmentAddress,
                                                   '');
+                                          FFAppState().appreAddDateTime =
+                                              dateTimeFormat(
+                                            "jm",
+                                            getCurrentTimestamp,
+                                            locale: FFLocalizations.of(context)
+                                                .languageCode,
+                                          );
+                                          FFAppState().appreAddDateMonth =
+                                              dateTimeFormat(
+                                            "MMM",
+                                            getCurrentTimestamp,
+                                            locale: FFLocalizations.of(context)
+                                                .languageCode,
+                                          );
+                                          FFAppState().appreAddDateDay =
+                                              dateTimeFormat(
+                                            "dd",
+                                            getCurrentTimestamp,
+                                            locale: FFLocalizations.of(context)
+                                                .languageCode,
+                                          );
+                                          FFAppState().appreAddDateYear =
+                                              dateTimeFormat(
+                                            "yyyy",
+                                            getCurrentTimestamp,
+                                            locale: FFLocalizations.of(context)
+                                                .languageCode,
+                                          );
+                                          FFAppState().appreEnforcer =
+                                              '${valueOrDefault(currentUserDocument?.lastName, '')} ${currentUserDisplayName}';
                                           safeSetState(() {});
 
                                           context.pushNamed(

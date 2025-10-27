@@ -145,15 +145,23 @@ Future<void> connectPrinter(BuildContext context) async {
       String enter = '\n';
       await PrintBluetoothThermal.writeBytes(enter.codeUnits);
 
-      String text = "ROAD WATCH TEST PRINT$enter";
       await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(size: 2, text: text + " Size 2\n"),
+        printText: PrintTextSize(size: 2, text: "ROAD WATCH TEST PRINT $enter"),
       );
       await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(size: 1, text: "Sample line size 1\n"),
+        printText: PrintTextSize(size: 1, text: "Size 1 $enter"),
       );
       await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(size: 3, text: "End of print$enter"),
+        printText: PrintTextSize(size: 2, text: "Size 2 $enter"),
+      );
+      await PrintBluetoothThermal.writeString(
+        printText: PrintTextSize(size: 3, text: "Size 3 $enter"),
+      );
+      await PrintBluetoothThermal.writeString(
+        printText: PrintTextSize(size: 4, text: "Size 4 $enter"),
+      );
+      await PrintBluetoothThermal.writeString(
+        printText: PrintTextSize(size: 5, text: "Size 5 $enter"),
       );
 
       ScaffoldMessenger.of(context).showSnackBar(

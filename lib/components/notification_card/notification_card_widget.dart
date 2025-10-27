@@ -102,6 +102,9 @@ class _NotificationCardWidgetState extends State<NotificationCardWidget> {
                       valueOrDefault<String>(
                         widget.title,
                         'title',
+                      ).maybeHandleOverflow(
+                        maxChars: 25,
+                        replacement: '…',
                       ),
                       style: FlutterFlowTheme.of(context).bodyLarge.override(
                             font: GoogleFonts.manrope(
@@ -125,6 +128,9 @@ class _NotificationCardWidgetState extends State<NotificationCardWidget> {
                         valueOrDefault<String>(
                           widget.subtitle,
                           'subtitle',
+                        ).maybeHandleOverflow(
+                          maxChars: 30,
+                          replacement: '…',
                         ),
                         style: FlutterFlowTheme.of(context).labelSmall.override(
                               font: GoogleFonts.manrope(

@@ -4,6 +4,7 @@ import '/components/violation_card/violation_card_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/custom_code/actions/index.dart' as actions;
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -361,18 +362,13 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                                         ),
                                         title: FFAppState()
                                             .selectedViolationName
-                                            .elementAtOrNull(selectedIndex)!,
+                                            .elementAtOrNull(selectedIndex),
                                         subtitle: FFAppState()
                                             .selectedViolationSection
                                             .elementAtOrNull(selectedIndex),
-                                        fine: formatNumber(
-                                          FFAppState()
-                                              .selectedViolationFine
-                                              .elementAtOrNull(selectedIndex),
-                                          formatType: FormatType.decimal,
-                                          decimalType: DecimalType.automatic,
-                                          currency: '₱',
-                                        ),
+                                        fine: FFAppState()
+                                            .selectedViolationFine
+                                            .elementAtOrNull(selectedIndex),
                                       ),
                                     ),
                                   );
@@ -425,29 +421,7 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Text(
-                              '₱',
-                              style: FlutterFlowTheme.of(context)
-                                  .headlineMedium
-                                  .override(
-                                    font: GoogleFonts.urbanist(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .headlineMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .headlineMedium
-                                          .fontStyle,
-                                    ),
-                                    letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .headlineMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .headlineMedium
-                                        .fontStyle,
-                                  ),
-                            ),
-                            Text(
-                              FFAppState().violationTotalFine.toString(),
+                              '₱${FFAppState().violationTotalFine.toString()}',
                               style: FlutterFlowTheme.of(context)
                                   .displaySmall
                                   .override(
@@ -536,38 +510,18 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                               confUnitPlateNum: FFAppState().vehicleAddPlateNum,
                               confUnitBrand: FFAppState().vehicleAddBrand,
                               confUnitModel: FFAppState().vehicleAddModel,
-                              appreTime: dateTimeFormat(
-                                "jm",
-                                getCurrentTimestamp,
-                                locale:
-                                    FFLocalizations.of(context).languageCode,
-                              ),
+                              appreTime: FFAppState().appreAddDateTime,
                               apprePlace: FFAppState().appreAddPlace,
                               violatorName: FFAppState().violatorAddName,
-                              appreEnforcer: currentUserDisplayName,
+                              appreEnforcer: FFAppState().appreEnforcer,
                               confUnitDesc:
                                   FFAppState().violationTotalFine.toString(),
                               appreEnforcerId: currentUserUid,
                               violatorLicenseNum:
                                   FFAppState().violatorAddLicenseNum,
-                              appreDateMonth: dateTimeFormat(
-                                "MMMM",
-                                getCurrentTimestamp,
-                                locale:
-                                    FFLocalizations.of(context).languageCode,
-                              ),
-                              appreDateDay: dateTimeFormat(
-                                "d",
-                                getCurrentTimestamp,
-                                locale:
-                                    FFLocalizations.of(context).languageCode,
-                              ),
-                              appreDateYear: dateTimeFormat(
-                                "yyyy",
-                                getCurrentTimestamp,
-                                locale:
-                                    FFLocalizations.of(context).languageCode,
-                              ),
+                              appreDateMonth: FFAppState().appreAddDateMonth,
+                              appreDateDay: FFAppState().appreAddDateDay,
+                              appreDateYear: FFAppState().appreAddDateYear,
                               createdTime: getCurrentTimestamp,
                               violationTotalFine:
                                   FFAppState().violationTotalFine,
@@ -594,6 +548,11 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                               },
                             ),
                           });
+                          FFAppState().citationId = '';
+                          safeSetState(() {});
+                          await actions.printTicket(
+                            context,
+                          );
                           FFAppState().selectedViolationName = [];
                           FFAppState().selectedViolationFine = [];
                           FFAppState().selectedViolationSection = [];
@@ -613,6 +572,11 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                           FFAppState().violatorAddBrgy = '';
                           FFAppState().violatorAddPrk = '';
                           FFAppState().violatorAddGender = '';
+                          FFAppState().appreAddDateTime = '';
+                          FFAppState().appreAddDateMonth = '';
+                          FFAppState().appreAddDateDay = '';
+                          FFAppState().appreAddDateYear = '';
+                          FFAppState().citationId = '';
                           FFAppState().update(() {});
 
                           context.goNamed(TicketWidget.routeName);

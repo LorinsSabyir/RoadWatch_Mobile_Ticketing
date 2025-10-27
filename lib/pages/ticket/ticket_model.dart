@@ -1,9 +1,6 @@
-import '/backend/backend.dart';
 import '/components/violation_card/violation_card_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
-import '/flutter_flow/request_manager.dart';
-
 import '/index.dart';
 import 'ticket_widget.dart' show TicketWidget;
 import 'package:flutter/material.dart';
@@ -86,59 +83,6 @@ class TicketModel extends FlutterFlowModel<TicketWidget> {
   // Models for ViolationCard dynamic component.
   late FlutterFlowDynamicModels<ViolationCardModel> violationCardModels;
 
-  /// Query cache managers for this widget.
-
-  final _violatorCityDropdownCacheManager =
-      StreamRequestManager<List<AddressCityRecord>>();
-  Stream<List<AddressCityRecord>> violatorCityDropdownCache({
-    String? uniqueQueryKey,
-    bool? overrideCache,
-    required Stream<List<AddressCityRecord>> Function() requestFn,
-  }) =>
-      _violatorCityDropdownCacheManager.performRequest(
-        uniqueQueryKey: uniqueQueryKey,
-        overrideCache: overrideCache,
-        requestFn: requestFn,
-      );
-  void clearViolatorCityDropdownCacheCache() =>
-      _violatorCityDropdownCacheManager.clear();
-  void clearViolatorCityDropdownCacheCacheKey(String? uniqueKey) =>
-      _violatorCityDropdownCacheManager.clearRequest(uniqueKey);
-
-  final _violatorProvinceDropdownCacheManager =
-      StreamRequestManager<List<AddressProvinceRecord>>();
-  Stream<List<AddressProvinceRecord>> violatorProvinceDropdownCache({
-    String? uniqueQueryKey,
-    bool? overrideCache,
-    required Stream<List<AddressProvinceRecord>> Function() requestFn,
-  }) =>
-      _violatorProvinceDropdownCacheManager.performRequest(
-        uniqueQueryKey: uniqueQueryKey,
-        overrideCache: overrideCache,
-        requestFn: requestFn,
-      );
-  void clearViolatorProvinceDropdownCacheCache() =>
-      _violatorProvinceDropdownCacheManager.clear();
-  void clearViolatorProvinceDropdownCacheCacheKey(String? uniqueKey) =>
-      _violatorProvinceDropdownCacheManager.clearRequest(uniqueKey);
-
-  final _violatorBrgyDropdownCacheManager =
-      StreamRequestManager<List<AddressBrgyRecord>>();
-  Stream<List<AddressBrgyRecord>> violatorBrgyDropdownCache({
-    String? uniqueQueryKey,
-    bool? overrideCache,
-    required Stream<List<AddressBrgyRecord>> Function() requestFn,
-  }) =>
-      _violatorBrgyDropdownCacheManager.performRequest(
-        uniqueQueryKey: uniqueQueryKey,
-        overrideCache: overrideCache,
-        requestFn: requestFn,
-      );
-  void clearViolatorBrgyDropdownCacheCache() =>
-      _violatorBrgyDropdownCacheManager.clear();
-  void clearViolatorBrgyDropdownCacheCacheKey(String? uniqueKey) =>
-      _violatorBrgyDropdownCacheManager.clearRequest(uniqueKey);
-
   @override
   void initState(BuildContext context) {
     violationCardModels = FlutterFlowDynamicModels(() => ViolationCardModel());
@@ -180,13 +124,5 @@ class TicketModel extends FlutterFlowModel<TicketWidget> {
     vehicleModelTextController?.dispose();
 
     violationCardModels.dispose();
-
-    /// Dispose query cache managers for this widget.
-
-    clearViolatorCityDropdownCacheCache();
-
-    clearViolatorProvinceDropdownCacheCache();
-
-    clearViolatorBrgyDropdownCacheCache();
   }
 }

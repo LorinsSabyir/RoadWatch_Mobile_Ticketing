@@ -419,17 +419,11 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                     key: Key(
                                                       'Keyhxz_${noSearchItem.id}',
                                                     ),
-                                                    title: noSearchItem.section,
-                                                    subtitle: noSearchItem
+                                                    title: noSearchItem
                                                         .violationName,
-                                                    fine: formatNumber(
-                                                      noSearchItem.fines,
-                                                      formatType:
-                                                          FormatType.decimal,
-                                                      decimalType:
-                                                          DecimalType.automatic,
-                                                      currency: '₱',
-                                                    ),
+                                                    subtitle:
+                                                        noSearchItem.section,
+                                                    fine: noSearchItem.fines,
                                                   ),
                                                 ),
                                               ),
@@ -613,15 +607,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                             searchItem.section,
                                                         subtitle: searchItem
                                                             .violationName,
-                                                        fine: formatNumber(
-                                                          searchItem.fines,
-                                                          formatType: FormatType
-                                                              .decimal,
-                                                          decimalType:
-                                                              DecimalType
-                                                                  .automatic,
-                                                          currency: '₱',
-                                                        ),
+                                                        fine: searchItem.fines,
                                                       ),
                                                     ),
                                                   ),

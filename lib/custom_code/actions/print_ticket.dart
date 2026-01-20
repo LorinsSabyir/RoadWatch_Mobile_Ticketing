@@ -116,6 +116,10 @@ Future<List<int>> textFormat() async {
   double totalFine = FFAppState().violationTotalFine;
   String totalFineValue = totalFine.toStringAsFixed(2);
 
+  // Note sa last part
+  String note =
+      "I hereby promise to appear at the office of the City Mayor with in two (2) days to answer the above-mentioned charges. It is understood that if I fail to appear therein and voluntarily pay the fines the city shall proceed with the filling of the case in court.";
+
   // ✅ Step 2: Format non-string into text string.
 
   // --- Title ---
@@ -157,10 +161,13 @@ Future<List<int>> textFormat() async {
         text: citationId,
         width: 8,
         styles: PosStyles(
-            align: PosAlign.right,
-            fontType: PosFontType.fontA,
-            bold: true,
-            underline: true)),
+          height: PosTextSize.size2,
+          width: PosTextSize.size2,
+          align: PosAlign.right,
+          fontType: PosFontType.fontA,
+          bold: false,
+          underline: true,
+        )),
   ]);
   bytes += generator.row([
     PosColumn(
@@ -176,7 +183,7 @@ Future<List<int>> textFormat() async {
   ]);
   bytes += generator.row([
     PosColumn(
-        text: 'Enforcer:',
+        text: 'Officer:',
         width: 4,
         styles: PosStyles(
             align: PosAlign.left, fontType: PosFontType.fontA, bold: false)),
@@ -315,7 +322,7 @@ Future<List<int>> textFormat() async {
   ]);
   bytes += generator.row([
     PosColumn(
-        text: 'Description:',
+        text: 'Desc.:',
         width: 4,
         styles: PosStyles(
             align: PosAlign.left, fontType: PosFontType.fontA, bold: false)),
@@ -339,7 +346,7 @@ Future<List<int>> textFormat() async {
   ]);
   bytes += generator.row([
     PosColumn(
-        text: 'Serial #:',
+        text: 'Chasis #:',
         width: 4,
         styles: PosStyles(
             align: PosAlign.left, fontType: PosFontType.fontA, bold: false)),
@@ -411,11 +418,25 @@ Future<List<int>> textFormat() async {
   bytes += generator.text('================================',
       styles: PosStyles(fontType: PosFontType.fontA, bold: true));
 
+  // Note sa last part
   bytes += generator.emptyLines(1);
+  bytes += generator.text(
+    note,
+    styles: PosStyles(fontType: PosFontType.fontA, bold: false),
+  );
+
+  bytes += generator.emptyLines(1);
+  bytes += generator.text('________________________________',
+      styles: PosStyles(fontType: PosFontType.fontA, bold: false));
+
+  bytes += generator.text('Apprehending Officer',
+      styles: PosStyles(align: PosAlign.center, fontType: PosFontType.fontA));
+
+  bytes += generator.emptyLines(2);
   bytes += generator.text('Thank you for your cooperation.',
       styles: PosStyles(align: PosAlign.center, fontType: PosFontType.fontA));
 
-  bytes += generator.feed(2); // Feed paper 2 lines
-  bytes += generator.cut(); // Cut paper
+  bytes += generator.feed(1);
+  bytes += generator.cut();
   return bytes;
 }

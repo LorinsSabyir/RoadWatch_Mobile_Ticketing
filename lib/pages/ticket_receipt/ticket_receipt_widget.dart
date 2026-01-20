@@ -5,8 +5,10 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
+import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'ticket_receipt_model.dart';
@@ -31,10 +33,29 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => TicketReceiptModel());
+
+    logFirebaseEvent('screen_view',
+        parameters: {'screen_name': 'TicketReceipt'});
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      logFirebaseEvent('TICKET_RECEIPT_TicketReceipt_ON_INIT_STA');
+      logFirebaseEvent('TicketReceipt_update_app_state');
+      FFAppState().violationTotalFine =
+          functions.totalFines(FFAppState().selectedViolationFine.toList());
+      FFAppState().update(() {});
+    });
   }
 
   @override
   void dispose() {
+    // On page dispose action.
+    () async {
+      logFirebaseEvent('TICKET_RECEIPT_TicketReceipt_ON_DISPOSE');
+      logFirebaseEvent('TicketReceipt_update_app_state');
+      FFAppState().violationTotalFine = 0.0;
+      FFAppState().update(() {});
+    }();
+
     _model.dispose();
 
     super.dispose();
@@ -75,21 +96,20 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
           centerTitle: false,
           elevation: 4.0,
         ),
-        body: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SingleChildScrollView(
-              primary: false,
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Align(
-                    alignment: AlignmentDirectional(0.0, 1.0),
-                    child: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 16.0, 8.0),
+        body: Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SingleChildScrollView(
+                primary: false,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Align(
+                      alignment: AlignmentDirectional(0.0, 1.0),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -308,11 +328,7 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                         ].divide(SizedBox(height: 4.0)),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                    Expanded(
                       child: Container(
                         width: MediaQuery.sizeOf(context).width * 1.0,
                         height: MediaQuery.sizeOf(context).height * 0.57,
@@ -379,14 +395,11 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ].divide(SizedBox(height: 8.0)).around(SizedBox(height: 8.0)),
+                ),
               ),
-            ),
-            Align(
-              alignment: AlignmentDirectional(0.0, 1.0),
-              child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 16.0, 0.0),
+              Align(
+                alignment: AlignmentDirectional(0.0, 1.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -449,20 +462,21 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                   ],
                 ),
               ),
-            ),
-            Align(
-              alignment: AlignmentDirectional(0.0, 1.0),
-              child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 16.0, 8.0),
+              Align(
+                alignment: AlignmentDirectional(0.0, 1.0),
                 child: Row(
-                  mainAxisSize: MainAxisSize.max,
+                  mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Expanded(
                       child: FFButtonWidget(
                         onPressed: () async {
-                          context.safePop();
+                          logFirebaseEvent(
+                              'TICKET_RECEIPT_PAGE_Back_Button_ON_TAP');
+                          logFirebaseEvent('Back_Button_navigate_to');
+
+                          context.goNamed(TicketWidget.routeName);
                         },
                         text: 'Back',
                         options: FFButtonOptions(
@@ -505,6 +519,14 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                     Expanded(
                       child: FFButtonWidget(
                         onPressed: () async {
+                          logFirebaseEvent(
+                              'TICKET_RECEIPT_PAGE_Submit_Button_ON_TAP');
+                          logFirebaseEvent('Submit_Button_custom_action');
+                          await actions.generateControlNumber(
+                            context,
+                          );
+                          logFirebaseEvent('Submit_Button_backend_call');
+
                           await CitationRecord.collection.doc().set({
                             ...createCitationRecordData(
                               confUnitPlateNum: FFAppState().vehicleAddPlateNum,
@@ -514,8 +536,7 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                               apprePlace: FFAppState().appreAddPlace,
                               violatorName: FFAppState().violatorAddName,
                               appreEnforcer: FFAppState().appreEnforcer,
-                              confUnitDesc:
-                                  FFAppState().violationTotalFine.toString(),
+                              confUnitDesc: FFAppState().vehicleAddDesc,
                               appreEnforcerId: currentUserUid,
                               violatorLicenseNum:
                                   FFAppState().violatorAddLicenseNum,
@@ -536,6 +557,8 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                               violatorAddressProvince:
                                   FFAppState().violatorAddProvince,
                               receiptStatus: false,
+                              controlNum: FFAppState().citationId,
+                              violatorPicUrl: FFAppState().imagePath,
                             ),
                             ...mapToFirestore(
                               {
@@ -548,11 +571,11 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                               },
                             ),
                           });
-                          FFAppState().citationId = '';
-                          safeSetState(() {});
+                          logFirebaseEvent('Submit_Button_custom_action');
                           await actions.printTicket(
                             context,
                           );
+                          logFirebaseEvent('Submit_Button_update_app_state');
                           FFAppState().selectedViolationName = [];
                           FFAppState().selectedViolationFine = [];
                           FFAppState().selectedViolationSection = [];
@@ -577,7 +600,10 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                           FFAppState().appreAddDateDay = '';
                           FFAppState().appreAddDateYear = '';
                           FFAppState().citationId = '';
+                          FFAppState().vehicleAddDesc = 'asdawdasd';
+                          FFAppState().imagePath = '';
                           FFAppState().update(() {});
+                          logFirebaseEvent('Submit_Button_navigate_to');
 
                           context.goNamed(TicketWidget.routeName);
                         },
@@ -621,8 +647,8 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                   ].divide(SizedBox(width: 8.0)),
                 ),
               ),
-            ),
-          ],
+            ].divide(SizedBox(height: 8.0)),
+          ),
         ),
       ),
     );

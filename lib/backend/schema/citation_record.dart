@@ -156,10 +156,15 @@ class CitationRecord extends FirestoreRecord {
   bool get receiptStatus => _receiptStatus ?? false;
   bool hasReceiptStatus() => _receiptStatus != null;
 
-  // "id" field.
-  String? _id;
-  String get id => _id ?? '';
-  bool hasId() => _id != null;
+  // "control_num" field.
+  String? _controlNum;
+  String get controlNum => _controlNum ?? '';
+  bool hasControlNum() => _controlNum != null;
+
+  // "violator_pic_url" field.
+  String? _violatorPicUrl;
+  String get violatorPicUrl => _violatorPicUrl ?? '';
+  bool hasViolatorPicUrl() => _violatorPicUrl != null;
 
   void _initializeFields() {
     _confUnitSerialNum = snapshotData['conf_unit_serial_num'] as String?;
@@ -192,7 +197,8 @@ class CitationRecord extends FirestoreRecord {
     _violatorAddressProvince =
         snapshotData['violator_address_province'] as String?;
     _receiptStatus = snapshotData['receipt_status'] as bool?;
-    _id = snapshotData['id'] as String?;
+    _controlNum = snapshotData['control_num'] as String?;
+    _violatorPicUrl = snapshotData['violator_pic_url'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -255,7 +261,8 @@ Map<String, dynamic> createCitationRecordData({
   String? violatorAddressCity,
   String? violatorAddressProvince,
   bool? receiptStatus,
-  String? id,
+  String? controlNum,
+  String? violatorPicUrl,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -284,7 +291,8 @@ Map<String, dynamic> createCitationRecordData({
       'violator_address_city': violatorAddressCity,
       'violator_address_province': violatorAddressProvince,
       'receipt_status': receiptStatus,
-      'id': id,
+      'control_num': controlNum,
+      'violator_pic_url': violatorPicUrl,
     }.withoutNulls,
   );
 
@@ -325,7 +333,8 @@ class CitationRecordDocumentEquality implements Equality<CitationRecord> {
         e1?.violatorAddressCity == e2?.violatorAddressCity &&
         e1?.violatorAddressProvince == e2?.violatorAddressProvince &&
         e1?.receiptStatus == e2?.receiptStatus &&
-        e1?.id == e2?.id;
+        e1?.controlNum == e2?.controlNum &&
+        e1?.violatorPicUrl == e2?.violatorPicUrl;
   }
 
   @override
@@ -358,7 +367,8 @@ class CitationRecordDocumentEquality implements Equality<CitationRecord> {
         e?.violatorAddressCity,
         e?.violatorAddressProvince,
         e?.receiptStatus,
-        e?.id
+        e?.controlNum,
+        e?.violatorPicUrl
       ]);
 
   @override

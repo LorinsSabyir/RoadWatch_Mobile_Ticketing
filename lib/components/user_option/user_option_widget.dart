@@ -145,6 +145,10 @@ class _UserOptionWidgetState extends State<UserOptionWidget>
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: () async {
+                                logFirebaseEvent(
+                                    'USER_OPTION_COMP_closeButton_ON_TAP');
+                                logFirebaseEvent(
+                                    'closeButton_close_dialog_drawer_etc');
                                 Navigator.pop(context);
                               },
                               child: Icon(
@@ -256,6 +260,10 @@ class _UserOptionWidgetState extends State<UserOptionWidget>
                                         hoverColor: Colors.transparent,
                                         highlightColor: Colors.transparent,
                                         onTap: () async {
+                                          logFirebaseEvent(
+                                              'USER_OPTION_Container_gxwwwdex_ON_TAP');
+                                          logFirebaseEvent(
+                                              'Container_set_dark_mode_settings');
                                           setDarkModeSetting(
                                               context, ThemeMode.light);
                                         },
@@ -361,6 +369,10 @@ class _UserOptionWidgetState extends State<UserOptionWidget>
                                         hoverColor: Colors.transparent,
                                         highlightColor: Colors.transparent,
                                         onTap: () async {
+                                          logFirebaseEvent(
+                                              'USER_OPTION_Container_469gslon_ON_TAP');
+                                          logFirebaseEvent(
+                                              'Container_set_dark_mode_settings');
                                           setDarkModeSetting(
                                               context, ThemeMode.dark);
                                         },
@@ -476,6 +488,10 @@ class _UserOptionWidgetState extends State<UserOptionWidget>
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () async {
+                              logFirebaseEvent(
+                                  'USER_OPTION_COMP_editButton_ON_TAP');
+                              logFirebaseEvent('editButton_navigate_to');
+
                               context.goNamed(ProfileEditWidget.routeName);
                             },
                             child: AnimatedContainer(
@@ -549,11 +565,12 @@ class _UserOptionWidgetState extends State<UserOptionWidget>
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () async {
+                              logFirebaseEvent(
+                                  'USER_OPTION_COMP_printerButton_ON_TAP');
+                              logFirebaseEvent('printerButton_custom_action');
                               await actions.connectPrinter(
                                 context,
                               );
-                              FFAppState().isPrinterConnected = true;
-                              safeSetState(() {});
                             },
                             child: AnimatedContainer(
                               duration: Duration(milliseconds: 150),
@@ -643,9 +660,14 @@ class _UserOptionWidgetState extends State<UserOptionWidget>
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: () async {
+                                logFirebaseEvent(
+                                    'USER_OPTION_COMP_printerButton_ON_TAP');
+                                logFirebaseEvent('printerButton_custom_action');
                                 await actions.disconnectPrinter(
                                   context,
                                 );
+                                logFirebaseEvent(
+                                    'printerButton_update_app_state');
                                 FFAppState().isPrinterConnected = false;
                                 safeSetState(() {});
                               },
@@ -741,14 +763,28 @@ class _UserOptionWidgetState extends State<UserOptionWidget>
                         hoverColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         onTap: () async {
-                          await currentUserReference!
-                              .update(createUsersRecordData(
-                            status: false,
-                            lastActive: getCurrentTimestamp,
-                          ));
+                          logFirebaseEvent(
+                              'USER_OPTION_COMP_logoutButton_ON_TAP');
+                          logFirebaseEvent('logoutButton_backend_call');
+
+                          await currentUserReference!.update({
+                            ...createUsersRecordData(
+                              status: false,
+                              lastActive: getCurrentTimestamp,
+                            ),
+                            ...mapToFirestore(
+                              {
+                                'assignment_address': FieldValue.delete(),
+                                'assignment_time': FieldValue.delete(),
+                              },
+                            ),
+                          });
+                          logFirebaseEvent('logoutButton_auth');
                           GoRouter.of(context).prepareAuthEvent();
                           await authManager.signOut();
                           GoRouter.of(context).clearRedirectLocation();
+
+                          logFirebaseEvent('logoutButton_navigate_to');
 
                           context.goNamedAuth(
                               SigninWidget.routeName, context.mounted);

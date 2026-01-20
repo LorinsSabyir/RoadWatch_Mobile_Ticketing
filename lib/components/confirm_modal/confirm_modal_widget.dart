@@ -9,12 +9,22 @@ export 'confirm_modal_model.dart';
 class ConfirmModalWidget extends StatefulWidget {
   const ConfirmModalWidget({
     super.key,
-    this.acceptButton,
-    this.cancelButton,
+    this.acceptButtonAction,
+    this.title,
+    this.buttonTitle,
+    this.buttonColor,
+    this.icon,
+    this.subtitle,
+    this.cancelButtonAction,
   });
 
-  final Future Function()? acceptButton;
-  final Future Function()? cancelButton;
+  final Future Function()? acceptButtonAction;
+  final String? title;
+  final String? buttonTitle;
+  final Color? buttonColor;
+  final Widget? icon;
+  final String? subtitle;
+  final Future Function()? cancelButtonAction;
 
   @override
   State<ConfirmModalWidget> createState() => _ConfirmModalWidgetState();
@@ -55,38 +65,65 @@ class _ConfirmModalWidgetState extends State<ConfirmModalWidget> {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            Icons.task_alt_outlined,
-            color: FlutterFlowTheme.of(context).success,
-            size: 40.0,
-          ),
-          Text(
-            'Confirm Assignment?',
-            style: FlutterFlowTheme.of(context).titleMedium.override(
-                  font: GoogleFonts.manrope(
-                    fontWeight:
-                        FlutterFlowTheme.of(context).titleMedium.fontWeight,
-                    fontStyle:
-                        FlutterFlowTheme.of(context).titleMedium.fontStyle,
-                  ),
-                  color: FlutterFlowTheme.of(context).primaryText,
-                  letterSpacing: 0.0,
-                  fontWeight:
-                      FlutterFlowTheme.of(context).titleMedium.fontWeight,
-                  fontStyle: FlutterFlowTheme.of(context).titleMedium.fontStyle,
+          widget.icon!,
+          Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Text(
+                valueOrDefault<String>(
+                  widget.title,
+                  'Confirmation Title',
                 ),
+                style: FlutterFlowTheme.of(context).titleMedium.override(
+                      font: GoogleFonts.manrope(
+                        fontWeight:
+                            FlutterFlowTheme.of(context).titleMedium.fontWeight,
+                        fontStyle:
+                            FlutterFlowTheme.of(context).titleMedium.fontStyle,
+                      ),
+                      color: FlutterFlowTheme.of(context).primaryText,
+                      letterSpacing: 0.0,
+                      fontWeight:
+                          FlutterFlowTheme.of(context).titleMedium.fontWeight,
+                      fontStyle:
+                          FlutterFlowTheme.of(context).titleMedium.fontStyle,
+                    ),
+              ),
+              Text(
+                valueOrDefault<String>(
+                  widget.subtitle,
+                  'Subtitle',
+                ),
+                style: FlutterFlowTheme.of(context).titleSmall.override(
+                      font: GoogleFonts.manrope(
+                        fontWeight:
+                            FlutterFlowTheme.of(context).titleSmall.fontWeight,
+                        fontStyle:
+                            FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                      ),
+                      color: FlutterFlowTheme.of(context).secondaryText,
+                      letterSpacing: 0.0,
+                      fontWeight:
+                          FlutterFlowTheme.of(context).titleSmall.fontWeight,
+                      fontStyle:
+                          FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                    ),
+              ),
+            ],
           ),
           Row(
             mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               FFButtonWidget(
                 onPressed: () async {
-                  await widget.cancelButton?.call();
+                  logFirebaseEvent('CONFIRM_MODAL_COMP_cancelButton_ON_TAP');
+                  logFirebaseEvent('cancelButton_execute_callback');
+                  await widget.cancelButtonAction?.call();
                 },
                 text: 'Cancel',
                 options: FFButtonOptions(
-                  width: 110.0,
+                  width: 120.0,
                   height: 40.0,
                   padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                   iconPadding:
@@ -117,16 +154,26 @@ class _ConfirmModalWidgetState extends State<ConfirmModalWidget> {
               ),
               FFButtonWidget(
                 onPressed: () async {
-                  await widget.acceptButton?.call();
+                  logFirebaseEvent('CONFIRM_MODAL_COMP_acceptButton_ON_TAP');
+                  logFirebaseEvent('acceptButton_execute_callback');
+                  await widget.acceptButtonAction?.call();
+                  logFirebaseEvent('acceptButton_close_dialog_drawer_etc');
+                  Navigator.pop(context);
                 },
-                text: 'Accept',
+                text: valueOrDefault<String>(
+                  widget.buttonTitle,
+                  'Button Title',
+                ),
                 options: FFButtonOptions(
-                  width: 110.0,
+                  width: 120.0,
                   height: 40.0,
                   padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                   iconPadding:
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                  color: FlutterFlowTheme.of(context).success,
+                  color: valueOrDefault<Color>(
+                    widget.buttonColor,
+                    FlutterFlowTheme.of(context).success,
+                  ),
                   textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                         font: GoogleFonts.manrope(
                           fontWeight: FlutterFlowTheme.of(context)
@@ -146,7 +193,7 @@ class _ConfirmModalWidgetState extends State<ConfirmModalWidget> {
                   borderRadius: BorderRadius.circular(8.0),
                 ),
               ),
-            ],
+            ].divide(SizedBox(width: 8.0)),
           ),
         ].divide(SizedBox(height: 16.0)),
       ),

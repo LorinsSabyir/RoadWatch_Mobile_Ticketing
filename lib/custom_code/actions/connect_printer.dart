@@ -11,17 +11,45 @@ import 'package:flutter/material.dart';
 // ignore_for_file: depend_on_referenced_packages
 import 'package:print_bluetooth_thermal/print_bluetooth_thermal.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 /// Main function to print using saved printer if available
 Future<void> connectPrinter(BuildContext context) async {
   try {
+    // STEP 0: Request Bluetooth permission if not granted
+    final bluetoothPermission = await Permission.bluetooth.status;
+    final connectPermission = await Permission.bluetoothConnect.status;
+    final scanPermission = await Permission.bluetoothScan.status;
+
+    if (bluetoothPermission.isDenied ||
+        connectPermission.isDenied ||
+        scanPermission.isDenied) {
+      final result = await [
+        Permission.bluetooth,
+        Permission.bluetoothConnect,
+        Permission.bluetoothScan,
+      ].request();
+
+      // If still denied after requesting
+      if (result.values.any((status) => status.isDenied)) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            duration: Duration(milliseconds: 1500),
+            content: Text('⚠️ Bluetooth permission is required to continue.'),
+          ),
+        );
+        return;
+      }
+    }
+
     // STEP 1: Ensure Bluetooth is enabled
     bool bluetoothEnabled = await PrintBluetoothThermal.bluetoothEnabled;
     if (!bluetoothEnabled) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-            duration: const Duration(milliseconds: 1000),
-            content: Text('❌ Bluetooth is OFF. Please enable it.')),
+          duration: Duration(milliseconds: 1500),
+          content: Text('❌ Bluetooth is OFF. Please enable it.'),
+        ),
       );
       return;
     }
@@ -32,7 +60,6 @@ Future<void> connectPrinter(BuildContext context) async {
     BluetoothInfo? selectedDevice;
 
     if (savedMac != null) {
-      // Attempt automatic reconnection
       bool connected =
           await PrintBluetoothThermal.connect(macPrinterAddress: savedMac);
       if (connected) {
@@ -62,8 +89,9 @@ Future<void> connectPrinter(BuildContext context) async {
       if (devices.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-              duration: const Duration(milliseconds: 1000),
-              content: Text('⚠️ No paired Bluetooth printers found.')),
+            duration: Duration(milliseconds: 1500),
+            content: Text('⚠️ No paired Bluetooth printers found.'),
+          ),
         );
         return;
       }
@@ -94,13 +122,13 @@ Future<void> connectPrinter(BuildContext context) async {
       if (selectedDevice == null) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-              duration: const Duration(milliseconds: 1000),
-              content: Text('⚠️ No printer selected.')),
+            duration: Duration(milliseconds: 1500),
+            content: Text('⚠️ No printer selected.'),
+          ),
         );
         return;
       }
 
-      // Connect to the newly selected printer
       bool connectStatus = await PrintBluetoothThermal.connect(
         macPrinterAddress: selectedDevice.macAdress!,
       );
@@ -122,7 +150,6 @@ Future<void> connectPrinter(BuildContext context) async {
         return;
       }
 
-      // Save printer MAC for next time
       await prefs.setString('saved_printer_mac', selectedDevice.macAdress!);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -139,29 +166,15 @@ Future<void> connectPrinter(BuildContext context) async {
       );
     }
 
-    // STEP 4: Print sample text (works for test or real print)
+    // STEP 4: Test print
     bool connectionStatus = await PrintBluetoothThermal.connectionStatus;
     if (connectionStatus) {
       String enter = '\n';
       await PrintBluetoothThermal.writeBytes(enter.codeUnits);
 
       await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(size: 2, text: "ROAD WATCH TEST PRINT $enter"),
-      );
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(size: 1, text: "Size 1 $enter"),
-      );
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(size: 2, text: "Size 2 $enter"),
-      );
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(size: 3, text: "Size 3 $enter"),
-      );
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(size: 4, text: "Size 4 $enter"),
-      );
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(size: 5, text: "Size 5 $enter"),
+        printText:
+            PrintTextSize(size: 2, text: "ROAD WATCH TEST PRINT $enter$enter"),
       );
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -192,6 +205,11 @@ Future<void> connectPrinter(BuildContext context) async {
         ),
       );
     }
+
+    // Sets appstate "isPrinterConnected" into true.
+    FFAppState().update(() {
+      FFAppState().isPrinterConnected = true;
+    });
   } catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(

@@ -80,6 +80,10 @@ class TicketModel extends FlutterFlowModel<TicketWidget> {
   FocusNode? vehicleModelFocusNode;
   TextEditingController? vehicleModelTextController;
   String? Function(BuildContext, String?)? vehicleModelTextControllerValidator;
+  // State field(s) for vehicleDec widget.
+  FocusNode? vehicleDecFocusNode;
+  TextEditingController? vehicleDecTextController;
+  String? Function(BuildContext, String?)? vehicleDecTextControllerValidator;
   // Models for ViolationCard dynamic component.
   late FlutterFlowDynamicModels<ViolationCardModel> violationCardModels;
 
@@ -122,6 +126,9 @@ class TicketModel extends FlutterFlowModel<TicketWidget> {
 
     vehicleModelFocusNode?.dispose();
     vehicleModelTextController?.dispose();
+
+    vehicleDecFocusNode?.dispose();
+    vehicleDecTextController?.dispose();
 
     violationCardModels.dispose();
   }

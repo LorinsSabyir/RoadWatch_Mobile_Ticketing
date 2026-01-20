@@ -1,5 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/components/is_empty/is_empty_widget.dart';
 import '/components/notification_card/notification_card_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -28,6 +29,8 @@ class _HistoryWidgetState extends State<HistoryWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => HistoryModel());
+
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'History'});
   }
 
   @override
@@ -46,9 +49,7 @@ class _HistoryWidgetState extends State<HistoryWidget> {
               'appre_enforcer_id',
               isEqualTo: currentUserUid,
             )
-            .orderBy('appre_date_month', descending: true)
-            .orderBy('appre_date_day', descending: true)
-            .orderBy('appre_date_year', descending: true),
+            .orderBy('created_time', descending: true),
       ),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
@@ -146,56 +147,66 @@ class _HistoryWidgetState extends State<HistoryWidget> {
                         EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
                     child: Container(
                       decoration: BoxDecoration(),
-                      child: Builder(
-                        builder: (context) {
-                          final card = historyCitationRecordList.toList();
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Builder(
+                            builder: (context) {
+                              final card = historyCitationRecordList.toList();
+                              if (card.isEmpty) {
+                                return IsEmptyWidget();
+                              }
 
-                          return ListView.separated(
-                            padding: EdgeInsets.zero,
-                            primary: false,
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            itemCount: card.length,
-                            separatorBuilder: (_, __) => SizedBox(height: 8.0),
-                            itemBuilder: (context, cardIndex) {
-                              final cardItem = card[cardIndex];
-                              return wrapWithModel(
-                                model: _model.notificationCardModels.getModel(
-                                  cardItem.reference.id,
-                                  cardIndex,
-                                ),
-                                updateCallback: () => safeSetState(() {}),
-                                child: NotificationCardWidget(
-                                  key: Key(
-                                    'Key9jr_${cardItem.reference.id}',
-                                  ),
-                                  title: valueOrDefault<String>(
-                                    cardItem.confUnitType,
-                                    'Type',
-                                  ),
-                                  subtitle: valueOrDefault<String>(
-                                    cardItem.confUnitPlateNum,
-                                    'Plate #',
-                                  ),
-                                  type: valueOrDefault<String>(
-                                    formatNumber(
-                                      cardItem.violationTotalFine,
-                                      formatType: FormatType.decimal,
-                                      decimalType: DecimalType.automatic,
-                                      currency: '₱',
+                              return ListView.separated(
+                                padding: EdgeInsets.zero,
+                                primary: false,
+                                shrinkWrap: true,
+                                scrollDirection: Axis.vertical,
+                                itemCount: card.length,
+                                separatorBuilder: (_, __) =>
+                                    SizedBox(height: 8.0),
+                                itemBuilder: (context, cardIndex) {
+                                  final cardItem = card[cardIndex];
+                                  return wrapWithModel(
+                                    model:
+                                        _model.notificationCardModels.getModel(
+                                      cardItem.reference.id,
+                                      cardIndex,
                                     ),
-                                    '₱00',
-                                  ),
-                                  titleColor:
-                                      FlutterFlowTheme.of(context).success,
-                                  date: cardItem.createdTime,
-                                  status:
-                                      FlutterFlowTheme.of(context).transparent,
-                                ),
+                                    updateCallback: () => safeSetState(() {}),
+                                    child: NotificationCardWidget(
+                                      key: Key(
+                                        'Key9jr_${cardItem.reference.id}',
+                                      ),
+                                      title: valueOrDefault<String>(
+                                        cardItem.confUnitType,
+                                        'Type',
+                                      ),
+                                      subtitle: valueOrDefault<String>(
+                                        cardItem.violatorName,
+                                        'Name',
+                                      ),
+                                      type: valueOrDefault<String>(
+                                        formatNumber(
+                                          cardItem.violationTotalFine,
+                                          formatType: FormatType.decimal,
+                                          decimalType: DecimalType.automatic,
+                                          currency: '₱',
+                                        ),
+                                        '₱00',
+                                      ),
+                                      titleColor:
+                                          FlutterFlowTheme.of(context).success,
+                                      date: cardItem.createdTime,
+                                      status: FlutterFlowTheme.of(context)
+                                          .transparent,
+                                    ),
+                                  );
+                                },
                               );
                             },
-                          );
-                        },
+                          ),
+                        ],
                       ),
                     ),
                   ),

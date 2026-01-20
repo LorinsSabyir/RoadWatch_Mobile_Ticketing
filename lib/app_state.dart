@@ -295,6 +295,24 @@ class FFAppState extends ChangeNotifier {
     _vehicleAddDesc = value;
   }
 
+  bool _enforcerIsActive = false;
+  bool get enforcerIsActive => _enforcerIsActive;
+  set enforcerIsActive(bool value) {
+    _enforcerIsActive = value;
+  }
+
+  bool _isViolatorPresent = false;
+  bool get isViolatorPresent => _isViolatorPresent;
+  set isViolatorPresent(bool value) {
+    _isViolatorPresent = value;
+  }
+
+  bool _confirmationModal = false;
+  bool get confirmationModal => _confirmationModal;
+  set confirmationModal(bool value) {
+    _confirmationModal = value;
+  }
+
   final _violatorProvinceDropdownCacheManager =
       StreamRequestManager<List<AddressProvinceRecord>>();
   Stream<List<AddressProvinceRecord>> violatorProvinceDropdownCache({
@@ -345,4 +363,21 @@ class FFAppState extends ChangeNotifier {
       _violatorBrgyDropdownCacheManager.clear();
   void clearViolatorBrgyDropdownCacheCacheKey(String? uniqueKey) =>
       _violatorBrgyDropdownCacheManager.clearRequest(uniqueKey);
+
+  final _violationSearchListCacheManager =
+      StreamRequestManager<List<ViolationRecord>>();
+  Stream<List<ViolationRecord>> violationSearchListCache({
+    String? uniqueQueryKey,
+    bool? overrideCache,
+    required Stream<List<ViolationRecord>> Function() requestFn,
+  }) =>
+      _violationSearchListCacheManager.performRequest(
+        uniqueQueryKey: uniqueQueryKey,
+        overrideCache: overrideCache,
+        requestFn: requestFn,
+      );
+  void clearViolationSearchListCacheCache() =>
+      _violationSearchListCacheManager.clear();
+  void clearViolationSearchListCacheCacheKey(String? uniqueKey) =>
+      _violationSearchListCacheManager.clearRequest(uniqueKey);
 }

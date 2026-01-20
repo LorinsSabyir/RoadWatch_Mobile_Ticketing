@@ -36,6 +36,7 @@ class _SignupWidgetState extends State<SignupWidget>
     super.initState();
     _model = createModel(context, () => SignupModel());
 
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'Signup'});
     _model.emailAddressTextController ??= TextEditingController();
     _model.emailAddressFocusNode ??= FocusNode();
 
@@ -1275,23 +1276,47 @@ class _SignupWidgetState extends State<SignupWidget>
                                       ),
                                     FFButtonWidget(
                                       onPressed: () async {
+                                        logFirebaseEvent(
+                                            'SIGNUP_PAGE_signupButton_ON_TAP');
                                         if ((_model.emailAddressTextController
-                                                        .text !=
-                                                    '') &&
+                                                        .text ==
+                                                    '') ||
                                             (_model.firstNameTextController
-                                                        .text !=
-                                                    '') &&
+                                                        .text ==
+                                                    '') ||
                                             (_model.lastNameTextController
-                                                        .text !=
-                                                    '') &&
+                                                        .text ==
+                                                    '') ||
                                             (_model.badgeNumTextController
-                                                        .text !=
-                                                    '') &&
+                                                        .text ==
+                                                    '') ||
                                             (_model.phoneNumTextController
-                                                        .text !=
-                                                    '') &&
-                                            (_model.genderValue != null &&
-                                                _model.genderValue != '')) {
+                                                        .text ==
+                                                    '') ||
+                                            (_model.genderValue == null ||
+                                                _model.genderValue == '')) {
+                                          logFirebaseEvent(
+                                              'signupButton_show_snack_bar');
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                'Please fill in all required fields before continuing.',
+                                                style: TextStyle(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .info,
+                                                ),
+                                              ),
+                                              duration:
+                                                  Duration(milliseconds: 2000),
+                                              backgroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .error,
+                                            ),
+                                          );
+                                        } else {
+                                          logFirebaseEvent('signupButton_auth');
                                           GoRouter.of(context)
                                               .prepareAuthEvent();
                                           if (_model.passwordTextController
@@ -1350,6 +1375,9 @@ class _SignupWidgetState extends State<SignupWidget>
                                             ),
                                           });
 
+                                          logFirebaseEvent(
+                                              'signupButton_backend_call');
+
                                           await AdminNotifRecord.collection
                                               .doc()
                                               .set(createAdminNotifRecordData(
@@ -1367,29 +1395,19 @@ class _SignupWidgetState extends State<SignupWidget>
                                                         ?.lastName,
                                                     ''),
                                               ));
+                                          logFirebaseEvent(
+                                              'signupButton_navigate_to');
+
+                                          context.pushNamedAuth(
+                                              HomeWidget.routeName,
+                                              context.mounted);
+
+                                          logFirebaseEvent(
+                                              'signupButton_navigate_to');
 
                                           context.goNamedAuth(
                                               EnforcerSelfieWidget.routeName,
                                               context.mounted);
-                                        } else {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            SnackBar(
-                                              content: Text(
-                                                'Please fill in all required fields before continuing.',
-                                                style: TextStyle(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .info,
-                                                ),
-                                              ),
-                                              duration:
-                                                  Duration(milliseconds: 2000),
-                                              backgroundColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .error,
-                                            ),
-                                          );
                                         }
                                       },
                                       text: 'Signup',
@@ -1482,11 +1500,16 @@ class _SignupWidgetState extends State<SignupWidget>
                                           hoverColor: Colors.transparent,
                                           highlightColor: Colors.transparent,
                                           onTap: () async {
+                                            logFirebaseEvent(
+                                                'SIGNUP_PAGE_signinLink_ON_TAP');
+                                            logFirebaseEvent(
+                                                'signinLink_navigate_to');
+
                                             context.pushNamed(
                                                 SigninWidget.routeName);
                                           },
                                           child: Text(
-                                            'Sign in',
+                                            'Log in',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(

@@ -1,38 +1,46 @@
-import '/auth/firebase_auth/auth_util.dart';
-import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'enforcer_selfie_model.dart';
-export 'enforcer_selfie_model.dart';
+import 'package:provider/provider.dart';
+import 'violator_picture_model.dart';
+export 'violator_picture_model.dart';
 
-class EnforcerSelfieWidget extends StatefulWidget {
-  const EnforcerSelfieWidget({super.key});
+class ViolatorPictureWidget extends StatefulWidget {
+  const ViolatorPictureWidget({super.key});
 
-  static String routeName = 'EnforcerSelfie';
-  static String routePath = '/enforcerSelfie';
+  static String routeName = 'ViolatorPicture';
+  static String routePath = '/violatorPicture';
 
   @override
-  State<EnforcerSelfieWidget> createState() => _EnforcerSelfieWidgetState();
+  State<ViolatorPictureWidget> createState() => _ViolatorPictureWidgetState();
 }
 
-class _EnforcerSelfieWidgetState extends State<EnforcerSelfieWidget> {
-  late EnforcerSelfieModel _model;
+class _ViolatorPictureWidgetState extends State<ViolatorPictureWidget> {
+  late ViolatorPictureModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => EnforcerSelfieModel());
+    _model = createModel(context, () => ViolatorPictureModel());
 
     logFirebaseEvent('screen_view',
-        parameters: {'screen_name': 'EnforcerSelfie'});
+        parameters: {'screen_name': 'ViolatorPicture'});
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      logFirebaseEvent('VIOLATOR_PICTURE_ViolatorPicture_ON_INIT');
+      logFirebaseEvent('ViolatorPicture_update_app_state');
+      FFAppState().imagePath = '';
+      safeSetState(() {});
+    });
   }
 
   @override
@@ -44,6 +52,8 @@ class _EnforcerSelfieWidgetState extends State<EnforcerSelfieWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -57,21 +67,51 @@ class _EnforcerSelfieWidgetState extends State<EnforcerSelfieWidget> {
           appBar: AppBar(
             backgroundColor: FlutterFlowTheme.of(context).primary,
             automaticallyImplyLeading: false,
-            title: Text(
-              'Upload an Image',
-              style: FlutterFlowTheme.of(context).headlineMedium.override(
-                    font: GoogleFonts.urbanist(
-                      fontWeight: FontWeight.w600,
-                      fontStyle:
-                          FlutterFlowTheme.of(context).headlineMedium.fontStyle,
+            title: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    FlutterFlowIconButton(
+                      borderRadius: 8.0,
+                      buttonSize: 50.0,
+                      fillColor: FlutterFlowTheme.of(context).primary,
+                      icon: Icon(
+                        Icons.arrow_back,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                        size: 30.0,
+                      ),
+                      onPressed: () async {
+                        logFirebaseEvent(
+                            'VIOLATOR_PICTURE_arrow_back_ICN_ON_TAP');
+                        logFirebaseEvent('IconButton_navigate_to');
+
+                        context.pushNamed(TicketWidget.routeName);
+                      },
                     ),
-                    color: FlutterFlowTheme.of(context).primaryText,
-                    fontSize: 28.0,
-                    letterSpacing: 0.0,
-                    fontWeight: FontWeight.w600,
-                    fontStyle:
-                        FlutterFlowTheme.of(context).headlineMedium.fontStyle,
-                  ),
+                  ],
+                ),
+                Text(
+                  'Upload an Image',
+                  style: FlutterFlowTheme.of(context).headlineMedium.override(
+                        font: GoogleFonts.urbanist(
+                          fontWeight: FontWeight.w600,
+                          fontStyle: FlutterFlowTheme.of(context)
+                              .headlineMedium
+                              .fontStyle,
+                        ),
+                        color: FlutterFlowTheme.of(context).primaryText,
+                        fontSize: 28.0,
+                        letterSpacing: 0.0,
+                        fontWeight: FontWeight.w600,
+                        fontStyle: FlutterFlowTheme.of(context)
+                            .headlineMedium
+                            .fontStyle,
+                      ),
+                ),
+              ].divide(SizedBox(width: 8.0)),
             ),
             actions: [],
             centerTitle: false,
@@ -130,7 +170,7 @@ class _EnforcerSelfieWidgetState extends State<EnforcerSelfieWidget> {
                     highlightColor: Colors.transparent,
                     onTap: () async {
                       logFirebaseEvent(
-                          'ENFORCER_SELFIE_Container_7gwyp7qz_ON_TA');
+                          'VIOLATOR_PICTURE_Container_ayrvnt7m_ON_T');
                       logFirebaseEvent('Container_store_media_for_upload');
                       final selectedMedia = await selectMedia(
                         imageQuality: 20,
@@ -140,7 +180,7 @@ class _EnforcerSelfieWidgetState extends State<EnforcerSelfieWidget> {
                           selectedMedia.every((m) =>
                               validateFileFormat(m.storagePath, context))) {
                         safeSetState(() =>
-                            _model.isDataUploading_uploadEnforcerFace = true);
+                            _model.isDataUploading_uploadViolatorPic = true);
                         var selectedUploadedFiles = <FFUploadedFile>[];
 
                         try {
@@ -161,12 +201,12 @@ class _EnforcerSelfieWidgetState extends State<EnforcerSelfieWidget> {
                               .toList();
                         } finally {
                           ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                          _model.isDataUploading_uploadEnforcerFace = false;
+                          _model.isDataUploading_uploadViolatorPic = false;
                         }
                         if (selectedUploadedFiles.length ==
                             selectedMedia.length) {
                           safeSetState(() {
-                            _model.uploadedLocalFile_uploadEnforcerFace =
+                            _model.uploadedLocalFile_uploadViolatorPic =
                                 selectedUploadedFiles.first;
                           });
                           showUploadMessage(context, 'Success!');
@@ -194,7 +234,7 @@ class _EnforcerSelfieWidgetState extends State<EnforcerSelfieWidget> {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(8.0),
                             child: Image.memory(
-                              _model.uploadedLocalFile_uploadEnforcerFace
+                              _model.uploadedLocalFile_uploadViolatorPic
                                       .bytes ??
                                   Uint8List.fromList([]),
                               width: MediaQuery.sizeOf(context).width * 1.0,
@@ -202,7 +242,7 @@ class _EnforcerSelfieWidgetState extends State<EnforcerSelfieWidget> {
                               fit: BoxFit.cover,
                             ),
                           ),
-                          if ((_model.uploadedLocalFile_uploadEnforcerFace.bytes
+                          if ((_model.uploadedLocalFile_uploadViolatorPic.bytes
                                       ?.isEmpty ??
                                   true))
                             Align(
@@ -218,7 +258,8 @@ class _EnforcerSelfieWidgetState extends State<EnforcerSelfieWidget> {
                                     size: 50.0,
                                   ),
                                   Text(
-                                    'Take a picture of your face',
+                                    'Take a picture of the violator \nalong with their vehicle',
+                                    textAlign: TextAlign.center,
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
@@ -270,20 +311,25 @@ class _EnforcerSelfieWidgetState extends State<EnforcerSelfieWidget> {
                     child: FFButtonWidget(
                       onPressed: () async {
                         logFirebaseEvent(
-                            'ENFORCER_SELFIE_PAGE_scanButton_ON_TAP');
+                            'VIOLATOR_PICTURE_PAGE_scanButton_ON_TAP');
                         logFirebaseEvent('scanButton_upload_file_to_firebase');
                         {
                           safeSetState(
-                              () => _model.isDataUploading_enforcerFace = true);
+                              () => _model.isDataUploading_violatorPic = true);
                           var selectedUploadedFiles = <FFUploadedFile>[];
                           var selectedFiles = <SelectedFile>[];
                           var downloadUrls = <String>[];
                           try {
+                            showUploadMessage(
+                              context,
+                              'Uploading file...',
+                              showLoading: true,
+                            );
                             selectedUploadedFiles = _model
-                                    .uploadedLocalFile_uploadEnforcerFace
+                                    .uploadedLocalFile_uploadViolatorPic
                                     .bytes!
                                     .isNotEmpty
-                                ? [_model.uploadedLocalFile_uploadEnforcerFace]
+                                ? [_model.uploadedLocalFile_uploadViolatorPic]
                                 : <FFUploadedFile>[];
                             selectedFiles = selectedFilesFromUploadedFiles(
                               selectedUploadedFiles,
@@ -298,41 +344,39 @@ class _EnforcerSelfieWidgetState extends State<EnforcerSelfieWidget> {
                                 .map((u) => u!)
                                 .toList();
                           } finally {
-                            _model.isDataUploading_enforcerFace = false;
+                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                            _model.isDataUploading_violatorPic = false;
                           }
                           if (selectedUploadedFiles.length ==
                                   selectedFiles.length &&
                               downloadUrls.length == selectedFiles.length) {
                             safeSetState(() {
-                              _model.uploadedLocalFile_enforcerFace =
+                              _model.uploadedLocalFile_violatorPic =
                                   selectedUploadedFiles.first;
-                              _model.uploadedFileUrl_enforcerFace =
+                              _model.uploadedFileUrl_violatorPic =
                                   downloadUrls.first;
                             });
+                            showUploadMessage(
+                              context,
+                              'Success!',
+                            );
                           } else {
                             safeSetState(() {});
+                            showUploadMessage(
+                              context,
+                              'Failed to upload file',
+                            );
                             return;
                           }
                         }
 
-                        logFirebaseEvent('scanButton_backend_call');
-
-                        await currentUserReference!
-                            .update(createUsersRecordData(
-                          photoUrl: _model.uploadedFileUrl_enforcerFace,
-                        ));
-                        logFirebaseEvent('scanButton_auth');
-                        GoRouter.of(context).prepareAuthEvent();
-                        await authManager.signOut();
-                        GoRouter.of(context).clearRedirectLocation();
-
                         logFirebaseEvent('scanButton_update_app_state');
-                        FFAppState().imagePath = '';
+                        FFAppState().imagePath =
+                            _model.uploadedFileUrl_violatorPic;
                         safeSetState(() {});
                         logFirebaseEvent('scanButton_navigate_to');
 
-                        context.goNamedAuth(
-                            ApprovalPageWidget.routeName, context.mounted);
+                        context.pushNamed(TicketReceiptWidget.routeName);
                       },
                       text: 'Submit Selfie',
                       options: FFButtonOptions(
@@ -342,20 +386,22 @@ class _EnforcerSelfieWidgetState extends State<EnforcerSelfieWidget> {
                         iconPadding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                         color: FlutterFlowTheme.of(context).primary,
-                        textStyle:
-                            FlutterFlowTheme.of(context).titleLarge.override(
-                                  font: GoogleFonts.manrope(
-                                    fontWeight: FontWeight.w500,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .titleLarge
-                                        .fontStyle,
-                                  ),
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w500,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .titleLarge
-                                      .fontStyle,
-                                ),
+                        textStyle: FlutterFlowTheme.of(context)
+                            .titleLarge
+                            .override(
+                              font: GoogleFonts.manrope(
+                                fontWeight: FontWeight.w500,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .titleLarge
+                                    .fontStyle,
+                              ),
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              letterSpacing: 0.0,
+                              fontWeight: FontWeight.w500,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .titleLarge
+                                  .fontStyle,
+                            ),
                         elevation: 0.0,
                         borderRadius: BorderRadius.circular(8.0),
                       ),

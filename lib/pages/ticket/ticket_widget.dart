@@ -48,6 +48,16 @@ class _TicketWidgetState extends State<TicketWidget> {
       FFAppState().isViolatorPresent = false;
       FFAppState().confirmationModal = false;
       safeSetState(() {});
+      logFirebaseEvent('Ticket_update_page_state');
+      _model.selectedViolationName =
+          FFAppState().selectedViolationName.toList().cast<String>();
+      _model.selectedViolationSection =
+          FFAppState().selectedViolationSection.toList().cast<String>();
+      _model.selectedViolationFine =
+          FFAppState().selectedViolationFine.toList().cast<double>();
+      _model.selectedViolationId =
+          FFAppState().selectedViolationId.toList().cast<DocumentReference>();
+      safeSetState(() {});
     });
 
     _model.violatorNameTextController ??=
@@ -3847,143 +3857,107 @@ class _TicketWidgetState extends State<TicketWidget> {
                                           padding: EdgeInsets.all(8.0),
                                           child: Builder(
                                             builder: (context) {
-                                              final selected = FFAppState()
-                                                  .citationRef
-                                                  .toList();
+                                              final selectedViolationName1 =
+                                                  FFAppState()
+                                                      .citationRef
+                                                      .toList();
 
                                               return ListView.separated(
                                                 padding: EdgeInsets.zero,
                                                 primary: false,
                                                 shrinkWrap: true,
                                                 scrollDirection: Axis.vertical,
-                                                itemCount: selected.length,
+                                                itemCount:
+                                                    selectedViolationName1
+                                                        .length,
                                                 separatorBuilder: (_, __) =>
                                                     SizedBox(height: 4.0),
-                                                itemBuilder:
-                                                    (context, selectedIndex) {
-                                                  final selectedItem =
-                                                      selected[selectedIndex];
-                                                  return StreamBuilder<
-                                                      List<ViolationRecord>>(
-                                                    stream:
-                                                        queryViolationRecord(
-                                                      queryBuilder:
-                                                          (violationRecord) =>
-                                                              violationRecord
-                                                                  .where(
-                                                        'violation_name',
-                                                        isEqualTo: selectedItem,
-                                                      ),
-                                                    ),
-                                                    builder:
-                                                        (context, snapshot) {
-                                                      // Customize what your widget looks like when it's loading.
-                                                      if (!snapshot.hasData) {
-                                                        return Center(
-                                                          child: SizedBox(
-                                                            width: 50.0,
-                                                            height: 50.0,
-                                                            child: SpinKitRing(
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .tertiary,
-                                                              size: 50.0,
+                                                itemBuilder: (context,
+                                                    selectedViolationName1Index) {
+                                                  final selectedViolationName1Item =
+                                                      selectedViolationName1[
+                                                          selectedViolationName1Index];
+                                                  return Container(
+                                                    width: 100.0,
+                                                    decoration: BoxDecoration(),
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Expanded(
+                                                          child: wrapWithModel(
+                                                            model: _model
+                                                                .violationCardModels1
+                                                                .getModel(
+                                                              selectedViolationName1Index
+                                                                  .toString(),
+                                                              selectedViolationName1Index,
+                                                            ),
+                                                            updateCallback: () =>
+                                                                safeSetState(
+                                                                    () {}),
+                                                            updateOnChange:
+                                                                true,
+                                                            child:
+                                                                ViolationCardWidget(
+                                                              key: Key(
+                                                                'Keygk1_${selectedViolationName1Index.toString()}',
+                                                              ),
+                                                              title: FFAppState()
+                                                                  .selectedViolationName
+                                                                  .elementAtOrNull(
+                                                                      selectedViolationName1Index),
+                                                              subtitle: FFAppState()
+                                                                  .selectedViolationSection
+                                                                  .elementAtOrNull(
+                                                                      selectedViolationName1Index),
+                                                              fine: FFAppState()
+                                                                  .selectedViolationFine
+                                                                  .elementAtOrNull(
+                                                                      selectedViolationName1Index),
                                                             ),
                                                           ),
-                                                        );
-                                                      }
-                                                      List<ViolationRecord>
-                                                          violationViolationRecordList =
-                                                          snapshot.data!;
-
-                                                      return Container(
-                                                        width: 100.0,
-                                                        decoration:
-                                                            BoxDecoration(),
-                                                        child: Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Expanded(
-                                                              child:
-                                                                  wrapWithModel(
-                                                                model: _model
-                                                                    .violationCardModels
-                                                                    .getModel(
-                                                                  selectedIndex
-                                                                      .toString(),
-                                                                  selectedIndex,
-                                                                ),
-                                                                updateCallback: () =>
-                                                                    safeSetState(
-                                                                        () {}),
-                                                                updateOnChange:
-                                                                    true,
-                                                                child:
-                                                                    ViolationCardWidget(
-                                                                  key: Key(
-                                                                    'Keyyjw_${selectedIndex.toString()}',
-                                                                  ),
-                                                                  title: FFAppState()
-                                                                      .selectedViolationName
-                                                                      .elementAtOrNull(
-                                                                          selectedIndex),
-                                                                  subtitle: FFAppState()
-                                                                      .selectedViolationSection
-                                                                      .elementAtOrNull(
-                                                                          selectedIndex),
-                                                                  fine: FFAppState()
-                                                                      .selectedViolationFine
-                                                                      .elementAtOrNull(
-                                                                          selectedIndex),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            FlutterFlowIconButton(
-                                                              borderRadius:
-                                                                  50.0,
-                                                              buttonSize: 40.0,
-                                                              icon: Icon(
-                                                                Icons
-                                                                    .delete_forever,
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .error,
-                                                                size: 24.0,
-                                                              ),
-                                                              onPressed:
-                                                                  () async {
-                                                                logFirebaseEvent(
-                                                                    'TICKET_PAGE_deleteButton_ON_TAP');
-                                                                logFirebaseEvent(
-                                                                    'deleteButton_update_app_state');
-                                                                FFAppState()
-                                                                    .removeFromSelectedViolationName(
-                                                                        selectedItem);
-                                                                FFAppState().removeFromSelectedViolationFine(
-                                                                    selectedIndex
-                                                                        .toDouble());
-                                                                FFAppState()
-                                                                    .removeFromSelectedViolationSection(
-                                                                        selectedItem);
-                                                                FFAppState()
-                                                                    .removeFromCitationRef(
-                                                                        selectedItem);
-                                                                safeSetState(
-                                                                    () {});
-                                                              },
-                                                            ),
-                                                          ].divide(SizedBox(
-                                                              width: 4.0)),
                                                         ),
-                                                      );
-                                                    },
+                                                        FlutterFlowIconButton(
+                                                          borderRadius: 50.0,
+                                                          buttonSize: 40.0,
+                                                          icon: Icon(
+                                                            Icons
+                                                                .delete_forever,
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .error,
+                                                            size: 24.0,
+                                                          ),
+                                                          onPressed: () async {
+                                                            logFirebaseEvent(
+                                                                'TICKET_PAGE_deleteButton_ON_TAP');
+                                                            logFirebaseEvent(
+                                                                'deleteButton_update_app_state');
+                                                            FFAppState()
+                                                                .removeAtIndexFromSelectedViolationName(
+                                                                    selectedViolationName1Index);
+                                                            FFAppState()
+                                                                .removeAtIndexFromSelectedViolationFine(
+                                                                    selectedViolationName1Index);
+                                                            FFAppState()
+                                                                .removeAtIndexFromSelectedViolationSection(
+                                                                    selectedViolationName1Index);
+                                                            FFAppState()
+                                                                .removeAtIndexFromCitationRef(
+                                                                    selectedViolationName1Index);
+                                                            safeSetState(() {});
+                                                          },
+                                                        ),
+                                                      ].divide(
+                                                          SizedBox(width: 4.0)),
+                                                    ),
                                                   );
                                                 },
                                               );
@@ -3992,6 +3966,189 @@ class _TicketWidgetState extends State<TicketWidget> {
                                         ),
                                       ),
                                     ),
+                                    if (false)
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            4.0, 0.0, 4.0, 0.0),
+                                        child: Container(
+                                          width:
+                                              MediaQuery.sizeOf(context).width *
+                                                  1.0,
+                                          height: MediaQuery.sizeOf(context)
+                                                  .height *
+                                              0.59,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryBackground,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                blurRadius: 3.0,
+                                                color: Color(0x35000000),
+                                                offset: Offset(
+                                                  0.0,
+                                                  1.0,
+                                                ),
+                                              )
+                                            ],
+                                            borderRadius:
+                                                BorderRadius.circular(12.0),
+                                          ),
+                                          child: Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Builder(
+                                              builder: (context) {
+                                                final selectedViolationName1 =
+                                                    FFAppState()
+                                                        .citationRef
+                                                        .toList();
+
+                                                return ListView.separated(
+                                                  padding: EdgeInsets.zero,
+                                                  primary: false,
+                                                  shrinkWrap: true,
+                                                  scrollDirection:
+                                                      Axis.vertical,
+                                                  itemCount:
+                                                      selectedViolationName1
+                                                          .length,
+                                                  separatorBuilder: (_, __) =>
+                                                      SizedBox(height: 4.0),
+                                                  itemBuilder: (context,
+                                                      selectedViolationName1Index) {
+                                                    final selectedViolationName1Item =
+                                                        selectedViolationName1[
+                                                            selectedViolationName1Index];
+                                                    return StreamBuilder<
+                                                        List<ViolationRecord>>(
+                                                      stream:
+                                                          queryViolationRecord(
+                                                        queryBuilder:
+                                                            (violationRecord) =>
+                                                                violationRecord
+                                                                    .where(
+                                                          'id',
+                                                          isEqualTo:
+                                                              selectedViolationName1Item,
+                                                        ),
+                                                      ),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        // Customize what your widget looks like when it's loading.
+                                                        if (!snapshot.hasData) {
+                                                          return Center(
+                                                            child: SizedBox(
+                                                              width: 50.0,
+                                                              height: 50.0,
+                                                              child:
+                                                                  SpinKitRing(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .tertiary,
+                                                                size: 50.0,
+                                                              ),
+                                                            ),
+                                                          );
+                                                        }
+                                                        List<ViolationRecord>
+                                                            violationViolationRecordList =
+                                                            snapshot.data!;
+
+                                                        return Container(
+                                                          width: 100.0,
+                                                          decoration:
+                                                              BoxDecoration(),
+                                                          child: Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Expanded(
+                                                                child:
+                                                                    wrapWithModel(
+                                                                  model: _model
+                                                                      .violationCardModels2
+                                                                      .getModel(
+                                                                    selectedViolationName1Index
+                                                                        .toString(),
+                                                                    selectedViolationName1Index,
+                                                                  ),
+                                                                  updateCallback: () =>
+                                                                      safeSetState(
+                                                                          () {}),
+                                                                  updateOnChange:
+                                                                      true,
+                                                                  child:
+                                                                      ViolationCardWidget(
+                                                                    key: Key(
+                                                                      'Keyrz2_${selectedViolationName1Index.toString()}',
+                                                                    ),
+                                                                    title:
+                                                                        selectedViolationName1Item,
+                                                                    subtitle: FFAppState()
+                                                                        .selectedViolationSection
+                                                                        .elementAtOrNull(
+                                                                            selectedViolationName1Index),
+                                                                    fine: FFAppState()
+                                                                        .selectedViolationFine
+                                                                        .elementAtOrNull(
+                                                                            selectedViolationName1Index),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              FlutterFlowIconButton(
+                                                                borderRadius:
+                                                                    50.0,
+                                                                buttonSize:
+                                                                    40.0,
+                                                                icon: Icon(
+                                                                  Icons
+                                                                      .delete_forever,
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .error,
+                                                                  size: 24.0,
+                                                                ),
+                                                                onPressed:
+                                                                    () async {
+                                                                  logFirebaseEvent(
+                                                                      'TICKET_PAGE_deleteButton_ON_TAP');
+                                                                  logFirebaseEvent(
+                                                                      'deleteButton_update_app_state');
+                                                                  FFAppState().removeFromSelectedViolationName(
+                                                                      selectedViolationName1Index
+                                                                          .toString());
+                                                                  FFAppState().removeFromSelectedViolationFine(
+                                                                      selectedViolationName1Index
+                                                                          .toDouble());
+                                                                  FFAppState().removeFromSelectedViolationSection(
+                                                                      selectedViolationName1Index
+                                                                          .toString());
+                                                                  FFAppState()
+                                                                      .removeAtIndexFromCitationRef(
+                                                                          selectedViolationName1Index);
+                                                                  safeSetState(
+                                                                      () {});
+                                                                },
+                                                              ),
+                                                            ].divide(SizedBox(
+                                                                width: 4.0)),
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 8.0, 0.0, 0.0),
@@ -4125,13 +4282,6 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                   FFAppState().appreEnforcer =
                                                       '${valueOrDefault(currentUserDocument?.lastName, '')} ${currentUserDisplayName}';
                                                   safeSetState(() {});
-                                                  logFirebaseEvent(
-                                                      'submitButton_navigate_to');
-
-                                                  context.pushNamed(
-                                                      TicketReceiptWidget
-                                                          .routeName);
-
                                                   if (FFAppState().imagePath !=
                                                           '') {
                                                     logFirebaseEvent(

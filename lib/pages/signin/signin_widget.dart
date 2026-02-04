@@ -464,11 +464,11 @@ class _SigninWidgetState extends State<SigninWidget>
                                                 FlutterFlowTheme.of(context)
                                                     .textbox,
                                             suffixIcon: InkWell(
-                                              onTap: () => safeSetState(
-                                                () => _model
+                                              onTap: () async {
+                                                safeSetState(() => _model
                                                         .passwordVisibility =
-                                                    !_model.passwordVisibility,
-                                              ),
+                                                    !_model.passwordVisibility);
+                                              },
                                               focusNode: FocusNode(
                                                   skipTraversal: true),
                                               child: Icon(
@@ -591,12 +591,12 @@ class _SigninWidgetState extends State<SigninWidget>
                                                           currentUserDocument
                                                               ?.accStatus,
                                                           '') ==
-                                                      'canceled') {
+                                                      'rejected') {
                                                     logFirebaseEvent(
                                                         'signinButton_navigate_to');
 
                                                     context.goNamedAuth(
-                                                        ApprovalCancelWidget
+                                                        ApprovalRejectWidget
                                                             .routeName,
                                                         context.mounted);
                                                   }

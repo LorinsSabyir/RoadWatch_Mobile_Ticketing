@@ -741,10 +741,11 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget> {
                                   fillColor:
                                       FlutterFlowTheme.of(context).textbox,
                                   suffixIcon: InkWell(
-                                    onTap: () => safeSetState(
-                                      () => _model.userPasswordVisibility =
-                                          !_model.userPasswordVisibility,
-                                    ),
+                                    onTap: () async {
+                                      safeSetState(() =>
+                                          _model.userPasswordVisibility =
+                                              !_model.userPasswordVisibility);
+                                    },
                                     focusNode: FocusNode(skipTraversal: true),
                                     child: Icon(
                                       _model.userPasswordVisibility
@@ -849,11 +850,12 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget> {
                                   fillColor:
                                       FlutterFlowTheme.of(context).textbox,
                                   suffixIcon: InkWell(
-                                    onTap: () => safeSetState(
-                                      () => _model
+                                    onTap: () async {
+                                      safeSetState(() => _model
                                               .userConfirmPasswordVisibility =
-                                          !_model.userConfirmPasswordVisibility,
-                                    ),
+                                          !_model
+                                              .userConfirmPasswordVisibility);
+                                    },
                                     focusNode: FocusNode(skipTraversal: true),
                                     child: Icon(
                                       _model.userConfirmPasswordVisibility

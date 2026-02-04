@@ -313,6 +313,35 @@ class FFAppState extends ChangeNotifier {
     _confirmationModal = value;
   }
 
+  List<DocumentReference> _selectedViolationId = [];
+  List<DocumentReference> get selectedViolationId => _selectedViolationId;
+  set selectedViolationId(List<DocumentReference> value) {
+    _selectedViolationId = value;
+  }
+
+  void addToSelectedViolationId(DocumentReference value) {
+    selectedViolationId.add(value);
+  }
+
+  void removeFromSelectedViolationId(DocumentReference value) {
+    selectedViolationId.remove(value);
+  }
+
+  void removeAtIndexFromSelectedViolationId(int index) {
+    selectedViolationId.removeAt(index);
+  }
+
+  void updateSelectedViolationIdAtIndex(
+    int index,
+    DocumentReference Function(DocumentReference) updateFn,
+  ) {
+    selectedViolationId[index] = updateFn(_selectedViolationId[index]);
+  }
+
+  void insertAtIndexInSelectedViolationId(int index, DocumentReference value) {
+    selectedViolationId.insert(index, value);
+  }
+
   final _violatorProvinceDropdownCacheManager =
       StreamRequestManager<List<AddressProvinceRecord>>();
   Stream<List<AddressProvinceRecord>> violatorProvinceDropdownCache({

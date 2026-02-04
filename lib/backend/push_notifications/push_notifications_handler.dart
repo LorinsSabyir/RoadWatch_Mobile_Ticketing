@@ -115,13 +115,14 @@ final parametersBuilderMap =
   'TicketReceipt': ParameterData.none(),
   'Home': ParameterData.none(),
   'Notification': ParameterData.none(),
-  'SearchPage': ParameterData.none(),
+  'SearchPageCopy1': ParameterData.none(),
   'Signup': ParameterData.none(),
   'ApprovalPage': ParameterData.none(),
   'ProfileEdit': ParameterData.none(),
   'EnforcerSelfie': ParameterData.none(),
   'ViolatorPicture': ParameterData.none(),
-  'ApprovalCancel': ParameterData.none(),
+  'ApprovalReject': ParameterData.none(),
+  'SearchPage': ParameterData.none(),
 };
 
 Map<String, dynamic> getInitialParameterData(Map<String, dynamic> data) {

@@ -6,22 +6,22 @@ import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'approval_cancel_model.dart';
-export 'approval_cancel_model.dart';
+import 'approval_reject_model.dart';
+export 'approval_reject_model.dart';
 
-class ApprovalCancelWidget extends StatefulWidget {
-  const ApprovalCancelWidget({super.key});
+class ApprovalRejectWidget extends StatefulWidget {
+  const ApprovalRejectWidget({super.key});
 
-  static String routeName = 'ApprovalCancel';
-  static String routePath = '/approvalCancel';
+  static String routeName = 'ApprovalReject';
+  static String routePath = '/approvalReject';
 
   @override
-  State<ApprovalCancelWidget> createState() => _ApprovalCancelWidgetState();
+  State<ApprovalRejectWidget> createState() => _ApprovalRejectWidgetState();
 }
 
-class _ApprovalCancelWidgetState extends State<ApprovalCancelWidget>
+class _ApprovalRejectWidgetState extends State<ApprovalRejectWidget>
     with TickerProviderStateMixin {
-  late ApprovalCancelModel _model;
+  late ApprovalRejectModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -30,10 +30,10 @@ class _ApprovalCancelWidgetState extends State<ApprovalCancelWidget>
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => ApprovalCancelModel());
+    _model = createModel(context, () => ApprovalRejectModel());
 
     logFirebaseEvent('screen_view',
-        parameters: {'screen_name': 'ApprovalCancel'});
+        parameters: {'screen_name': 'ApprovalReject'});
     animationsMap.addAll({
       'containerOnPageLoadAnimation': AnimationInfo(
         trigger: AnimationTrigger.onPageLoad,
@@ -206,7 +206,7 @@ class _ApprovalCancelWidgetState extends State<ApprovalCancelWidget>
                                           child: FFButtonWidget(
                                             onPressed: () async {
                                               logFirebaseEvent(
-                                                  'APPROVAL_CANCEL_PAGE_signinButton_ON_TAP');
+                                                  'APPROVAL_REJECT_PAGE_signinButton_ON_TAP');
                                               logFirebaseEvent(
                                                   'signinButton_navigate_to');
 

@@ -129,10 +129,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               : NotificationWidget(),
         ),
         FFRoute(
-          name: SearchPageWidget.routeName,
-          path: SearchPageWidget.routePath,
+          name: SearchPageCopy1Widget.routeName,
+          path: SearchPageCopy1Widget.routePath,
           requireAuth: true,
-          builder: (context, params) => SearchPageWidget(),
+          builder: (context, params) => SearchPageCopy1Widget(),
         ),
         FFRoute(
           name: SignupWidget.routeName,
@@ -163,9 +163,15 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => ViolatorPictureWidget(),
         ),
         FFRoute(
-          name: ApprovalCancelWidget.routeName,
-          path: ApprovalCancelWidget.routePath,
-          builder: (context, params) => ApprovalCancelWidget(),
+          name: ApprovalRejectWidget.routeName,
+          path: ApprovalRejectWidget.routePath,
+          builder: (context, params) => ApprovalRejectWidget(),
+        ),
+        FFRoute(
+          name: SearchPageWidget.routeName,
+          path: SearchPageWidget.routePath,
+          requireAuth: true,
+          builder: (context, params) => SearchPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

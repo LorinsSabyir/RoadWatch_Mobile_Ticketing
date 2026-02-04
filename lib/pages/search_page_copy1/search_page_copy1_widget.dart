@@ -10,34 +10,35 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:text_search/text_search.dart';
-import 'search_page_model.dart';
-export 'search_page_model.dart';
+import 'search_page_copy1_model.dart';
+export 'search_page_copy1_model.dart';
 
-class SearchPageWidget extends StatefulWidget {
-  const SearchPageWidget({super.key});
+class SearchPageCopy1Widget extends StatefulWidget {
+  const SearchPageCopy1Widget({super.key});
 
-  static String routeName = 'SearchPage';
-  static String routePath = '/searchPage';
+  static String routeName = 'SearchPageCopy1';
+  static String routePath = '/searchPageCopy1';
 
   @override
-  State<SearchPageWidget> createState() => _SearchPageWidgetState();
+  State<SearchPageCopy1Widget> createState() => _SearchPageCopy1WidgetState();
 }
 
-class _SearchPageWidgetState extends State<SearchPageWidget> {
-  late SearchPageModel _model;
+class _SearchPageCopy1WidgetState extends State<SearchPageCopy1Widget> {
+  late SearchPageCopy1Model _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => SearchPageModel());
+    _model = createModel(context, () => SearchPageCopy1Model());
 
-    logFirebaseEvent('screen_view', parameters: {'screen_name': 'SearchPage'});
+    logFirebaseEvent('screen_view',
+        parameters: {'screen_name': 'SearchPageCopy1'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('SEARCH_SearchPage_ON_INIT_STATE');
-      logFirebaseEvent('SearchPage_update_app_state');
+      logFirebaseEvent('SEARCH_COPY1_SearchPageCopy1_ON_INIT_STA');
+      logFirebaseEvent('SearchPageCopy1_update_app_state');
       FFAppState().searchActive = false;
       safeSetState(() {});
     });
@@ -78,7 +79,8 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
             ),
           );
         }
-        List<ViolationRecord> searchPageViolationRecordList = snapshot.data!;
+        List<ViolationRecord> searchPageCopy1ViolationRecordList =
+            snapshot.data!;
 
         return GestureDetector(
           onTap: () {
@@ -172,7 +174,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                 ),
                                 onPressed: () async {
                                   logFirebaseEvent(
-                                      'SEARCH_PAGE_PAGE_backButton_ON_TAP');
+                                      'SEARCH_PAGE_COPY1_PAGE_backButton_ON_TAP');
                                   logFirebaseEvent('backButton_navigate_back');
                                   context.pop();
                                 },
@@ -219,13 +221,13 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                 Duration(milliseconds: 2000),
                                                 () async {
                                                   logFirebaseEvent(
-                                                      'SEARCH_searchbar_ON_TEXTFIELD_CHANGE');
+                                                      'SEARCH_COPY1_searchbar_ON_TEXTFIELD_CHAN');
                                                   logFirebaseEvent(
                                                       'searchbar_simple_search');
                                                   safeSetState(() {
                                                     _model.simpleSearchResults =
                                                         TextSearch(
-                                                      searchPageViolationRecordList
+                                                      searchPageCopy1ViolationRecordList
                                                           .map(
                                                             (record) =>
                                                                 TextSearchItem
@@ -383,7 +385,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                           ),
                                           onPressed: () async {
                                             logFirebaseEvent(
-                                                'SEARCH_PAGE_PAGE_closeButton_ON_TAP');
+                                                'SEARCH_COPY1_closeButton_ON_TAP');
                                             logFirebaseEvent(
                                                 'closeButton_clear_text_fields_pin_codes');
                                             safeSetState(() {
@@ -476,7 +478,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                   child: Builder(
                                     builder: (context) {
                                       final noSearch =
-                                          searchPageViolationRecordList
+                                          searchPageCopy1ViolationRecordList
                                               .toList();
 
                                       return ListView.builder(
@@ -514,7 +516,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                       child:
                                                           ViolationCardWidget(
                                                         key: Key(
-                                                          'Key0yd_${noSearchItem.id}',
+                                                          'Keyhxz_${noSearchItem.id}',
                                                         ),
                                                         title: noSearchItem
                                                             .violationName,
@@ -562,7 +564,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                             ? null
                                                             : () async {
                                                                 logFirebaseEvent(
-                                                                    'SEARCH_PAGE_PAGE_addButton_ON_TAP');
+                                                                    'SEARCH_PAGE_COPY1_PAGE_addButton_ON_TAP');
                                                                 if (FFAppState()
                                                                         .citationRef
                                                                         .contains(
@@ -594,19 +596,9 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                                 } else {
                                                                   logFirebaseEvent(
                                                                       'addButton_update_app_state');
-                                                                  FFAppState().addToSelectedViolationName(
+                                                                  FFAppState().addToSelectedViolationId(
                                                                       noSearchItem
-                                                                          .violationName);
-                                                                  FFAppState().addToSelectedViolationFine(
-                                                                      noSearchItem
-                                                                          .fines);
-                                                                  FFAppState().addToSelectedViolationSection(
-                                                                      noSearchItem
-                                                                          .section);
-                                                                  FFAppState()
-                                                                      .addToCitationRef(
-                                                                          noSearchItem
-                                                                              .id);
+                                                                          .reference);
                                                                   safeSetState(
                                                                       () {});
                                                                   logFirebaseEvent(
@@ -724,7 +716,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                           child:
                                                               ViolationCardWidget(
                                                             key: Key(
-                                                              'Keydw0_${searchItem.id}',
+                                                              'Keyqt1_${searchItem.id}',
                                                             ),
                                                             title: searchItem
                                                                 .section,
@@ -772,7 +764,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                                 ? null
                                                                 : () async {
                                                                     logFirebaseEvent(
-                                                                        'SEARCH_PAGE_PAGE_addButton_ON_TAP');
+                                                                        'SEARCH_PAGE_COPY1_PAGE_addButton_ON_TAP');
                                                                     if (FFAppState()
                                                                             .citationRef
                                                                             .contains(searchItem.id) ==

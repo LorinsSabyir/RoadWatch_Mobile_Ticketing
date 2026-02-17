@@ -372,30 +372,34 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                             ),
                                           ),
                                         ),
-                                        FlutterFlowIconButton(
-                                          borderRadius: 50.0,
-                                          buttonSize: 40.0,
-                                          icon: Icon(
-                                            Icons.close,
-                                            color: FlutterFlowTheme.of(context)
-                                                .textboxTextHollow,
-                                            size: 24.0,
+                                        if (_model.searchbarTextController
+                                                    .text !=
+                                                '')
+                                          FlutterFlowIconButton(
+                                            borderRadius: 50.0,
+                                            buttonSize: 40.0,
+                                            icon: Icon(
+                                              Icons.close,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .textboxTextHollow,
+                                              size: 24.0,
+                                            ),
+                                            onPressed: () async {
+                                              logFirebaseEvent(
+                                                  'SEARCH_PAGE_PAGE_closeButton_ON_TAP');
+                                              logFirebaseEvent(
+                                                  'closeButton_clear_text_fields_pin_codes');
+                                              safeSetState(() {
+                                                _model.searchbarTextController
+                                                    ?.clear();
+                                              });
+                                              logFirebaseEvent(
+                                                  'closeButton_update_app_state');
+                                              FFAppState().searchActive = false;
+                                              safeSetState(() {});
+                                            },
                                           ),
-                                          onPressed: () async {
-                                            logFirebaseEvent(
-                                                'SEARCH_PAGE_PAGE_closeButton_ON_TAP');
-                                            logFirebaseEvent(
-                                                'closeButton_clear_text_fields_pin_codes');
-                                            safeSetState(() {
-                                              _model.searchbarTextController
-                                                  ?.clear();
-                                            });
-                                            logFirebaseEvent(
-                                                'closeButton_update_app_state');
-                                            FFAppState().searchActive = false;
-                                            safeSetState(() {});
-                                          },
-                                        ),
                                       ],
                                     ),
                                   ),
@@ -530,22 +534,20 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                     height: 40.0,
                                                     decoration: BoxDecoration(),
                                                     child: Visibility(
-                                                      visible: (FFAppState()
-                                                                  .citationRef
-                                                                  .contains(
-                                                                      noSearchItem
-                                                                          .id) ==
-                                                              false) ||
-                                                          (mainCitationRecord
-                                                                  ?.violationName
-                                                                  .contains(
-                                                                      noSearchItem
-                                                                          .violationName) ==
-                                                              true),
+                                                      visible: FFAppState()
+                                                              .citationRef
+                                                              .contains(
+                                                                  noSearchItem
+                                                                      .id) ==
+                                                          false,
                                                       child:
                                                           FlutterFlowIconButton(
                                                         borderRadius: 50.0,
                                                         buttonSize: 40.0,
+                                                        disabledIconColor:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondaryBackground,
                                                         icon: Icon(
                                                           Icons.add,
                                                           color: FlutterFlowTheme
@@ -741,22 +743,20 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                         decoration:
                                                             BoxDecoration(),
                                                         child: Visibility(
-                                                          visible: (FFAppState()
-                                                                      .citationRef
-                                                                      .contains(
-                                                                          searchItem
-                                                                              .id) ==
-                                                                  false) ||
-                                                              (mainCitationRecord
-                                                                      ?.violationName
-                                                                      .contains(
-                                                                          searchItem
-                                                                              .violationName) ==
-                                                                  true),
+                                                          visible: FFAppState()
+                                                                  .citationRef
+                                                                  .contains(
+                                                                      searchItem
+                                                                          .id) ==
+                                                              false,
                                                           child:
                                                               FlutterFlowIconButton(
                                                             borderRadius: 50.0,
                                                             buttonSize: 40.0,
+                                                            disabledIconColor:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryBackground,
                                                             icon: Icon(
                                                               Icons.add,
                                                               color: FlutterFlowTheme

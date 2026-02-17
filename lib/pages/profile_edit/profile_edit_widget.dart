@@ -1704,9 +1704,6 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget> {
                                                                       '_show_snack_bar');
                                                                   ScaffoldMessenger.of(
                                                                           context)
-                                                                      .clearSnackBars();
-                                                                  ScaffoldMessenger.of(
-                                                                          context)
                                                                       .showSnackBar(
                                                                     SnackBar(
                                                                       content:
@@ -1723,7 +1720,7 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget> {
                                                                               4000),
                                                                       backgroundColor:
                                                                           FlutterFlowTheme.of(context)
-                                                                              .error,
+                                                                              .success,
                                                                     ),
                                                                   );
 

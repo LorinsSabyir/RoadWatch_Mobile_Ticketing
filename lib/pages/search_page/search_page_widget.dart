@@ -727,9 +727,9 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                               'Keydw0_${searchItem.id}',
                                                             ),
                                                             title: searchItem
-                                                                .section,
-                                                            subtitle: searchItem
                                                                 .violationName,
+                                                            subtitle: searchItem
+                                                                .section,
                                                             fine: searchItem
                                                                 .fines,
                                                           ),

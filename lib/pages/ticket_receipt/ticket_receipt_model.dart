@@ -1,3 +1,4 @@
+import '/backend/backend.dart';
 import '/components/violation_card/violation_card_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
@@ -9,6 +10,8 @@ class TicketReceiptModel extends FlutterFlowModel<TicketReceiptWidget> {
 
   // Models for ViolationCard dynamic component.
   late FlutterFlowDynamicModels<ViolationCardModel> violationCardModels;
+  // Stores action output result for [Backend Call - Create Document] action in Submit_Button widget.
+  CitationRecord? createViolator;
 
   @override
   void initState(BuildContext context) {

@@ -6,8 +6,6 @@ export '/pages/ticket_receipt/ticket_receipt_widget.dart'
     show TicketReceiptWidget;
 export '/pages/home/home_widget.dart' show HomeWidget;
 export '/pages/notification/notification_widget.dart' show NotificationWidget;
-export '/pages/search_page_copy1/search_page_copy1_widget.dart'
-    show SearchPageCopy1Widget;
 export '/pages/signup/signup_widget.dart' show SignupWidget;
 export '/pages/approval_page/approval_page_widget.dart' show ApprovalPageWidget;
 export '/pages/profile_edit/profile_edit_widget.dart' show ProfileEditWidget;

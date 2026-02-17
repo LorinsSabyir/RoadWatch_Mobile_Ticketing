@@ -115,7 +115,6 @@ final parametersBuilderMap =
   'TicketReceipt': ParameterData.none(),
   'Home': ParameterData.none(),
   'Notification': ParameterData.none(),
-  'SearchPageCopy1': ParameterData.none(),
   'Signup': ParameterData.none(),
   'ApprovalPage': ParameterData.none(),
   'ProfileEdit': ParameterData.none(),

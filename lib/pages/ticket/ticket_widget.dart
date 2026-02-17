@@ -63,7 +63,7 @@ class _TicketWidgetState extends State<TicketWidget> {
     _model.violatorNameTextController ??=
         TextEditingController(text: FFAppState().violatorAddName);
     _model.violatorNameFocusNode ??= FocusNode();
-
+    _model.violatorNameFocusNode!.addListener(() => safeSetState(() {}));
     _model.violatorContactNumTextController ??=
         TextEditingController(text: FFAppState().violatorAddContact);
     _model.violatorContactNumFocusNode ??= FocusNode();
@@ -404,6 +404,47 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                 }
                                                               },
                                                             ),
+                                                            onFieldSubmitted:
+                                                                (_) async {
+                                                              logFirebaseEvent(
+                                                                  'TICKET_violatorName_ON_TEXTFIELD_SUBMIT');
+                                                              if (mainCitationRecord
+                                                                      ?.violatorName ==
+                                                                  _model
+                                                                      .violatorNameTextController
+                                                                      .text) {
+                                                                logFirebaseEvent(
+                                                                    'violatorName_update_app_state');
+                                                                FFAppState()
+                                                                        .isViolatorPresent =
+                                                                    true;
+                                                                safeSetState(
+                                                                    () {});
+                                                                logFirebaseEvent(
+                                                                    'violatorName_show_snack_bar');
+                                                                ScaffoldMessenger.of(
+                                                                        context)
+                                                                    .showSnackBar(
+                                                                  SnackBar(
+                                                                    content:
+                                                                        Text(
+                                                                      'Violator Already Caught Today!',
+                                                                      style:
+                                                                          TextStyle(
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .textbox,
+                                                                      ),
+                                                                    ),
+                                                                    duration: Duration(
+                                                                        milliseconds:
+                                                                            4000),
+                                                                    backgroundColor:
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .error,
+                                                                  ),
+                                                                );
+                                                              }
+                                                            },
                                                             autofocus: false,
                                                             textCapitalization:
                                                                 TextCapitalization
@@ -666,20 +707,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                   .textbox,
                                                           elevation: 0.0,
                                                           borderColor:
-                                                              valueOrDefault<
-                                                                  Color>(
-                                                            FFAppState()
-                                                                    .isViolatorPresent
-                                                                ? FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .error
-                                                                : FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .alternate,
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .alternate,
-                                                          ),
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .alternate,
                                                           borderWidth: 0.0,
                                                           borderRadius: 12.0,
                                                           margin:
@@ -771,18 +801,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                   OutlineInputBorder(
                                                                 borderSide:
                                                                     BorderSide(
-                                                                  color:
-                                                                      valueOrDefault<
-                                                                          Color>(
-                                                                    FFAppState().isViolatorPresent
-                                                                        ? FlutterFlowTheme.of(context)
-                                                                            .error
-                                                                        : FlutterFlowTheme.of(context)
-                                                                            .alternate,
-                                                                    FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .alternate,
-                                                                  ),
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .alternate,
                                                                   width: 1.0,
                                                                 ),
                                                                 borderRadius:
@@ -971,18 +992,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                   OutlineInputBorder(
                                                                 borderSide:
                                                                     BorderSide(
-                                                                  color:
-                                                                      valueOrDefault<
-                                                                          Color>(
-                                                                    FFAppState().isViolatorPresent
-                                                                        ? FlutterFlowTheme.of(context)
-                                                                            .error
-                                                                        : FlutterFlowTheme.of(context)
-                                                                            .alternate,
-                                                                    FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .alternate,
-                                                                  ),
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .alternate,
                                                                   width: 1.0,
                                                                 ),
                                                                 borderRadius:
@@ -1271,20 +1283,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                     .textbox,
                                                             elevation: 0.0,
                                                             borderColor:
-                                                                valueOrDefault<
-                                                                    Color>(
-                                                              FFAppState()
-                                                                      .isViolatorPresent
-                                                                  ? FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .error
-                                                                  : FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .alternate,
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .alternate,
-                                                            ),
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .alternate,
                                                             borderWidth: 0.0,
                                                             borderRadius: 12.0,
                                                             margin:
@@ -1433,17 +1434,8 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                     elevation:
                                                                         0.0,
                                                                     borderColor:
-                                                                        valueOrDefault<
-                                                                            Color>(
-                                                                      FFAppState().isViolatorPresent
-                                                                          ? FlutterFlowTheme.of(context)
-                                                                              .error
-                                                                          : FlutterFlowTheme.of(context)
-                                                                              .alternate,
-                                                                      FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .alternate,
-                                                                    ),
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .alternate,
                                                                     borderWidth:
                                                                         0.0,
                                                                     borderRadius:
@@ -1581,17 +1573,8 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                                     elevation:
                                                                         0.0,
                                                                     borderColor:
-                                                                        valueOrDefault<
-                                                                            Color>(
-                                                                      FFAppState().isViolatorPresent
-                                                                          ? FlutterFlowTheme.of(context)
-                                                                              .error
-                                                                          : FlutterFlowTheme.of(context)
-                                                                              .alternate,
-                                                                      FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .alternate,
-                                                                    ),
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .alternate,
                                                                     borderWidth:
                                                                         0.0,
                                                                     borderRadius:
@@ -2110,6 +2093,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         focusNode: _model
                                                             .violatorPrkFocusNode,
                                                         autofocus: false,
+                                                        textCapitalization:
+                                                            TextCapitalization
+                                                                .words,
                                                         obscureText: false,
                                                         decoration:
                                                             InputDecoration(
@@ -2148,21 +2134,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                               OutlineInputBorder(
                                                             borderSide:
                                                                 BorderSide(
-                                                              color:
-                                                                  valueOrDefault<
-                                                                      Color>(
-                                                                FFAppState()
-                                                                        .isViolatorPresent
-                                                                    ? FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .error
-                                                                    : FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .alternate,
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .alternate,
-                                                              ),
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .alternate,
                                                               width: 1.0,
                                                             ),
                                                             borderRadius:
@@ -2252,6 +2226,24 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                             .violatorPrkTextControllerValidator
                                                             .asValidator(
                                                                 context),
+                                                        inputFormatters: [
+                                                          if (!isAndroid &&
+                                                              !isiOS)
+                                                            TextInputFormatter
+                                                                .withFunction(
+                                                                    (oldValue,
+                                                                        newValue) {
+                                                              return TextEditingValue(
+                                                                selection: newValue
+                                                                    .selection,
+                                                                text: newValue
+                                                                    .text
+                                                                    .toCapitalization(
+                                                                        TextCapitalization
+                                                                            .words),
+                                                              );
+                                                            }),
+                                                        ],
                                                       ),
                                                     ),
                                                   ].divide(
@@ -3103,6 +3095,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         focusNode: _model
                                                             .vehicleBrandFocusNode,
                                                         autofocus: false,
+                                                        textCapitalization:
+                                                            TextCapitalization
+                                                                .words,
                                                         obscureText: false,
                                                         decoration:
                                                             InputDecoration(
@@ -3234,6 +3229,24 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                             .vehicleBrandTextControllerValidator
                                                             .asValidator(
                                                                 context),
+                                                        inputFormatters: [
+                                                          if (!isAndroid &&
+                                                              !isiOS)
+                                                            TextInputFormatter
+                                                                .withFunction(
+                                                                    (oldValue,
+                                                                        newValue) {
+                                                              return TextEditingValue(
+                                                                selection: newValue
+                                                                    .selection,
+                                                                text: newValue
+                                                                    .text
+                                                                    .toCapitalization(
+                                                                        TextCapitalization
+                                                                            .words),
+                                                              );
+                                                            }),
+                                                        ],
                                                       ),
                                                     ),
                                                   ),
@@ -3268,6 +3281,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         focusNode: _model
                                                             .vehicleModelFocusNode,
                                                         autofocus: false,
+                                                        textCapitalization:
+                                                            TextCapitalization
+                                                                .words,
                                                         obscureText: false,
                                                         decoration:
                                                             InputDecoration(
@@ -3399,6 +3415,24 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                             .vehicleModelTextControllerValidator
                                                             .asValidator(
                                                                 context),
+                                                        inputFormatters: [
+                                                          if (!isAndroid &&
+                                                              !isiOS)
+                                                            TextInputFormatter
+                                                                .withFunction(
+                                                                    (oldValue,
+                                                                        newValue) {
+                                                              return TextEditingValue(
+                                                                selection: newValue
+                                                                    .selection,
+                                                                text: newValue
+                                                                    .text
+                                                                    .toCapitalization(
+                                                                        TextCapitalization
+                                                                            .words),
+                                                              );
+                                                            }),
+                                                        ],
                                                       ),
                                                     ),
                                                   ),
@@ -3415,6 +3449,9 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                 focusNode:
                                                     _model.vehicleDecFocusNode,
                                                 autofocus: false,
+                                                textCapitalization:
+                                                    TextCapitalization
+                                                        .sentences,
                                                 obscureText: false,
                                                 decoration: InputDecoration(
                                                   labelText:
@@ -3546,6 +3583,21 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                 validator: _model
                                                     .vehicleDecTextControllerValidator
                                                     .asValidator(context),
+                                                inputFormatters: [
+                                                  if (!isAndroid && !isiOS)
+                                                    TextInputFormatter
+                                                        .withFunction((oldValue,
+                                                            newValue) {
+                                                      return TextEditingValue(
+                                                        selection:
+                                                            newValue.selection,
+                                                        text: newValue.text
+                                                            .toCapitalization(
+                                                                TextCapitalization
+                                                                    .sentences),
+                                                      );
+                                                    }),
+                                                ],
                                               ),
                                             ),
                                           ].divide(SizedBox(height: 8.0)),

@@ -129,12 +129,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               : NotificationWidget(),
         ),
         FFRoute(
-          name: SearchPageCopy1Widget.routeName,
-          path: SearchPageCopy1Widget.routePath,
-          requireAuth: true,
-          builder: (context, params) => SearchPageCopy1Widget(),
-        ),
-        FFRoute(
           name: SignupWidget.routeName,
           path: SignupWidget.routePath,
           builder: (context, params) => SignupWidget(),

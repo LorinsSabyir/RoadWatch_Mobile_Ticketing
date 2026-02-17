@@ -525,9 +525,15 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                           await actions.generateControlNumber(
                             context,
                           );
+                          logFirebaseEvent('Submit_Button_custom_action');
+                          await actions.printTicket(
+                            context,
+                          );
                           logFirebaseEvent('Submit_Button_backend_call');
 
-                          await CitationRecord.collection.doc().set({
+                          var citationRecordReference =
+                              CitationRecord.collection.doc();
+                          await citationRecordReference.set({
                             ...createCitationRecordData(
                               confUnitPlateNum: FFAppState().vehicleAddPlateNum,
                               confUnitBrand: FFAppState().vehicleAddBrand,
@@ -571,10 +577,51 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                               },
                             ),
                           });
-                          logFirebaseEvent('Submit_Button_custom_action');
-                          await actions.printTicket(
-                            context,
-                          );
+                          _model.createViolator =
+                              CitationRecord.getDocumentFromData({
+                            ...createCitationRecordData(
+                              confUnitPlateNum: FFAppState().vehicleAddPlateNum,
+                              confUnitBrand: FFAppState().vehicleAddBrand,
+                              confUnitModel: FFAppState().vehicleAddModel,
+                              appreTime: FFAppState().appreAddDateTime,
+                              apprePlace: FFAppState().appreAddPlace,
+                              violatorName: FFAppState().violatorAddName,
+                              appreEnforcer: FFAppState().appreEnforcer,
+                              confUnitDesc: FFAppState().vehicleAddDesc,
+                              appreEnforcerId: currentUserUid,
+                              violatorLicenseNum:
+                                  FFAppState().violatorAddLicenseNum,
+                              appreDateMonth: FFAppState().appreAddDateMonth,
+                              appreDateDay: FFAppState().appreAddDateDay,
+                              appreDateYear: FFAppState().appreAddDateYear,
+                              createdTime: getCurrentTimestamp,
+                              violationTotalFine:
+                                  FFAppState().violationTotalFine,
+                              violatorGender: FFAppState().violatorAddGender,
+                              confUnitType: FFAppState().vehicleAddType,
+                              appreEnfId: currentUserReference,
+                              confUnitSerialNum:
+                                  FFAppState().vehicleAddSerialNum,
+                              violatorAddressPrk: FFAppState().violatorAddPrk,
+                              violatorAddressBrgy: FFAppState().violatorAddBrgy,
+                              violatorAddressCity: FFAppState().violatorAddCity,
+                              violatorAddressProvince:
+                                  FFAppState().violatorAddProvince,
+                              receiptStatus: false,
+                              controlNum: FFAppState().citationId,
+                              violatorPicUrl: FFAppState().imagePath,
+                            ),
+                            ...mapToFirestore(
+                              {
+                                'violation_section':
+                                    FFAppState().selectedViolationSection,
+                                'violation_fine':
+                                    FFAppState().selectedViolationFine,
+                                'violation_name':
+                                    FFAppState().selectedViolationName,
+                              },
+                            ),
+                          }, citationRecordReference);
                           logFirebaseEvent('Submit_Button_update_app_state');
                           FFAppState().selectedViolationName = [];
                           FFAppState().selectedViolationFine = [];
@@ -606,6 +653,8 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                           logFirebaseEvent('Submit_Button_navigate_to');
 
                           context.goNamed(TicketWidget.routeName);
+
+                          safeSetState(() {});
                         },
                         text: 'Submit & Print',
                         options: FFButtonOptions(

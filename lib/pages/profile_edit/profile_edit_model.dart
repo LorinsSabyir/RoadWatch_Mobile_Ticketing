@@ -4,6 +4,20 @@ import 'profile_edit_widget.dart' show ProfileEditWidget;
 import 'package:flutter/material.dart';
 
 class ProfileEditModel extends FlutterFlowModel<ProfileEditWidget> {
+  ///  Local state fields for this page.
+
+  bool? hasMinLength;
+
+  bool? hasUppercase;
+
+  bool? hasLowercase;
+
+  bool? hasNumber;
+
+  bool? hasSpecial;
+
+  bool? isTheSame;
+
   ///  State fields for stateful widgets in this page.
 
   // State field(s) for userFirstName widget.

@@ -1,5 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/components/is_empty/is_empty_widget.dart';
 import '/components/notification_card/notification_card_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -28,6 +29,9 @@ class _NotificationWidgetState extends State<NotificationWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => NotificationModel());
+
+    logFirebaseEvent('screen_view',
+        parameters: {'screen_name': 'Notification'});
   }
 
   @override
@@ -46,8 +50,10 @@ class _NotificationWidgetState extends State<NotificationWidget> {
               'enforcer_id',
               isEqualTo: currentUserReference,
             )
-            .orderBy('created_time', descending: true)
-            .orderBy('edited_time', descending: true),
+            .where(
+              'notif_type',
+              isNotEqualTo: 'assignment',
+            ),
       ),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
@@ -146,57 +152,86 @@ class _NotificationWidgetState extends State<NotificationWidget> {
                         EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
                     child: Container(
                       decoration: BoxDecoration(),
-                      child: Builder(
-                        builder: (context) {
-                          final card =
-                              notificationAdminNotifRecordList.toList();
+                      child: Container(
+                        decoration: BoxDecoration(),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Builder(
+                              builder: (context) {
+                                final isNotEmpty =
+                                    notificationAdminNotifRecordList.toList();
+                                if (isNotEmpty.isEmpty) {
+                                  return IsEmptyWidget();
+                                }
 
-                          return ListView.separated(
-                            padding: EdgeInsets.zero,
-                            primary: false,
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            itemCount: card.length,
-                            separatorBuilder: (_, __) => SizedBox(height: 8.0),
-                            itemBuilder: (context, cardIndex) {
-                              final cardItem = card[cardIndex];
-                              return wrapWithModel(
-                                model: _model.notificationCardModels.getModel(
-                                  cardItem.reference.id,
-                                  cardIndex,
-                                ),
-                                updateCallback: () => safeSetState(() {}),
-                                child: NotificationCardWidget(
-                                  key: Key(
-                                    'Key33e_${cardItem.reference.id}',
-                                  ),
-                                  title: valueOrDefault<String>(
-                                    cardItem.title,
-                                    'Title',
-                                  ),
-                                  subtitle: valueOrDefault<String>(
-                                    cardItem.subtitle,
-                                    'Subtitle',
-                                  ),
-                                  pupose: valueOrDefault<String>(
-                                    cardItem.type,
-                                    'Type',
-                                  ),
-                                  date: cardItem.createdTime,
-                                  titleColor:
-                                      FlutterFlowTheme.of(context).primary,
-                                  status: valueOrDefault<Color>(
-                                    cardItem.status == 'pending'
-                                        ? FlutterFlowTheme.of(context).primary
-                                        : FlutterFlowTheme.of(context)
-                                            .textboxTextHollow,
-                                    FlutterFlowTheme.of(context).primary,
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-                        },
+                                return ListView.separated(
+                                  padding: EdgeInsets.zero,
+                                  primary: false,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: isNotEmpty.length,
+                                  separatorBuilder: (_, __) =>
+                                      SizedBox(height: 8.0),
+                                  itemBuilder: (context, isNotEmptyIndex) {
+                                    final isNotEmptyItem =
+                                        isNotEmpty[isNotEmptyIndex];
+                                    return InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        logFirebaseEvent(
+                                            'NOTIFICATION_Container_33e0cft0_ON_TAP');
+                                        logFirebaseEvent(
+                                            'NotificationCard_backend_call');
+
+                                        await isNotEmptyItem.reference
+                                            .update(createAdminNotifRecordData(
+                                          status: 'read',
+                                        ));
+                                      },
+                                      child: wrapWithModel(
+                                        model: _model.notificationCardModels
+                                            .getModel(
+                                          isNotEmptyIndex.toString(),
+                                          isNotEmptyIndex,
+                                        ),
+                                        updateCallback: () =>
+                                            safeSetState(() {}),
+                                        child: NotificationCardWidget(
+                                          key: Key(
+                                            'Key33e_${isNotEmptyIndex.toString()}',
+                                          ),
+                                          title: isNotEmptyItem.title,
+                                          subtitle: isNotEmptyItem.subtitle,
+                                          type: isNotEmptyItem.type,
+                                          date: isNotEmptyItem.createdTime,
+                                          titleColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .primary,
+                                          status: valueOrDefault<Color>(
+                                            (isNotEmptyItem.status ==
+                                                        'pending') ||
+                                                    (isNotEmptyItem.status ==
+                                                        'unread')
+                                                ? FlutterFlowTheme.of(context)
+                                                    .primary
+                                                : FlutterFlowTheme.of(context)
+                                                    .alternate,
+                                            FlutterFlowTheme.of(context)
+                                                .primary,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

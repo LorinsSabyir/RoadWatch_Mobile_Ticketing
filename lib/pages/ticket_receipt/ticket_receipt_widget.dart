@@ -4,8 +4,11 @@ import '/components/violation_card/violation_card_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/custom_code/actions/index.dart' as actions;
+import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'ticket_receipt_model.dart';
@@ -30,10 +33,29 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => TicketReceiptModel());
+
+    logFirebaseEvent('screen_view',
+        parameters: {'screen_name': 'TicketReceipt'});
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      logFirebaseEvent('TICKET_RECEIPT_TicketReceipt_ON_INIT_STA');
+      logFirebaseEvent('TicketReceipt_update_app_state');
+      FFAppState().violationTotalFine =
+          functions.totalFines(FFAppState().selectedViolationFine.toList());
+      FFAppState().update(() {});
+    });
   }
 
   @override
   void dispose() {
+    // On page dispose action.
+    () async {
+      logFirebaseEvent('TICKET_RECEIPT_TicketReceipt_ON_DISPOSE');
+      logFirebaseEvent('TicketReceipt_update_app_state');
+      FFAppState().violationTotalFine = 0.0;
+      FFAppState().update(() {});
+    }();
+
     _model.dispose();
 
     super.dispose();
@@ -74,21 +96,20 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
           centerTitle: false,
           elevation: 4.0,
         ),
-        body: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SingleChildScrollView(
-              primary: false,
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Align(
-                    alignment: AlignmentDirectional(0.0, 1.0),
-                    child: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 16.0, 8.0),
+        body: Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SingleChildScrollView(
+                primary: false,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Align(
+                      alignment: AlignmentDirectional(0.0, 1.0),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -123,7 +144,7 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                               AuthUserStreamWidget(
                                 builder: (context) => Text(
                                   valueOrDefault(
-                                      currentUserDocument?.assignmentLandmark,
+                                      currentUserDocument?.assignmentAddress,
                                       ''),
                                   style: FlutterFlowTheme.of(context)
                                       .displaySmall
@@ -148,66 +169,6 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                                             .fontStyle,
                                       ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Text(
-                                    'Schedule of Seminar',
-                                    style: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .override(
-                                          font: GoogleFonts.manrope(
-                                            fontWeight:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelMedium
-                                                    .fontWeight,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelMedium
-                                                    .fontStyle,
-                                          ),
-                                          letterSpacing: 0.0,
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .fontStyle,
-                                        ),
-                                  ),
-                                ],
-                              ),
-                              Text(
-                                '(date of seminar)',
-                                style: FlutterFlowTheme.of(context)
-                                    .displaySmall
-                                    .override(
-                                      font: GoogleFonts.urbanist(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .displaySmall
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .displaySmall
-                                            .fontStyle,
-                                      ),
-                                      fontSize: 16.0,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .displaySmall
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .displaySmall
-                                          .fontStyle,
-                                    ),
                               ),
                             ],
                           ),
@@ -367,11 +328,7 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                         ].divide(SizedBox(height: 4.0)),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                    Expanded(
                       child: Container(
                         width: MediaQuery.sizeOf(context).width * 1.0,
                         height: MediaQuery.sizeOf(context).height * 0.57,
@@ -421,18 +378,13 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                                         ),
                                         title: FFAppState()
                                             .selectedViolationName
-                                            .elementAtOrNull(selectedIndex)!,
+                                            .elementAtOrNull(selectedIndex),
                                         subtitle: FFAppState()
                                             .selectedViolationSection
                                             .elementAtOrNull(selectedIndex),
-                                        fine: formatNumber(
-                                          FFAppState()
-                                              .selectedViolationFine
-                                              .elementAtOrNull(selectedIndex),
-                                          formatType: FormatType.decimal,
-                                          decimalType: DecimalType.automatic,
-                                          currency: '₱',
-                                        ),
+                                        fine: FFAppState()
+                                            .selectedViolationFine
+                                            .elementAtOrNull(selectedIndex),
                                       ),
                                     ),
                                   );
@@ -443,14 +395,11 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ].divide(SizedBox(height: 8.0)).around(SizedBox(height: 8.0)),
+                ),
               ),
-            ),
-            Align(
-              alignment: AlignmentDirectional(0.0, 1.0),
-              child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 16.0, 0.0),
+              Align(
+                alignment: AlignmentDirectional(0.0, 1.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -485,29 +434,7 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Text(
-                              '₱',
-                              style: FlutterFlowTheme.of(context)
-                                  .headlineMedium
-                                  .override(
-                                    font: GoogleFonts.urbanist(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .headlineMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .headlineMedium
-                                          .fontStyle,
-                                    ),
-                                    letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .headlineMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .headlineMedium
-                                        .fontStyle,
-                                  ),
-                            ),
-                            Text(
-                              FFAppState().violationTotalFine.toString(),
+                              '₱${FFAppState().violationTotalFine.toString()}',
                               style: FlutterFlowTheme.of(context)
                                   .displaySmall
                                   .override(
@@ -535,20 +462,21 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                   ],
                 ),
               ),
-            ),
-            Align(
-              alignment: AlignmentDirectional(0.0, 1.0),
-              child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 16.0, 8.0),
+              Align(
+                alignment: AlignmentDirectional(0.0, 1.0),
                 child: Row(
-                  mainAxisSize: MainAxisSize.max,
+                  mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Expanded(
                       child: FFButtonWidget(
                         onPressed: () async {
-                          context.safePop();
+                          logFirebaseEvent(
+                              'TICKET_RECEIPT_PAGE_Back_Button_ON_TAP');
+                          logFirebaseEvent('Back_Button_navigate_to');
+
+                          context.goNamed(TicketWidget.routeName);
                         },
                         text: 'Back',
                         options: FFButtonOptions(
@@ -591,57 +519,52 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                     Expanded(
                       child: FFButtonWidget(
                         onPressed: () async {
-                          await CitationRecord.collection.doc().set({
+                          logFirebaseEvent(
+                              'TICKET_RECEIPT_PAGE_Submit_Button_ON_TAP');
+                          logFirebaseEvent('Submit_Button_custom_action');
+                          await actions.generateControlNumber(
+                            context,
+                          );
+                          logFirebaseEvent('Submit_Button_custom_action');
+                          await actions.printTicket(
+                            context,
+                          );
+                          logFirebaseEvent('Submit_Button_backend_call');
+
+                          var citationRecordReference =
+                              CitationRecord.collection.doc();
+                          await citationRecordReference.set({
                             ...createCitationRecordData(
-                              confUnitSerialNum:
-                                  FFAppState().vehicleAddSerialNum,
                               confUnitPlateNum: FFAppState().vehicleAddPlateNum,
                               confUnitBrand: FFAppState().vehicleAddBrand,
                               confUnitModel: FFAppState().vehicleAddModel,
-                              appreTime: dateTimeFormat(
-                                "jm",
-                                getCurrentTimestamp,
-                                locale:
-                                    FFLocalizations.of(context).languageCode,
-                              ),
+                              appreTime: FFAppState().appreAddDateTime,
                               apprePlace: FFAppState().appreAddPlace,
                               violatorName: FFAppState().violatorAddName,
-                              appreEnforcer: currentUserDisplayName,
-                              confUnitDesc:
-                                  FFAppState().violationTotalFine.toString(),
-                              violatorAddressProvince:
-                                  FFAppState().violatorAddProvince,
-                              violatorAddressCity: FFAppState().violatorAddCity,
-                              violatorAddressBrgy: FFAppState().violatorAddBrgy,
-                              violatorAddressPrk: FFAppState().violatorAddPrk,
+                              appreEnforcer: FFAppState().appreEnforcer,
+                              confUnitDesc: FFAppState().vehicleAddDesc,
                               appreEnforcerId: currentUserUid,
                               violatorLicenseNum:
                                   FFAppState().violatorAddLicenseNum,
-                              appreDateMonth: dateTimeFormat(
-                                "MMMM",
-                                getCurrentTimestamp,
-                                locale:
-                                    FFLocalizations.of(context).languageCode,
-                              ),
-                              appreDateDay: dateTimeFormat(
-                                "d",
-                                getCurrentTimestamp,
-                                locale:
-                                    FFLocalizations.of(context).languageCode,
-                              ),
-                              appreDateYear: dateTimeFormat(
-                                "yyyy",
-                                getCurrentTimestamp,
-                                locale:
-                                    FFLocalizations.of(context).languageCode,
-                              ),
-                              citationNumber: '',
+                              appreDateMonth: FFAppState().appreAddDateMonth,
+                              appreDateDay: FFAppState().appreAddDateDay,
+                              appreDateYear: FFAppState().appreAddDateYear,
                               createdTime: getCurrentTimestamp,
                               violationTotalFine:
                                   FFAppState().violationTotalFine,
                               violatorGender: FFAppState().violatorAddGender,
                               confUnitType: FFAppState().vehicleAddType,
                               appreEnfId: currentUserReference,
+                              confUnitSerialNum:
+                                  FFAppState().vehicleAddSerialNum,
+                              violatorAddressPrk: FFAppState().violatorAddPrk,
+                              violatorAddressBrgy: FFAppState().violatorAddBrgy,
+                              violatorAddressCity: FFAppState().violatorAddCity,
+                              violatorAddressProvince:
+                                  FFAppState().violatorAddProvince,
+                              receiptStatus: false,
+                              controlNum: FFAppState().citationId,
+                              violatorPicUrl: FFAppState().imagePath,
                             ),
                             ...mapToFirestore(
                               {
@@ -654,6 +577,52 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                               },
                             ),
                           });
+                          _model.createViolator =
+                              CitationRecord.getDocumentFromData({
+                            ...createCitationRecordData(
+                              confUnitPlateNum: FFAppState().vehicleAddPlateNum,
+                              confUnitBrand: FFAppState().vehicleAddBrand,
+                              confUnitModel: FFAppState().vehicleAddModel,
+                              appreTime: FFAppState().appreAddDateTime,
+                              apprePlace: FFAppState().appreAddPlace,
+                              violatorName: FFAppState().violatorAddName,
+                              appreEnforcer: FFAppState().appreEnforcer,
+                              confUnitDesc: FFAppState().vehicleAddDesc,
+                              appreEnforcerId: currentUserUid,
+                              violatorLicenseNum:
+                                  FFAppState().violatorAddLicenseNum,
+                              appreDateMonth: FFAppState().appreAddDateMonth,
+                              appreDateDay: FFAppState().appreAddDateDay,
+                              appreDateYear: FFAppState().appreAddDateYear,
+                              createdTime: getCurrentTimestamp,
+                              violationTotalFine:
+                                  FFAppState().violationTotalFine,
+                              violatorGender: FFAppState().violatorAddGender,
+                              confUnitType: FFAppState().vehicleAddType,
+                              appreEnfId: currentUserReference,
+                              confUnitSerialNum:
+                                  FFAppState().vehicleAddSerialNum,
+                              violatorAddressPrk: FFAppState().violatorAddPrk,
+                              violatorAddressBrgy: FFAppState().violatorAddBrgy,
+                              violatorAddressCity: FFAppState().violatorAddCity,
+                              violatorAddressProvince:
+                                  FFAppState().violatorAddProvince,
+                              receiptStatus: false,
+                              controlNum: FFAppState().citationId,
+                              violatorPicUrl: FFAppState().imagePath,
+                            ),
+                            ...mapToFirestore(
+                              {
+                                'violation_section':
+                                    FFAppState().selectedViolationSection,
+                                'violation_fine':
+                                    FFAppState().selectedViolationFine,
+                                'violation_name':
+                                    FFAppState().selectedViolationName,
+                              },
+                            ),
+                          }, citationRecordReference);
+                          logFirebaseEvent('Submit_Button_update_app_state');
                           FFAppState().selectedViolationName = [];
                           FFAppState().selectedViolationFine = [];
                           FFAppState().selectedViolationSection = [];
@@ -667,16 +636,25 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                           FFAppState().appreAddPlace = '';
                           FFAppState().vehicleAddSerialNum = '';
                           FFAppState().violationTotalFine = 0.0;
-                          FFAppState().citationNumber = 0;
                           FFAppState().citationRef = [];
                           FFAppState().violatorAddProvince = '';
                           FFAppState().violatorAddCity = '';
                           FFAppState().violatorAddBrgy = '';
                           FFAppState().violatorAddPrk = '';
                           FFAppState().violatorAddGender = '';
+                          FFAppState().appreAddDateTime = '';
+                          FFAppState().appreAddDateMonth = '';
+                          FFAppState().appreAddDateDay = '';
+                          FFAppState().appreAddDateYear = '';
+                          FFAppState().citationId = '';
+                          FFAppState().vehicleAddDesc = 'asdawdasd';
+                          FFAppState().imagePath = '';
                           FFAppState().update(() {});
+                          logFirebaseEvent('Submit_Button_navigate_to');
 
                           context.goNamed(TicketWidget.routeName);
+
+                          safeSetState(() {});
                         },
                         text: 'Submit & Print',
                         options: FFButtonOptions(
@@ -718,8 +696,8 @@ class _TicketReceiptWidgetState extends State<TicketReceiptWidget> {
                   ].divide(SizedBox(width: 8.0)),
                 ),
               ),
-            ),
-          ],
+            ].divide(SizedBox(height: 8.0)),
+          ),
         ),
       ),
     );

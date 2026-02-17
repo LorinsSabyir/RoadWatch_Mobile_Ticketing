@@ -36,6 +36,7 @@ class _SignupWidgetState extends State<SignupWidget>
     super.initState();
     _model = createModel(context, () => SignupModel());
 
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'Signup'});
     _model.emailAddressTextController ??= TextEditingController();
     _model.emailAddressFocusNode ??= FocusNode();
 
@@ -200,7 +201,7 @@ class _SignupWidgetState extends State<SignupWidget>
                                   children: [
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 24.0),
+                                          0.0, 0.0, 0.0, 8.0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
@@ -985,68 +986,6 @@ class _SignupWidgetState extends State<SignupWidget>
                                         ],
                                       ),
                                     ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        FFButtonWidget(
-                                          onPressed: () {
-                                            print('selfieButton pressed ...');
-                                          },
-                                          text: 'Take a Selfie',
-                                          icon: Icon(
-                                            Icons.camera_alt,
-                                            size: 25.0,
-                                          ),
-                                          options: FFButtonOptions(
-                                            height: 40.0,
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    16.0, 0.0, 16.0, 0.0),
-                                            iconAlignment: IconAlignment.end,
-                                            iconPadding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary,
-                                            textStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .titleSmall
-                                                    .override(
-                                                      font: GoogleFonts.manrope(
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleSmall
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleSmall
-                                                                .fontStyle,
-                                                      ),
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                      letterSpacing: 0.0,
-                                                      fontWeight:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .titleSmall
-                                                              .fontWeight,
-                                                      fontStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .titleSmall
-                                                              .fontStyle,
-                                                    ),
-                                            elevation: 0.0,
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
                                     if (responsiveVisibility(
                                       context: context,
                                       phone: false,
@@ -1140,11 +1079,11 @@ class _SignupWidgetState extends State<SignupWidget>
                                                 FlutterFlowTheme.of(context)
                                                     .textbox,
                                             suffixIcon: InkWell(
-                                              onTap: () => safeSetState(
-                                                () => _model
+                                              onTap: () async {
+                                                safeSetState(() => _model
                                                         .passwordVisibility =
-                                                    !_model.passwordVisibility,
-                                              ),
+                                                    !_model.passwordVisibility);
+                                              },
                                               focusNode: FocusNode(
                                                   skipTraversal: true),
                                               child: Icon(
@@ -1284,12 +1223,12 @@ class _SignupWidgetState extends State<SignupWidget>
                                                 FlutterFlowTheme.of(context)
                                                     .textbox,
                                             suffixIcon: InkWell(
-                                              onTap: () => safeSetState(
-                                                () => _model
+                                              onTap: () async {
+                                                safeSetState(() => _model
                                                         .confirmPasswordVisibility =
                                                     !_model
-                                                        .confirmPasswordVisibility,
-                                              ),
+                                                        .confirmPasswordVisibility);
+                                              },
                                               focusNode: FocusNode(
                                                   skipTraversal: true),
                                               child: Icon(
@@ -1337,90 +1276,139 @@ class _SignupWidgetState extends State<SignupWidget>
                                       ),
                                     FFButtonWidget(
                                       onPressed: () async {
-                                        GoRouter.of(context).prepareAuthEvent();
-                                        if (_model
-                                                .passwordTextController.text !=
-                                            _model.confirmPasswordTextController
-                                                .text) {
+                                        logFirebaseEvent(
+                                            'SIGNUP_PAGE_signupButton_ON_TAP');
+                                        if ((_model.emailAddressTextController
+                                                        .text ==
+                                                    '') ||
+                                            (_model.firstNameTextController
+                                                        .text ==
+                                                    '') ||
+                                            (_model.lastNameTextController
+                                                        .text ==
+                                                    '') ||
+                                            (_model.badgeNumTextController
+                                                        .text ==
+                                                    '') ||
+                                            (_model.phoneNumTextController
+                                                        .text ==
+                                                    '') ||
+                                            (_model.genderValue == null ||
+                                                _model.genderValue == '')) {
+                                          logFirebaseEvent(
+                                              'signupButton_show_snack_bar');
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
                                             SnackBar(
                                               content: Text(
-                                                'Passwords don\'t match!',
+                                                'Please fill in all required fields before continuing.',
+                                                style: TextStyle(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .info,
+                                                ),
                                               ),
+                                              duration:
+                                                  Duration(milliseconds: 2000),
+                                              backgroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .error,
                                             ),
                                           );
-                                          return;
-                                        }
+                                        } else {
+                                          logFirebaseEvent('signupButton_auth');
+                                          GoRouter.of(context)
+                                              .prepareAuthEvent();
+                                          if (_model.passwordTextController
+                                                  .text !=
+                                              _model
+                                                  .confirmPasswordTextController
+                                                  .text) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  'Passwords don\'t match!',
+                                                ),
+                                              ),
+                                            );
+                                            return;
+                                          }
 
-                                        final user = await authManager
-                                            .createAccountWithEmail(
-                                          context,
-                                          _model
-                                              .emailAddressTextController.text,
-                                          _model.passwordTextController.text,
-                                        );
-                                        if (user == null) {
-                                          return;
-                                        }
-
-                                        await UsersRecord.collection
-                                            .doc(user.uid)
-                                            .update({
-                                          ...createUsersRecordData(
-                                            email: _model
-                                                .emailAddressTextController
+                                          final user = await authManager
+                                              .createAccountWithEmail(
+                                            context,
+                                            _model.emailAddressTextController
                                                 .text,
-                                            badgeNumber: _model
-                                                .badgeNumTextController.text,
-                                            phoneNumber: _model
-                                                .phoneNumTextController.text,
-                                            status: false,
-                                            lastName: _model
-                                                .lastNameTextController.text,
-                                            lastActive: getCurrentTimestamp,
-                                            gender: _model.genderValue,
-                                            accStatus: 'pending',
-                                            displayName: _model
-                                                .firstNameTextController.text,
-                                            role: 'user',
-                                          ),
-                                          ...mapToFirestore(
-                                            {
-                                              'created_time':
-                                                  FieldValue.serverTimestamp(),
-                                            },
-                                          ),
-                                        });
+                                            _model.passwordTextController.text,
+                                          );
+                                          if (user == null) {
+                                            return;
+                                          }
 
-                                        await AdminNotifRecord.collection
-                                            .doc()
-                                            .set(createAdminNotifRecordData(
-                                              title:
-                                                  'Enforcer Creation Attempt!',
-                                              type: 'System',
-                                              status: 'pending',
-                                              enforcerId: currentUserReference,
-                                              notifType: 'warning',
-                                              createdTime: getCurrentTimestamp,
-                                              subtitle: valueOrDefault(
-                                                  currentUserDocument?.lastName,
-                                                  ''),
-                                            ));
+                                          await UsersRecord.collection
+                                              .doc(user.uid)
+                                              .update({
+                                            ...createUsersRecordData(
+                                              email: _model
+                                                  .emailAddressTextController
+                                                  .text,
+                                              badgeNumber: _model
+                                                  .badgeNumTextController.text,
+                                              phoneNumber: _model
+                                                  .phoneNumTextController.text,
+                                              status: false,
+                                              lastName: _model
+                                                  .lastNameTextController.text,
+                                              lastActive: getCurrentTimestamp,
+                                              gender: _model.genderValue,
+                                              accStatus: 'pending',
+                                              displayName: _model
+                                                  .firstNameTextController.text,
+                                              role: 'user',
+                                            ),
+                                            ...mapToFirestore(
+                                              {
+                                                'created_time': FieldValue
+                                                    .serverTimestamp(),
+                                              },
+                                            ),
+                                          });
 
-                                        await currentUserReference!
-                                            .update(createUsersRecordData(
-                                          status: false,
-                                          lastActive: getCurrentTimestamp,
-                                        ));
-                                        GoRouter.of(context).prepareAuthEvent();
-                                        await authManager.signOut();
-                                        GoRouter.of(context)
-                                            .clearRedirectLocation();
+                                          logFirebaseEvent(
+                                              'signupButton_backend_call');
 
-                                        context.goNamedAuth(
-                                            ApprovalPageWidget.routeName,
-                                            context.mounted);
+                                          await AdminNotifRecord.collection
+                                              .doc()
+                                              .set(createAdminNotifRecordData(
+                                                title:
+                                                    'Enforcer Creation Attempt!',
+                                                type: 'system',
+                                                status: 'pending',
+                                                enforcerId:
+                                                    currentUserReference,
+                                                notifType: 'warning',
+                                                createdTime:
+                                                    getCurrentTimestamp,
+                                                subtitle: valueOrDefault(
+                                                    currentUserDocument
+                                                        ?.lastName,
+                                                    ''),
+                                              ));
+                                          logFirebaseEvent(
+                                              'signupButton_navigate_to');
+
+                                          context.pushNamedAuth(
+                                              HomeWidget.routeName,
+                                              context.mounted);
+
+                                          logFirebaseEvent(
+                                              'signupButton_navigate_to');
+
+                                          context.goNamedAuth(
+                                              EnforcerSelfieWidget.routeName,
+                                              context.mounted);
+                                        }
                                       },
                                       text: 'Signup',
                                       options: FFButtonOptions(
@@ -1512,20 +1500,21 @@ class _SignupWidgetState extends State<SignupWidget>
                                           hoverColor: Colors.transparent,
                                           highlightColor: Colors.transparent,
                                           onTap: () async {
+                                            logFirebaseEvent(
+                                                'SIGNUP_PAGE_signinLink_ON_TAP');
+                                            logFirebaseEvent(
+                                                'signinLink_navigate_to');
+
                                             context.pushNamed(
                                                 SigninWidget.routeName);
                                           },
                                           child: Text(
-                                            'Sign in',
+                                            'Log in',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
                                                   font: GoogleFonts.manrope(
-                                                    fontWeight:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontWeight,
+                                                    fontWeight: FontWeight.bold,
                                                     fontStyle:
                                                         FlutterFlowTheme.of(
                                                                 context)
@@ -1534,13 +1523,9 @@ class _SignupWidgetState extends State<SignupWidget>
                                                   ),
                                                   color: FlutterFlowTheme.of(
                                                           context)
-                                                      .primary,
+                                                      .primaryText,
                                                   letterSpacing: 0.0,
-                                                  fontWeight:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontWeight,
+                                                  fontWeight: FontWeight.bold,
                                                   fontStyle:
                                                       FlutterFlowTheme.of(
                                                               context)

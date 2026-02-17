@@ -61,6 +61,11 @@
     <string>Allow bluetooth access to print ticket.</string>
 	<key>PermissionGroupNotification</key>
     <string>Allow notifications to receive important updates and alerts in real time.</string>
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>fetch</string>
+        <string>remote-notification</string>
+    </array>
 
 
 

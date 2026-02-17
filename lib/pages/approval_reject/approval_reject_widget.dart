@@ -6,22 +6,22 @@ import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'approval_await_model.dart';
-export 'approval_await_model.dart';
+import 'approval_reject_model.dart';
+export 'approval_reject_model.dart';
 
-class ApprovalAwaitWidget extends StatefulWidget {
-  const ApprovalAwaitWidget({super.key});
+class ApprovalRejectWidget extends StatefulWidget {
+  const ApprovalRejectWidget({super.key});
 
-  static String routeName = 'ApprovalAwait';
-  static String routePath = '/approvalAwait';
+  static String routeName = 'ApprovalReject';
+  static String routePath = '/approvalReject';
 
   @override
-  State<ApprovalAwaitWidget> createState() => _ApprovalAwaitWidgetState();
+  State<ApprovalRejectWidget> createState() => _ApprovalRejectWidgetState();
 }
 
-class _ApprovalAwaitWidgetState extends State<ApprovalAwaitWidget>
+class _ApprovalRejectWidgetState extends State<ApprovalRejectWidget>
     with TickerProviderStateMixin {
-  late ApprovalAwaitModel _model;
+  late ApprovalRejectModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -30,8 +30,10 @@ class _ApprovalAwaitWidgetState extends State<ApprovalAwaitWidget>
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => ApprovalAwaitModel());
+    _model = createModel(context, () => ApprovalRejectModel());
 
+    logFirebaseEvent('screen_view',
+        parameters: {'screen_name': 'ApprovalReject'});
     animationsMap.addAll({
       'containerOnPageLoadAnimation': AnimationInfo(
         trigger: AnimationTrigger.onPageLoad,
@@ -172,68 +174,30 @@ class _ApprovalAwaitWidgetState extends State<ApprovalAwaitWidget>
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
-                                        Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Text(
-                                              'Your account is still pending approval.',
-                                              textAlign: TextAlign.center,
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .headlineMedium
-                                                  .override(
-                                                    font: GoogleFonts.urbanist(
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .headlineMedium
-                                                              .fontStyle,
-                                                    ),
-                                                    letterSpacing: 0.0,
-                                                    fontWeight: FontWeight.w600,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .headlineMedium
-                                                            .fontStyle,
-                                                  ),
-                                            ),
-                                            Text(
-                                              'You’ll can sign in once it’s reviewed and activated.',
-                                              textAlign: TextAlign.center,
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .labelLarge
-                                                      .override(
-                                                        font:
-                                                            GoogleFonts.manrope(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .labelLarge
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .labelLarge
-                                                                  .fontStyle,
-                                                        ),
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .labelLarge
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .labelLarge
-                                                                .fontStyle,
-                                                      ),
-                                            ),
-                                          ].divide(SizedBox(height: 16.0)),
+                                        Text(
+                                          'Your account creation was rejected.',
+                                          textAlign: TextAlign.center,
+                                          style: FlutterFlowTheme.of(context)
+                                              .headlineMedium
+                                              .override(
+                                                font: GoogleFonts.urbanist(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .headlineMedium
+                                                          .fontStyle,
+                                                ),
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .error,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.w600,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .headlineMedium
+                                                        .fontStyle,
+                                              ),
                                         ),
                                         Padding(
                                           padding:
@@ -241,6 +205,11 @@ class _ApprovalAwaitWidgetState extends State<ApprovalAwaitWidget>
                                                   0.0, 24.0, 0.0, 0.0),
                                           child: FFButtonWidget(
                                             onPressed: () async {
+                                              logFirebaseEvent(
+                                                  'APPROVAL_REJECT_PAGE_signinButton_ON_TAP');
+                                              logFirebaseEvent(
+                                                  'signinButton_navigate_to');
+
                                               context.goNamed(
                                                   SigninWidget.routeName);
                                             },
@@ -296,7 +265,7 @@ class _ApprovalAwaitWidgetState extends State<ApprovalAwaitWidget>
                                             ),
                                           ),
                                         ),
-                                      ].divide(SizedBox(height: 8.0)),
+                                      ],
                                     ),
                                   ),
                                 ),

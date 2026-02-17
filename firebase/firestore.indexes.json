@@ -1,6 +1,34 @@
 {
   "indexes": [
     {
+      "collectionGroup": "addressCity",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "provinceRef",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "city",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "addressBrgy",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "cityRef",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "barangay",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
       "collectionGroup": "citation",
       "queryScope": "COLLECTION",
       "fields": [
@@ -9,15 +37,7 @@
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "appre_date_month",
-          "order": "DESCENDING"
-        },
-        {
-          "fieldPath": "appre_date_day",
-          "order": "DESCENDING"
-        },
-        {
-          "fieldPath": "appre_date_year",
+          "fieldPath": "created_time",
           "order": "DESCENDING"
         }
       ]
@@ -49,12 +69,20 @@
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "created_time",
-          "order": "DESCENDING"
-        },
+          "fieldPath": "notif_type",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": [
+    {
+      "collectionGroup": "fcm_tokens",
+      "fieldPath": "fcm_token",
+      "indexes": [
         {
-          "fieldPath": "edited_time",
-          "order": "DESCENDING"
+          "order": "ASCENDING",
+          "queryScope": "COLLECTION_GROUP"
         }
       ]
     }

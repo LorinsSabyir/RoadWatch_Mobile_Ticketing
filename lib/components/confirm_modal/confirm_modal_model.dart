@@ -1,9 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import '/index.dart';
-import 'approval_await_widget.dart' show ApprovalAwaitWidget;
+import 'confirm_modal_widget.dart' show ConfirmModalWidget;
 import 'package:flutter/material.dart';
 
-class ApprovalAwaitModel extends FlutterFlowModel<ApprovalAwaitWidget> {
+class ConfirmModalModel extends FlutterFlowModel<ConfirmModalWidget> {
   @override
   void initState(BuildContext context) {}
 

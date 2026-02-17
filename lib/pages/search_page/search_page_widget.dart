@@ -33,8 +33,11 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
     super.initState();
     _model = createModel(context, () => SearchPageModel());
 
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'SearchPage'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      logFirebaseEvent('SEARCH_SearchPage_ON_INIT_STATE');
+      logFirebaseEvent('SearchPage_update_app_state');
       FFAppState().searchActive = false;
       safeSetState(() {});
     });
@@ -55,7 +58,9 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
     context.watch<FFAppState>();
 
     return StreamBuilder<List<ViolationRecord>>(
-      stream: queryViolationRecord(),
+      stream: FFAppState().violationSearchListCache(
+        requestFn: () => queryViolationRecord(),
+      ),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -84,10 +89,26 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
             key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
             appBar: PreferredSize(
-              preferredSize: Size.fromHeight(0.0),
+              preferredSize: Size.fromHeight(25.0),
               child: AppBar(
                 backgroundColor: FlutterFlowTheme.of(context).primary,
                 automaticallyImplyLeading: false,
+                title: Text(
+                  'Select Violations',
+                  style: FlutterFlowTheme.of(context).headlineMedium.override(
+                        font: GoogleFonts.urbanist(
+                          fontWeight: FontWeight.w600,
+                          fontStyle: FlutterFlowTheme.of(context)
+                              .headlineMedium
+                              .fontStyle,
+                        ),
+                        letterSpacing: 0.0,
+                        fontWeight: FontWeight.w600,
+                        fontStyle: FlutterFlowTheme.of(context)
+                            .headlineMedium
+                            .fontStyle,
+                      ),
+                ),
                 actions: [],
                 centerTitle: false,
                 elevation: 0.0,
@@ -150,6 +171,9 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                   size: 30.0,
                                 ),
                                 onPressed: () async {
+                                  logFirebaseEvent(
+                                      'SEARCH_PAGE_PAGE_backButton_ON_TAP');
+                                  logFirebaseEvent('backButton_navigate_back');
                                   context.pop();
                                 },
                               ),
@@ -194,6 +218,10 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                 '_model.searchbarTextController',
                                                 Duration(milliseconds: 2000),
                                                 () async {
+                                                  logFirebaseEvent(
+                                                      'SEARCH_searchbar_ON_TEXTFIELD_CHANGE');
+                                                  logFirebaseEvent(
+                                                      'searchbar_simple_search');
                                                   safeSetState(() {
                                                     _model.simpleSearchResults =
                                                         TextSearch(
@@ -220,6 +248,8 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                             .toList();
                                                     ;
                                                   });
+                                                  logFirebaseEvent(
+                                                      'searchbar_update_app_state');
                                                   FFAppState().searchActive =
                                                       true;
                                                   safeSetState(() {});
@@ -342,24 +372,34 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                             ),
                                           ),
                                         ),
-                                        FlutterFlowIconButton(
-                                          borderRadius: 50.0,
-                                          buttonSize: 40.0,
-                                          icon: Icon(
-                                            Icons.close,
-                                            color: FlutterFlowTheme.of(context)
-                                                .textboxTextHollow,
-                                            size: 24.0,
+                                        if (_model.searchbarTextController
+                                                    .text !=
+                                                '')
+                                          FlutterFlowIconButton(
+                                            borderRadius: 50.0,
+                                            buttonSize: 40.0,
+                                            icon: Icon(
+                                              Icons.close,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .textboxTextHollow,
+                                              size: 24.0,
+                                            ),
+                                            onPressed: () async {
+                                              logFirebaseEvent(
+                                                  'SEARCH_PAGE_PAGE_closeButton_ON_TAP');
+                                              logFirebaseEvent(
+                                                  'closeButton_clear_text_fields_pin_codes');
+                                              safeSetState(() {
+                                                _model.searchbarTextController
+                                                    ?.clear();
+                                              });
+                                              logFirebaseEvent(
+                                                  'closeButton_update_app_state');
+                                              FFAppState().searchActive = false;
+                                              safeSetState(() {});
+                                            },
                                           ),
-                                          onPressed: () async {
-                                            safeSetState(() {
-                                              _model.searchbarTextController
-                                                  ?.clear();
-                                            });
-                                            FFAppState().searchActive = false;
-                                            safeSetState(() {});
-                                          },
-                                        ),
                                       ],
                                     ),
                                   ),
@@ -370,217 +410,88 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                         ),
                       ),
                     ),
-                    Container(
-                      width: MediaQuery.sizeOf(context).width * 1.0,
-                      decoration: BoxDecoration(),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          if (!FFAppState().searchActive)
-                            Container(
-                              decoration: BoxDecoration(),
-                              child: Builder(
-                                builder: (context) {
-                                  final noSearch =
-                                      searchPageViolationRecordList.toList();
-
-                                  return ListView.builder(
-                                    padding: EdgeInsets.zero,
-                                    primary: false,
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.vertical,
-                                    itemCount: noSearch.length,
-                                    itemBuilder: (context, noSearchIndex) {
-                                      final noSearchItem =
-                                          noSearch[noSearchIndex];
-                                      return Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            16.0, 0.0, 16.0, 0.0),
-                                        child: Container(
-                                          width: 100.0,
-                                          decoration: BoxDecoration(),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            children: [
-                                              Expanded(
-                                                child: wrapWithModel(
-                                                  model: _model
-                                                      .violationCardModels1
-                                                      .getModel(
-                                                    noSearchItem.id,
-                                                    noSearchIndex,
-                                                  ),
-                                                  updateCallback: () =>
-                                                      safeSetState(() {}),
-                                                  child: ViolationCardWidget(
-                                                    key: Key(
-                                                      'Keyhxz_${noSearchItem.id}',
-                                                    ),
-                                                    title: noSearchItem.section,
-                                                    subtitle: noSearchItem
-                                                        .violationName,
-                                                    fine: formatNumber(
-                                                      noSearchItem.fines,
-                                                      formatType:
-                                                          FormatType.decimal,
-                                                      decimalType:
-                                                          DecimalType.automatic,
-                                                      currency: '₱',
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              Container(
-                                                width: 40.0,
-                                                height: 40.0,
-                                                decoration: BoxDecoration(),
-                                                child: Visibility(
-                                                  visible: FFAppState()
-                                                          .citationRef
-                                                          .contains(noSearchItem
-                                                              .id) ==
-                                                      false,
-                                                  child: FlutterFlowIconButton(
-                                                    borderRadius: 50.0,
-                                                    buttonSize: 40.0,
-                                                    icon: Icon(
-                                                      Icons.add,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primary,
-                                                      size: 24.0,
-                                                    ),
-                                                    onPressed: () async {
-                                                      if (FFAppState()
-                                                              .citationRef
-                                                              .contains(
-                                                                  noSearchItem
-                                                                      .id) ==
-                                                          true) {
-                                                        ScaffoldMessenger.of(
-                                                                context)
-                                                            .showSnackBar(
-                                                          SnackBar(
-                                                            content: Text(
-                                                              'Violation already exist',
-                                                              style: TextStyle(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryBackground,
-                                                              ),
-                                                            ),
-                                                            duration: Duration(
-                                                                milliseconds:
-                                                                    4000),
-                                                            backgroundColor:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .error,
-                                                          ),
-                                                        );
-                                                      } else {
-                                                        ScaffoldMessenger.of(
-                                                                context)
-                                                            .showSnackBar(
-                                                          SnackBar(
-                                                            content: Text(
-                                                              'Sucessfully added',
-                                                              style: TextStyle(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryText,
-                                                              ),
-                                                            ),
-                                                            duration: Duration(
-                                                                milliseconds:
-                                                                    4000),
-                                                            backgroundColor:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondary,
-                                                          ),
-                                                        );
-                                                        FFAppState()
-                                                            .addToSelectedViolationName(
-                                                                noSearchItem
-                                                                    .violationName);
-                                                        FFAppState()
-                                                            .addToSelectedViolationFine(
-                                                                noSearchItem
-                                                                    .fines);
-                                                        FFAppState()
-                                                            .addToSelectedViolationSection(
-                                                                noSearchItem
-                                                                    .section);
-                                                        FFAppState()
-                                                            .addToCitationRef(
-                                                                noSearchItem
-                                                                    .id);
-                                                        safeSetState(() {});
-                                                      }
-                                                    },
-                                                  ),
-                                                ),
-                                              ),
-                                            ].divide(SizedBox(width: 4.0)),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  );
-                                },
+                    StreamBuilder<List<CitationRecord>>(
+                      stream: queryCitationRecord(
+                        queryBuilder: (citationRecord) => citationRecord
+                            .where(
+                              'appre_date_month',
+                              isEqualTo: dateTimeFormat(
+                                "MMMM",
+                                getCurrentTimestamp,
+                                locale:
+                                    FFLocalizations.of(context).languageCode,
+                              ),
+                            )
+                            .where(
+                              'appre_date_year',
+                              isEqualTo: dateTimeFormat(
+                                "yyyy",
+                                getCurrentTimestamp,
+                                locale:
+                                    FFLocalizations.of(context).languageCode,
+                              ),
+                            )
+                            .where(
+                              'appre_date_day',
+                              isEqualTo: dateTimeFormat(
+                                "dd",
+                                getCurrentTimestamp,
+                                locale:
+                                    FFLocalizations.of(context).languageCode,
+                              ),
+                            )
+                            .where(
+                              'violator_name',
+                              isEqualTo: FFAppState().violatorAddName,
+                            ),
+                        singleRecord: true,
+                      ),
+                      builder: (context, snapshot) {
+                        // Customize what your widget looks like when it's loading.
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: SizedBox(
+                              width: 50.0,
+                              height: 50.0,
+                              child: SpinKitRing(
+                                color: FlutterFlowTheme.of(context).tertiary,
+                                size: 50.0,
                               ),
                             ),
-                          if (FFAppState().searchActive)
-                            Container(
-                              decoration: BoxDecoration(),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 0.0, 0.0, 0.0),
-                                    child: Text(
-                                      'Searched results',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            font: GoogleFonts.manrope(
-                                              fontWeight: FontWeight.w600,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontStyle,
-                                            ),
-                                            fontSize: 12.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w600,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontStyle,
-                                          ),
-                                    ),
-                                  ),
-                                  Builder(
+                          );
+                        }
+                        List<CitationRecord> mainCitationRecordList =
+                            snapshot.data!;
+                        final mainCitationRecord =
+                            mainCitationRecordList.isNotEmpty
+                                ? mainCitationRecordList.first
+                                : null;
+
+                        return Container(
+                          width: MediaQuery.sizeOf(context).width * 1.0,
+                          decoration: BoxDecoration(),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (!FFAppState().searchActive)
+                                Container(
+                                  decoration: BoxDecoration(),
+                                  child: Builder(
                                     builder: (context) {
-                                      final search =
-                                          _model.simpleSearchResults.toList();
+                                      final noSearch =
+                                          searchPageViolationRecordList
+                                              .toList();
 
                                       return ListView.builder(
                                         padding: EdgeInsets.zero,
                                         primary: false,
                                         shrinkWrap: true,
                                         scrollDirection: Axis.vertical,
-                                        itemCount: search.length,
-                                        itemBuilder: (context, searchIndex) {
-                                          final searchItem =
-                                              search[searchIndex];
+                                        itemCount: noSearch.length,
+                                        itemBuilder: (context, noSearchIndex) {
+                                          final noSearchItem =
+                                              noSearch[noSearchIndex];
                                           return Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
@@ -597,31 +508,24 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                   Expanded(
                                                     child: wrapWithModel(
                                                       model: _model
-                                                          .violationCardModels2
+                                                          .violationCardModels1
                                                           .getModel(
-                                                        searchItem.id,
-                                                        searchIndex,
+                                                        noSearchItem.id,
+                                                        noSearchIndex,
                                                       ),
                                                       updateCallback: () =>
                                                           safeSetState(() {}),
                                                       child:
                                                           ViolationCardWidget(
                                                         key: Key(
-                                                          'Keyqt1_${searchItem.id}',
+                                                          'Key0yd_${noSearchItem.id}',
                                                         ),
-                                                        title:
-                                                            searchItem.section,
-                                                        subtitle: searchItem
+                                                        title: noSearchItem
                                                             .violationName,
-                                                        fine: formatNumber(
-                                                          searchItem.fines,
-                                                          formatType: FormatType
-                                                              .decimal,
-                                                          decimalType:
-                                                              DecimalType
-                                                                  .automatic,
-                                                          currency: '₱',
-                                                        ),
+                                                        subtitle: noSearchItem
+                                                            .section,
+                                                        fine:
+                                                            noSearchItem.fines,
                                                       ),
                                                     ),
                                                   ),
@@ -633,13 +537,17 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                       visible: FFAppState()
                                                               .citationRef
                                                               .contains(
-                                                                  searchItem
+                                                                  noSearchItem
                                                                       .id) ==
                                                           false,
                                                       child:
                                                           FlutterFlowIconButton(
                                                         borderRadius: 50.0,
                                                         buttonSize: 40.0,
+                                                        disabledIconColor:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondaryBackground,
                                                         icon: Icon(
                                                           Icons.add,
                                                           color: FlutterFlowTheme
@@ -647,77 +555,87 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                               .primary,
                                                           size: 24.0,
                                                         ),
-                                                        onPressed: () async {
-                                                          if (FFAppState()
-                                                                  .citationRef
-                                                                  .contains(
-                                                                      searchItem
-                                                                          .id) ==
-                                                              true) {
-                                                            ScaffoldMessenger
-                                                                    .of(context)
-                                                                .showSnackBar(
-                                                              SnackBar(
-                                                                content: Text(
-                                                                  'Violation already exist',
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .secondaryBackground,
-                                                                  ),
-                                                                ),
-                                                                duration: Duration(
-                                                                    milliseconds:
-                                                                        4000),
-                                                                backgroundColor:
-                                                                    FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .error,
-                                                              ),
-                                                            );
-                                                          } else {
-                                                            ScaffoldMessenger
-                                                                    .of(context)
-                                                                .showSnackBar(
-                                                              SnackBar(
-                                                                content: Text(
-                                                                  'Sucessfully added',
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primaryText,
-                                                                  ),
-                                                                ),
-                                                                duration: Duration(
-                                                                    milliseconds:
-                                                                        4000),
-                                                                backgroundColor:
-                                                                    FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .secondary,
-                                                              ),
-                                                            );
-                                                            FFAppState()
-                                                                .addToSelectedViolationName(
-                                                                    searchItem
-                                                                        .violationName);
-                                                            FFAppState()
-                                                                .addToSelectedViolationFine(
-                                                                    searchItem
-                                                                        .fines);
-                                                            FFAppState()
-                                                                .addToSelectedViolationSection(
-                                                                    searchItem
-                                                                        .section);
-                                                            FFAppState()
-                                                                .addToCitationRef(
-                                                                    searchItem
-                                                                        .id);
-                                                            safeSetState(() {});
-                                                          }
-                                                        },
+                                                        onPressed: (mainCitationRecord
+                                                                    ?.violationName
+                                                                    .contains(
+                                                                        noSearchItem
+                                                                            .violationName) ==
+                                                                true)
+                                                            ? null
+                                                            : () async {
+                                                                logFirebaseEvent(
+                                                                    'SEARCH_PAGE_PAGE_addButton_ON_TAP');
+                                                                if (FFAppState()
+                                                                        .citationRef
+                                                                        .contains(
+                                                                            noSearchItem.id) ==
+                                                                    true) {
+                                                                  logFirebaseEvent(
+                                                                      'addButton_show_snack_bar');
+                                                                  ScaffoldMessenger.of(
+                                                                          context)
+                                                                      .showSnackBar(
+                                                                    SnackBar(
+                                                                      content:
+                                                                          Text(
+                                                                        'Violation already exist',
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).secondaryBackground,
+                                                                        ),
+                                                                      ),
+                                                                      duration: Duration(
+                                                                          milliseconds:
+                                                                              4000),
+                                                                      backgroundColor:
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .error,
+                                                                    ),
+                                                                  );
+                                                                } else {
+                                                                  logFirebaseEvent(
+                                                                      'addButton_update_app_state');
+                                                                  FFAppState().addToSelectedViolationName(
+                                                                      noSearchItem
+                                                                          .violationName);
+                                                                  FFAppState().addToSelectedViolationFine(
+                                                                      noSearchItem
+                                                                          .fines);
+                                                                  FFAppState().addToSelectedViolationSection(
+                                                                      noSearchItem
+                                                                          .section);
+                                                                  FFAppState()
+                                                                      .addToCitationRef(
+                                                                          noSearchItem
+                                                                              .id);
+                                                                  safeSetState(
+                                                                      () {});
+                                                                  logFirebaseEvent(
+                                                                      'addButton_show_snack_bar');
+                                                                  ScaffoldMessenger.of(
+                                                                          context)
+                                                                      .showSnackBar(
+                                                                    SnackBar(
+                                                                      content:
+                                                                          Text(
+                                                                        'Sucessfully added',
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primaryText,
+                                                                        ),
+                                                                      ),
+                                                                      duration: Duration(
+                                                                          milliseconds:
+                                                                              4000),
+                                                                      backgroundColor:
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .secondary,
+                                                                    ),
+                                                                  );
+                                                                }
+                                                              },
                                                       ),
                                                     ),
                                                   ),
@@ -729,11 +647,214 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                       );
                                     },
                                   ),
-                                ],
-                              ),
-                            ),
-                        ],
-                      ),
+                                ),
+                              if (FFAppState().searchActive)
+                                Container(
+                                  decoration: BoxDecoration(),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 0.0, 0.0, 0.0),
+                                        child: Text(
+                                          'Searched results',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                font: GoogleFonts.manrope(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontStyle,
+                                                ),
+                                                fontSize: 12.0,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.w600,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontStyle,
+                                              ),
+                                        ),
+                                      ),
+                                      Builder(
+                                        builder: (context) {
+                                          final search = _model
+                                              .simpleSearchResults
+                                              .toList();
+
+                                          return ListView.builder(
+                                            padding: EdgeInsets.zero,
+                                            primary: false,
+                                            shrinkWrap: true,
+                                            scrollDirection: Axis.vertical,
+                                            itemCount: search.length,
+                                            itemBuilder:
+                                                (context, searchIndex) {
+                                              final searchItem =
+                                                  search[searchIndex];
+                                              return Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        16.0, 0.0, 16.0, 0.0),
+                                                child: Container(
+                                                  width: 100.0,
+                                                  decoration: BoxDecoration(),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceAround,
+                                                    children: [
+                                                      Expanded(
+                                                        child: wrapWithModel(
+                                                          model: _model
+                                                              .violationCardModels2
+                                                              .getModel(
+                                                            searchItem.id,
+                                                            searchIndex,
+                                                          ),
+                                                          updateCallback: () =>
+                                                              safeSetState(
+                                                                  () {}),
+                                                          child:
+                                                              ViolationCardWidget(
+                                                            key: Key(
+                                                              'Keydw0_${searchItem.id}',
+                                                            ),
+                                                            title: searchItem
+                                                                .violationName,
+                                                            subtitle: searchItem
+                                                                .section,
+                                                            fine: searchItem
+                                                                .fines,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        width: 40.0,
+                                                        height: 40.0,
+                                                        decoration:
+                                                            BoxDecoration(),
+                                                        child: Visibility(
+                                                          visible: FFAppState()
+                                                                  .citationRef
+                                                                  .contains(
+                                                                      searchItem
+                                                                          .id) ==
+                                                              false,
+                                                          child:
+                                                              FlutterFlowIconButton(
+                                                            borderRadius: 50.0,
+                                                            buttonSize: 40.0,
+                                                            disabledIconColor:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryBackground,
+                                                            icon: Icon(
+                                                              Icons.add,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primary,
+                                                              size: 24.0,
+                                                            ),
+                                                            onPressed: (mainCitationRecord
+                                                                        ?.violationName
+                                                                        .contains(
+                                                                            searchItem.violationName) ==
+                                                                    true)
+                                                                ? null
+                                                                : () async {
+                                                                    logFirebaseEvent(
+                                                                        'SEARCH_PAGE_PAGE_addButton_ON_TAP');
+                                                                    if (FFAppState()
+                                                                            .citationRef
+                                                                            .contains(searchItem.id) ==
+                                                                        true) {
+                                                                      logFirebaseEvent(
+                                                                          'addButton_show_snack_bar');
+                                                                      ScaffoldMessenger.of(
+                                                                              context)
+                                                                          .showSnackBar(
+                                                                        SnackBar(
+                                                                          content:
+                                                                              Text(
+                                                                            'Violation already exist',
+                                                                            style:
+                                                                                TextStyle(
+                                                                              color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                            ),
+                                                                          ),
+                                                                          duration:
+                                                                              Duration(milliseconds: 4000),
+                                                                          backgroundColor:
+                                                                              FlutterFlowTheme.of(context).error,
+                                                                        ),
+                                                                      );
+                                                                    } else {
+                                                                      logFirebaseEvent(
+                                                                          'addButton_show_snack_bar');
+                                                                      ScaffoldMessenger.of(
+                                                                              context)
+                                                                          .showSnackBar(
+                                                                        SnackBar(
+                                                                          content:
+                                                                              Text(
+                                                                            'Sucessfully added',
+                                                                            style:
+                                                                                TextStyle(
+                                                                              color: FlutterFlowTheme.of(context).primaryText,
+                                                                            ),
+                                                                          ),
+                                                                          duration:
+                                                                              Duration(milliseconds: 4000),
+                                                                          backgroundColor:
+                                                                              FlutterFlowTheme.of(context).secondary,
+                                                                        ),
+                                                                      );
+                                                                      logFirebaseEvent(
+                                                                          'addButton_update_app_state');
+                                                                      FFAppState()
+                                                                          .addToSelectedViolationName(
+                                                                              searchItem.violationName);
+                                                                      FFAppState()
+                                                                          .addToSelectedViolationFine(
+                                                                              searchItem.fines);
+                                                                      FFAppState()
+                                                                          .addToSelectedViolationSection(
+                                                                              searchItem.section);
+                                                                      FFAppState()
+                                                                          .addToCitationRef(
+                                                                              searchItem.id);
+                                                                      safeSetState(
+                                                                          () {});
+                                                                    }
+                                                                  },
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ].divide(
+                                                        SizedBox(width: 4.0)),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                            ],
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),

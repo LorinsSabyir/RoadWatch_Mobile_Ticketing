@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 
 import '/auth/base_auth_user_provider.dart';
 
+import '/backend/push_notifications/push_notifications_handler.dart'
+    show PushNotificationsHandler;
 import '/main.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
@@ -127,18 +129,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               : NotificationWidget(),
         ),
         FFRoute(
-          name: SearchPageWidget.routeName,
-          path: SearchPageWidget.routePath,
-          requireAuth: true,
-          builder: (context, params) => SearchPageWidget(),
-        ),
-        FFRoute(
-          name: ScanLicenseWidget.routeName,
-          path: ScanLicenseWidget.routePath,
-          requireAuth: true,
-          builder: (context, params) => ScanLicenseWidget(),
-        ),
-        FFRoute(
           name: SignupWidget.routeName,
           path: SignupWidget.routePath,
           builder: (context, params) => SignupWidget(),
@@ -147,11 +137,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: ApprovalPageWidget.routeName,
           path: ApprovalPageWidget.routePath,
           builder: (context, params) => ApprovalPageWidget(),
-        ),
-        FFRoute(
-          name: ApprovalAwaitWidget.routeName,
-          path: ApprovalAwaitWidget.routePath,
-          builder: (context, params) => ApprovalAwaitWidget(),
         ),
         FFRoute(
           name: ProfileEditWidget.routeName,
@@ -164,6 +149,23 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: EnforcerSelfieWidget.routePath,
           requireAuth: true,
           builder: (context, params) => EnforcerSelfieWidget(),
+        ),
+        FFRoute(
+          name: ViolatorPictureWidget.routeName,
+          path: ViolatorPictureWidget.routePath,
+          requireAuth: true,
+          builder: (context, params) => ViolatorPictureWidget(),
+        ),
+        FFRoute(
+          name: ApprovalRejectWidget.routeName,
+          path: ApprovalRejectWidget.routePath,
+          builder: (context, params) => ApprovalRejectWidget(),
+        ),
+        FFRoute(
+          name: SearchPageWidget.routeName,
+          path: SearchPageWidget.routePath,
+          requireAuth: true,
+          builder: (context, params) => SearchPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -355,7 +357,7 @@ class FFRoute {
                     fit: BoxFit.cover,
                   ),
                 )
-              : page;
+              : PushNotificationsHandler(child: page);
 
           final transitionInfo = state.transitionInfo;
           return transitionInfo.hasTransition

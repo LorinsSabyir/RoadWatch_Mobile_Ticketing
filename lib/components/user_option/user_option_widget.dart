@@ -3,10 +3,12 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/custom_code/actions/index.dart' as actions;
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'user_option_model.dart';
 export 'user_option_model.dart';
 
@@ -66,11 +68,13 @@ class _UserOptionWidgetState extends State<UserOptionWidget>
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Padding(
       padding: EdgeInsets.all(16.0),
       child: Container(
         width: 320.0,
-        height: 300.0,
+        height: 360.0,
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).primaryBackground,
           boxShadow: [
@@ -141,6 +145,10 @@ class _UserOptionWidgetState extends State<UserOptionWidget>
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: () async {
+                                logFirebaseEvent(
+                                    'USER_OPTION_COMP_closeButton_ON_TAP');
+                                logFirebaseEvent(
+                                    'closeButton_close_dialog_drawer_etc');
                                 Navigator.pop(context);
                               },
                               child: Icon(
@@ -186,27 +194,15 @@ class _UserOptionWidgetState extends State<UserOptionWidget>
                                   ),
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 4.0, 0.0, 0.0),
-                            child: Text(
-                              valueOrDefault<String>(
-                                currentUserEmail,
-                                'Enforcer Email',
-                              ),
-                              style: FlutterFlowTheme.of(context)
-                                  .bodySmall
-                                  .override(
-                                    font: GoogleFonts.manrope(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodySmall
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodySmall
-                                          .fontStyle,
-                                    ),
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    letterSpacing: 0.0,
+                          Text(
+                            valueOrDefault<String>(
+                              currentUserEmail,
+                              'Enforcer Email',
+                            ),
+                            style: FlutterFlowTheme.of(context)
+                                .bodySmall
+                                .override(
+                                  font: GoogleFonts.manrope(
                                     fontWeight: FlutterFlowTheme.of(context)
                                         .bodySmall
                                         .fontWeight,
@@ -214,7 +210,15 @@ class _UserOptionWidgetState extends State<UserOptionWidget>
                                         .bodySmall
                                         .fontStyle,
                                   ),
-                            ),
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FlutterFlowTheme.of(context)
+                                      .bodySmall
+                                      .fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .bodySmall
+                                      .fontStyle,
+                                ),
                           ),
                         ],
                       ),
@@ -256,6 +260,10 @@ class _UserOptionWidgetState extends State<UserOptionWidget>
                                         hoverColor: Colors.transparent,
                                         highlightColor: Colors.transparent,
                                         onTap: () async {
+                                          logFirebaseEvent(
+                                              'USER_OPTION_Container_gxwwwdex_ON_TAP');
+                                          logFirebaseEvent(
+                                              'Container_set_dark_mode_settings');
                                           setDarkModeSetting(
                                               context, ThemeMode.light);
                                         },
@@ -361,6 +369,10 @@ class _UserOptionWidgetState extends State<UserOptionWidget>
                                         hoverColor: Colors.transparent,
                                         highlightColor: Colors.transparent,
                                         onTap: () async {
+                                          logFirebaseEvent(
+                                              'USER_OPTION_Container_469gslon_ON_TAP');
+                                          logFirebaseEvent(
+                                              'Container_set_dark_mode_settings');
                                           setDarkModeSetting(
                                               context, ThemeMode.dark);
                                         },
@@ -476,6 +488,10 @@ class _UserOptionWidgetState extends State<UserOptionWidget>
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () async {
+                              logFirebaseEvent(
+                                  'USER_OPTION_COMP_editButton_ON_TAP');
+                              logFirebaseEvent('editButton_navigate_to');
+
                               context.goNamed(ProfileEditWidget.routeName);
                             },
                             child: AnimatedContainer(
@@ -498,7 +514,7 @@ class _UserOptionWidgetState extends State<UserOptionWidget>
                                         Icons.edit,
                                         color: FlutterFlowTheme.of(context)
                                             .secondaryText,
-                                        size: 20.0,
+                                        size: 25.0,
                                       ),
                                     ),
                                     Expanded(
@@ -543,6 +559,186 @@ class _UserOptionWidgetState extends State<UserOptionWidget>
                               ),
                             ),
                           ),
+                          InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              logFirebaseEvent(
+                                  'USER_OPTION_COMP_printerButton_ON_TAP');
+                              logFirebaseEvent('printerButton_custom_action');
+                              await actions.connectPrinter(
+                                context,
+                              );
+                            },
+                            child: AnimatedContainer(
+                              duration: Duration(milliseconds: 150),
+                              curve: Curves.easeInOut,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 8.0, 0.0, 8.0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          12.0, 0.0, 0.0, 0.0),
+                                      child: Icon(
+                                        Icons.local_print_shop_rounded,
+                                        color: valueOrDefault<Color>(
+                                          FFAppState().isPrinterConnected
+                                              ? FlutterFlowTheme.of(context)
+                                                  .success
+                                              : FlutterFlowTheme.of(context)
+                                                  .secondaryText,
+                                          FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                        ),
+                                        size: 25.0,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            12.0, 0.0, 0.0, 0.0),
+                                        child: Text(
+                                          'Connect printer',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                font: GoogleFonts.manrope(
+                                                  fontWeight:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontWeight,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontStyle,
+                                                ),
+                                                color: valueOrDefault<Color>(
+                                                  FFAppState()
+                                                          .isPrinterConnected
+                                                      ? FlutterFlowTheme.of(
+                                                              context)
+                                                          .success
+                                                      : FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondaryText,
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                                ),
+                                                letterSpacing: 0.0,
+                                                fontWeight:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontWeight,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontStyle,
+                                              ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          if (FFAppState().isPrinterConnected == true)
+                            InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                logFirebaseEvent(
+                                    'USER_OPTION_COMP_printerButton_ON_TAP');
+                                logFirebaseEvent('printerButton_custom_action');
+                                await actions.disconnectPrinter(
+                                  context,
+                                );
+                                logFirebaseEvent(
+                                    'printerButton_update_app_state');
+                                FFAppState().isPrinterConnected = false;
+                                safeSetState(() {});
+                              },
+                              child: AnimatedContainer(
+                                duration: Duration(milliseconds: 150),
+                                curve: Curves.easeInOut,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 8.0, 0.0, 8.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            12.0, 0.0, 0.0, 0.0),
+                                        child: Icon(
+                                          Icons.print_disabled_rounded,
+                                          color: FlutterFlowTheme.of(context)
+                                              .error,
+                                          size: 25.0,
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  12.0, 0.0, 0.0, 0.0),
+                                          child: Text(
+                                            'Disconnect printer',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  font: GoogleFonts.manrope(
+                                                    fontWeight:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .fontWeight,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .fontStyle,
+                                                  ),
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .error,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontWeight,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontStyle,
+                                                ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
                         ],
                       ),
                     ),
@@ -567,14 +763,28 @@ class _UserOptionWidgetState extends State<UserOptionWidget>
                         hoverColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         onTap: () async {
-                          await currentUserReference!
-                              .update(createUsersRecordData(
-                            status: false,
-                            lastActive: getCurrentTimestamp,
-                          ));
+                          logFirebaseEvent(
+                              'USER_OPTION_COMP_logoutButton_ON_TAP');
+                          logFirebaseEvent('logoutButton_backend_call');
+
+                          await currentUserReference!.update({
+                            ...createUsersRecordData(
+                              status: false,
+                              lastActive: getCurrentTimestamp,
+                            ),
+                            ...mapToFirestore(
+                              {
+                                'assignment_address': FieldValue.delete(),
+                                'assignment_time': FieldValue.delete(),
+                              },
+                            ),
+                          });
+                          logFirebaseEvent('logoutButton_auth');
                           GoRouter.of(context).prepareAuthEvent();
                           await authManager.signOut();
                           GoRouter.of(context).clearRedirectLocation();
+
+                          logFirebaseEvent('logoutButton_navigate_to');
 
                           context.goNamedAuth(
                               SigninWidget.routeName, context.mounted);

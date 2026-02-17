@@ -27,6 +27,7 @@
 
 import 'form_field_controller.dart';
 import 'package:flutter/material.dart';
+import 'flutter_flow_widgets.dart';
 
 class FlutterFlowRadioButton extends StatefulWidget {
   const FlutterFlowRadioButton({
@@ -46,6 +47,10 @@ class FlutterFlowRadioButton extends StatefulWidget {
     this.toggleable = false,
     this.horizontalAlignment = WrapAlignment.start,
     this.verticalAlignment = WrapCrossAlignment.start,
+    this.focusBorder,
+    this.focusBorderRadius,
+    this.focusBorderPadding,
+    this.showBorderAroundRadioButtonAndText = true,
   });
 
   final List<String> options;
@@ -63,6 +68,10 @@ class FlutterFlowRadioButton extends StatefulWidget {
   final bool toggleable;
   final WrapAlignment horizontalAlignment;
   final WrapCrossAlignment verticalAlignment;
+  final Border? focusBorder;
+  final BorderRadius? focusBorderRadius;
+  final EdgeInsetsGeometry? focusBorderPadding;
+  final bool showBorderAroundRadioButtonAndText;
 
   @override
   State<FlutterFlowRadioButton> createState() => _FlutterFlowRadioButtonState();
@@ -133,6 +142,11 @@ class _FlutterFlowRadioButtonState extends State<FlutterFlowRadioButton> {
         items: effectiveOptions,
         itemBuilder: (item) =>
             RadioButtonBuilder(item, buttonPosition: widget.buttonPosition),
+        focusBorder: widget.focusBorder,
+        focusBorderRadius: widget.focusBorderRadius,
+        focusBorderPadding: widget.focusBorderPadding,
+        showBorderAroundRadioButtonAndText:
+            widget.showBorderAroundRadioButtonAndText,
       ),
     );
   }
@@ -167,6 +181,10 @@ class RadioButton<T> extends StatelessWidget {
     required this.selectedTextStyle,
     required this.textPadding,
     this.shouldFlex = false,
+    this.focusBorder,
+    this.focusBorderRadius,
+    this.focusBorderPadding,
+    this.showBorderAroundRadioButtonAndText = true,
   });
 
   final String description;
@@ -180,6 +198,21 @@ class RadioButton<T> extends StatelessWidget {
   final TextStyle selectedTextStyle;
   final EdgeInsetsGeometry textPadding;
   final bool shouldFlex;
+  final Border? focusBorder;
+  final BorderRadius? focusBorderRadius;
+  final EdgeInsetsGeometry? focusBorderPadding;
+  final bool showBorderAroundRadioButtonAndText;
+
+  Widget _buildRadio(FocusNode? focusNode) {
+    return Radio<T>(
+      groupValue: groupValue,
+      onChanged: onChanged,
+      value: value,
+      activeColor: activeColor,
+      toggleable: toggleable,
+      focusNode: focusNode,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -195,19 +228,49 @@ class RadioButton<T> extends StatelessWidget {
     if (shouldFlex) {
       radioButtonText = Flexible(child: radioButtonText);
     }
-    return InkWell(
+
+    final hasFocusBorder = focusBorder != null ||
+        focusBorderRadius != null ||
+        focusBorderPadding != null;
+
+    if (hasFocusBorder && showBorderAroundRadioButtonAndText) {
+      return FFFocusIndicator(
+        border: focusBorder,
+        borderRadius: focusBorderRadius,
+        padding: focusBorderPadding,
+        builder: (focusNode) => GestureDetector(
+          onTap: onChanged != null ? () => onChanged!(value) : null,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              if (buttonPosition == RadioButtonPosition.right) radioButtonText,
+              _buildRadio(focusNode),
+              if (buttonPosition == RadioButtonPosition.left) radioButtonText,
+            ],
+          ),
+        ),
+      );
+    }
+
+    Widget radioWidget;
+    if (hasFocusBorder && !showBorderAroundRadioButtonAndText) {
+      radioWidget = FFFocusIndicator(
+        border: focusBorder,
+        borderRadius: focusBorderRadius,
+        padding: focusBorderPadding,
+        builder: (focusNode) => _buildRadio(focusNode),
+      );
+    } else {
+      radioWidget = _buildRadio(null);
+    }
+
+    return GestureDetector(
       onTap: onChanged != null ? () => onChanged!(value) : null,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           if (buttonPosition == RadioButtonPosition.right) radioButtonText,
-          Radio<T>(
-            groupValue: groupValue,
-            onChanged: onChanged,
-            value: value,
-            activeColor: activeColor,
-            toggleable: toggleable,
-          ),
+          radioWidget,
           if (buttonPosition == RadioButtonPosition.left) radioButtonText,
         ],
       ),
@@ -232,6 +295,10 @@ class RadioGroup<T> extends StatelessWidget {
     required this.textPadding,
     this.optionWidth,
     this.verticalAlignment = WrapCrossAlignment.center,
+    this.focusBorder,
+    this.focusBorderRadius,
+    this.focusBorderPadding,
+    this.showBorderAroundRadioButtonAndText = true,
   });
 
   final T? groupValue;
@@ -248,6 +315,10 @@ class RadioGroup<T> extends StatelessWidget {
   final TextStyle textStyle;
   final TextStyle selectedTextStyle;
   final EdgeInsetsGeometry textPadding;
+  final Border? focusBorder;
+  final BorderRadius? focusBorderRadius;
+  final EdgeInsetsGeometry? focusBorderPadding;
+  final bool showBorderAroundRadioButtonAndText;
 
   List<Widget> get _group => items.map(
         (item) {
@@ -267,6 +338,11 @@ class RadioGroup<T> extends StatelessWidget {
               selectedTextStyle: selectedTextStyle,
               textPadding: textPadding,
               shouldFlex: optionWidth != null,
+              focusBorder: focusBorder,
+              focusBorderRadius: focusBorderRadius,
+              focusBorderPadding: focusBorderPadding,
+              showBorderAroundRadioButtonAndText:
+                  showBorderAroundRadioButtonAndText,
             ),
           );
         },

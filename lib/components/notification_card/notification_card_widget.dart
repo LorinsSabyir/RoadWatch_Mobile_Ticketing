@@ -10,18 +10,18 @@ class NotificationCardWidget extends StatefulWidget {
     super.key,
     this.title,
     this.subtitle,
-    this.pupose,
+    this.type,
     this.date,
-    Color? titleColor,
     this.status,
+    Color? titleColor,
   }) : this.titleColor = titleColor ?? const Color(0xFFFFD500);
 
   final String? title;
   final String? subtitle;
-  final String? pupose;
+  final String? type;
   final DateTime? date;
-  final Color titleColor;
   final Color? status;
+  final Color titleColor;
 
   @override
   State<NotificationCardWidget> createState() => _NotificationCardWidgetState();
@@ -68,11 +68,7 @@ class _NotificationCardWidgetState extends State<NotificationCardWidget> {
         ],
         borderRadius: BorderRadius.circular(12.0),
         border: Border.all(
-          color: valueOrDefault<Color>(
-            widget.status,
-            FlutterFlowTheme.of(context).primary,
-          ),
-          width: 1.0,
+          color: FlutterFlowTheme.of(context).transparent,
         ),
       ),
       child: Padding(
@@ -80,9 +76,23 @@ class _NotificationCardWidgetState extends State<NotificationCardWidget> {
         child: Row(
           mainAxisSize: MainAxisSize.max,
           children: [
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(6.0, 6.0, 0.0, 6.0),
+              child: Container(
+                width: 3.0,
+                height: MediaQuery.sizeOf(context).height * 1.0,
+                decoration: BoxDecoration(
+                  color: valueOrDefault<Color>(
+                    widget.status,
+                    FlutterFlowTheme.of(context).primary,
+                  ),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+              ),
+            ),
             Expanded(
               child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 0.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -92,20 +102,20 @@ class _NotificationCardWidgetState extends State<NotificationCardWidget> {
                       valueOrDefault<String>(
                         widget.title,
                         'title',
+                      ).maybeHandleOverflow(
+                        maxChars: 25,
+                        replacement: '…',
                       ),
                       style: FlutterFlowTheme.of(context).bodyLarge.override(
                             font: GoogleFonts.manrope(
-                              fontWeight: FlutterFlowTheme.of(context)
-                                  .bodyLarge
-                                  .fontWeight,
+                              fontWeight: FontWeight.w600,
                               fontStyle: FlutterFlowTheme.of(context)
                                   .bodyLarge
                                   .fontStyle,
                             ),
+                            fontSize: 18.0,
                             letterSpacing: 0.0,
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .bodyLarge
-                                .fontWeight,
+                            fontWeight: FontWeight.w600,
                             fontStyle: FlutterFlowTheme.of(context)
                                 .bodyLarge
                                 .fontStyle,
@@ -118,20 +128,20 @@ class _NotificationCardWidgetState extends State<NotificationCardWidget> {
                         valueOrDefault<String>(
                           widget.subtitle,
                           'subtitle',
+                        ).maybeHandleOverflow(
+                          maxChars: 30,
+                          replacement: '…',
                         ),
                         style: FlutterFlowTheme.of(context).labelSmall.override(
                               font: GoogleFonts.manrope(
-                                fontWeight: FlutterFlowTheme.of(context)
-                                    .labelSmall
-                                    .fontWeight,
+                                fontWeight: FontWeight.normal,
                                 fontStyle: FlutterFlowTheme.of(context)
                                     .labelSmall
                                     .fontStyle,
                               ),
+                              fontSize: 12.0,
                               letterSpacing: 0.0,
-                              fontWeight: FlutterFlowTheme.of(context)
-                                  .labelSmall
-                                  .fontWeight,
+                              fontWeight: FontWeight.normal,
                               fontStyle: FlutterFlowTheme.of(context)
                                   .labelSmall
                                   .fontStyle,
@@ -151,15 +161,13 @@ class _NotificationCardWidgetState extends State<NotificationCardWidget> {
                 children: [
                   Text(
                     valueOrDefault<String>(
-                      widget.pupose,
-                      'purpose',
+                      widget.type,
+                      'Type',
                     ),
                     textAlign: TextAlign.end,
                     style: FlutterFlowTheme.of(context).titleLarge.override(
                           font: GoogleFonts.manrope(
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .titleLarge
-                                .fontWeight,
+                            fontWeight: FontWeight.w600,
                             fontStyle: FlutterFlowTheme.of(context)
                                 .titleLarge
                                 .fontStyle,
@@ -169,9 +177,7 @@ class _NotificationCardWidgetState extends State<NotificationCardWidget> {
                             FlutterFlowTheme.of(context).primary,
                           ),
                           letterSpacing: 0.0,
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .titleLarge
-                              .fontWeight,
+                          fontWeight: FontWeight.w600,
                           fontStyle:
                               FlutterFlowTheme.of(context).titleLarge.fontStyle,
                         ),
@@ -189,9 +195,7 @@ class _NotificationCardWidgetState extends State<NotificationCardWidget> {
                       textAlign: TextAlign.end,
                       style: FlutterFlowTheme.of(context).labelMedium.override(
                             font: GoogleFonts.manrope(
-                              fontWeight: FlutterFlowTheme.of(context)
-                                  .labelMedium
-                                  .fontWeight,
+                              fontWeight: FontWeight.normal,
                               fontStyle: FlutterFlowTheme.of(context)
                                   .labelMedium
                                   .fontStyle,
@@ -199,9 +203,7 @@ class _NotificationCardWidgetState extends State<NotificationCardWidget> {
                             color: FlutterFlowTheme.of(context).secondaryText,
                             fontSize: 14.0,
                             letterSpacing: 0.0,
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .labelMedium
-                                .fontWeight,
+                            fontWeight: FontWeight.normal,
                             fontStyle: FlutterFlowTheme.of(context)
                                 .labelMedium
                                 .fontStyle,

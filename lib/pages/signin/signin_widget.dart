@@ -34,6 +34,7 @@ class _SigninWidgetState extends State<SigninWidget>
     super.initState();
     _model = createModel(context, () => SigninModel());
 
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'Signin'});
     _model.emailAddressTextController ??= TextEditingController();
     _model.emailAddressFocusNode ??= FocusNode();
 
@@ -463,11 +464,11 @@ class _SigninWidgetState extends State<SigninWidget>
                                                 FlutterFlowTheme.of(context)
                                                     .textbox,
                                             suffixIcon: InkWell(
-                                              onTap: () => safeSetState(
-                                                () => _model
+                                              onTap: () async {
+                                                safeSetState(() => _model
                                                         .passwordVisibility =
-                                                    !_model.passwordVisibility,
-                                              ),
+                                                    !_model.passwordVisibility);
+                                              },
                                               focusNode: FocusNode(
                                                   skipTraversal: true),
                                               child: Icon(
@@ -520,6 +521,10 @@ class _SigninWidgetState extends State<SigninWidget>
                                             0.0, 24.0, 0.0, 0.0),
                                         child: FFButtonWidget(
                                           onPressed: () async {
+                                            logFirebaseEvent(
+                                                'SIGNIN_PAGE_signinButton_ON_TAP');
+                                            logFirebaseEvent(
+                                                'signinButton_auth');
                                             GoRouter.of(context)
                                                 .prepareAuthEvent();
 
@@ -539,45 +544,67 @@ class _SigninWidgetState extends State<SigninWidget>
                                                     currentUserDocument?.role,
                                                     '') ==
                                                 'user') {
-                                              if ((valueOrDefault(
-                                                          currentUserDocument
-                                                              ?.accStatus,
-                                                          '') ==
-                                                      'pending') &&
-                                                  (valueOrDefault(
-                                                          currentUserDocument
-                                                              ?.accStatus,
-                                                          '') !=
-                                                      'active')) {
+                                              if (valueOrDefault(
+                                                      currentUserDocument
+                                                          ?.accStatus,
+                                                      '') ==
+                                                  'active') {
+                                                logFirebaseEvent(
+                                                    'signinButton_backend_call');
+
                                                 await currentUserReference!
                                                     .update(
                                                         createUsersRecordData(
-                                                  status: false,
+                                                  status: true,
                                                   lastActive:
                                                       getCurrentTimestamp,
                                                 ));
+                                                logFirebaseEvent(
+                                                    'signinButton_navigate_to');
+
+                                                context.goNamedAuth(
+                                                    HomeWidget.routeName,
+                                                    context.mounted);
+                                              } else {
+                                                logFirebaseEvent(
+                                                    'signinButton_auth');
                                                 GoRouter.of(context)
                                                     .prepareAuthEvent();
                                                 await authManager.signOut();
                                                 GoRouter.of(context)
                                                     .clearRedirectLocation();
 
-                                                context.goNamedAuth(
-                                                    ApprovalAwaitWidget
-                                                        .routeName,
-                                                    context.mounted);
-                                              } else {
-                                                await currentUserReference!
-                                                    .update(
-                                                        createUsersRecordData(
-                                                  status: true,
-                                                ));
+                                                if (valueOrDefault(
+                                                        currentUserDocument
+                                                            ?.accStatus,
+                                                        '') ==
+                                                    'pending') {
+                                                  logFirebaseEvent(
+                                                      'signinButton_navigate_to');
 
-                                                context.goNamedAuth(
-                                                    HomeWidget.routeName,
-                                                    context.mounted);
+                                                  context.goNamedAuth(
+                                                      ApprovalPageWidget
+                                                          .routeName,
+                                                      context.mounted);
+                                                } else {
+                                                  if (valueOrDefault(
+                                                          currentUserDocument
+                                                              ?.accStatus,
+                                                          '') ==
+                                                      'rejected') {
+                                                    logFirebaseEvent(
+                                                        'signinButton_navigate_to');
+
+                                                    context.goNamedAuth(
+                                                        ApprovalRejectWidget
+                                                            .routeName,
+                                                        context.mounted);
+                                                  }
+                                                }
                                               }
                                             } else {
+                                              logFirebaseEvent(
+                                                  'signinButton_show_snack_bar');
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(
                                                 SnackBar(
@@ -587,7 +614,7 @@ class _SigninWidgetState extends State<SigninWidget>
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .primaryText,
+                                                              .textbox,
                                                     ),
                                                   ),
                                                   duration: Duration(
@@ -598,6 +625,8 @@ class _SigninWidgetState extends State<SigninWidget>
                                                           .error,
                                                 ),
                                               );
+                                              logFirebaseEvent(
+                                                  'signinButton_clear_text_fields_pin_codes');
                                               safeSetState(() {
                                                 _model.passwordTextController
                                                     ?.clear();
@@ -705,6 +734,11 @@ class _SigninWidgetState extends State<SigninWidget>
                                             hoverColor: Colors.transparent,
                                             highlightColor: Colors.transparent,
                                             onTap: () async {
+                                              logFirebaseEvent(
+                                                  'SIGNIN_PAGE_signupLink_ON_TAP');
+                                              logFirebaseEvent(
+                                                  'signupLink_navigate_to');
+
                                               context.pushNamed(
                                                   SignupWidget.routeName);
                                             },
@@ -716,10 +750,7 @@ class _SigninWidgetState extends State<SigninWidget>
                                                   .override(
                                                     font: GoogleFonts.manrope(
                                                       fontWeight:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .fontWeight,
+                                                          FontWeight.bold,
                                                       fontStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -728,13 +759,9 @@ class _SigninWidgetState extends State<SigninWidget>
                                                     ),
                                                     color: FlutterFlowTheme.of(
                                                             context)
-                                                        .primary,
+                                                        .primaryText,
                                                     letterSpacing: 0.0,
-                                                    fontWeight:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontWeight,
+                                                    fontWeight: FontWeight.bold,
                                                     fontStyle:
                                                         FlutterFlowTheme.of(
                                                                 context)

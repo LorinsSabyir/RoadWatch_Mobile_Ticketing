@@ -47,15 +47,53 @@ class _HomeWidgetState extends State<HomeWidget> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(0.0),
-        child: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).primary,
-          automaticallyImplyLeading: false,
-          actions: [],
-          centerTitle: false,
-          elevation: 0.0,
-        ),
+      appBar: AppBar(
+        backgroundColor: FlutterFlowTheme.of(context).primary,
+        automaticallyImplyLeading: false,
+        actions: [
+          Container(
+            width: MediaQuery.sizeOf(context).width * 1.0,
+            decoration: BoxDecoration(),
+            child: Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: Image.asset(
+                      'assets/images/1000053181-removebg-preview.png',
+                      width: 60.0,
+                      height: 60.0,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                  Text(
+                    'RoadWatch',
+                    style: FlutterFlowTheme.of(context).displaySmall.override(
+                          font: GoogleFonts.urbanist(
+                            fontWeight: FontWeight.bold,
+                            fontStyle: FlutterFlowTheme.of(context)
+                                .displaySmall
+                                .fontStyle,
+                          ),
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          letterSpacing: 0.0,
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FlutterFlowTheme.of(context)
+                              .displaySmall
+                              .fontStyle,
+                        ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+        centerTitle: false,
+        elevation: 0.0,
       ),
       body: SafeArea(
         top: true,
@@ -78,6 +116,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                   ),
                   child: Container(
                     width: MediaQuery.sizeOf(context).width * 1.0,
+                    height: MediaQuery.sizeOf(context).height * 0.02,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).primary,
                       boxShadow: [
@@ -95,144 +134,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                         bottomRight: Radius.circular(16.0),
                         topLeft: Radius.circular(0.0),
                         topRight: Radius.circular(0.0),
-                      ),
-                    ),
-                    child: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child: Image.asset(
-                              'assets/images/panabo-weblogo-white.png',
-                              width: 50.0,
-                              height: 50.0,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          Align(
-                            alignment: AlignmentDirectional(0.0, 0.0),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  8.0, 0.0, 8.0, 12.0),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      'Panabo City, DDN',
-                                      textAlign: TextAlign.center,
-                                      style: FlutterFlowTheme.of(context)
-                                          .displaySmall
-                                          .override(
-                                            font: GoogleFonts.outfit(
-                                              fontWeight:
-                                                  FlutterFlowTheme.of(context)
-                                                      .displaySmall
-                                                      .fontWeight,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .displaySmall
-                                                      .fontStyle,
-                                            ),
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            fontSize: 20.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight:
-                                                FlutterFlowTheme.of(context)
-                                                    .displaySmall
-                                                    .fontWeight,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .displaySmall
-                                                    .fontStyle,
-                                          ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      'Traffic Citation Ticket',
-                                      textAlign: TextAlign.center,
-                                      style: FlutterFlowTheme.of(context)
-                                          .displaySmall
-                                          .override(
-                                            font: GoogleFonts.outfit(
-                                              fontWeight:
-                                                  FlutterFlowTheme.of(context)
-                                                      .displaySmall
-                                                      .fontWeight,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .displaySmall
-                                                      .fontStyle,
-                                            ),
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            fontSize: 25.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight:
-                                                FlutterFlowTheme.of(context)
-                                                    .displaySmall
-                                                    .fontWeight,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .displaySmall
-                                                    .fontStyle,
-                                          ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      'Traffic Management Unit',
-                                      textAlign: TextAlign.center,
-                                      style: FlutterFlowTheme.of(context)
-                                          .displaySmall
-                                          .override(
-                                            font: GoogleFonts.outfit(
-                                              fontWeight:
-                                                  FlutterFlowTheme.of(context)
-                                                      .displaySmall
-                                                      .fontWeight,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .displaySmall
-                                                      .fontStyle,
-                                            ),
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            fontSize: 16.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight:
-                                                FlutterFlowTheme.of(context)
-                                                    .displaySmall
-                                                    .fontWeight,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .displaySmall
-                                                    .fontStyle,
-                                          ),
-                                    ),
-                                  ),
-                                ].divide(SizedBox(height: 2.0)),
-                              ),
-                            ),
-                          ),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child: Image.asset(
-                              'assets/images/Logo_sa_HCI.png',
-                              width: 50.0,
-                              height: 50.0,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        ],
                       ),
                     ),
                   ),

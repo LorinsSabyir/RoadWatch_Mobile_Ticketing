@@ -40,7 +40,7 @@ Future<void> generateControlNumber(BuildContext context) async {
 
       // Format: TCTTMDS0 (e.g. TCTTMDS1)
       final formattedNum = newNum.toString();
-      final newControlNum = 'TCTTMDS$formattedNum';
+      final newControlNum = 'TCT-TMDS-$formattedNum';
 
       // Save to AppState
       FFAppState().citationId = newControlNum;

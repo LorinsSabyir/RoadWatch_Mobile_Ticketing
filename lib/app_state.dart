@@ -342,6 +342,35 @@ class FFAppState extends ChangeNotifier {
     selectedViolationId.insert(index, value);
   }
 
+  List<String> _otherViolation = [];
+  List<String> get otherViolation => _otherViolation;
+  set otherViolation(List<String> value) {
+    _otherViolation = value;
+  }
+
+  void addToOtherViolation(String value) {
+    otherViolation.add(value);
+  }
+
+  void removeFromOtherViolation(String value) {
+    otherViolation.remove(value);
+  }
+
+  void removeAtIndexFromOtherViolation(int index) {
+    otherViolation.removeAt(index);
+  }
+
+  void updateOtherViolationAtIndex(
+    int index,
+    String Function(String) updateFn,
+  ) {
+    otherViolation[index] = updateFn(_otherViolation[index]);
+  }
+
+  void insertAtIndexInOtherViolation(int index, String value) {
+    otherViolation.insert(index, value);
+  }
+
   final _violatorProvinceDropdownCacheManager =
       StreamRequestManager<List<AddressProvinceRecord>>();
   Stream<List<AddressProvinceRecord>> violatorProvinceDropdownCache({

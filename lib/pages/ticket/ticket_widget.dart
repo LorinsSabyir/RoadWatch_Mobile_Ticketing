@@ -1,6 +1,7 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/confirm_modal/confirm_modal_widget.dart';
+import '/components/textfield_modal/textfield_modal_widget.dart';
 import '/components/violation_card/violation_card_widget.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -3805,27 +3806,130 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         .fontStyle,
                                               ),
                                         ),
-                                        FlutterFlowIconButton(
-                                          borderRadius: 8.0,
-                                          buttonSize: 40.0,
-                                          fillColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .primary,
-                                          icon: Icon(
-                                            Icons.search,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 24.0,
-                                          ),
-                                          onPressed: () async {
-                                            logFirebaseEvent(
-                                                'TICKET_PAGE_searchButton_ON_TAP');
-                                            logFirebaseEvent(
-                                                'searchButton_navigate_to');
+                                        Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Builder(
+                                              builder: (context) => InkWell(
+                                                splashColor: Colors.transparent,
+                                                focusColor: Colors.transparent,
+                                                hoverColor: Colors.transparent,
+                                                highlightColor:
+                                                    Colors.transparent,
+                                                onTap: () async {
+                                                  logFirebaseEvent(
+                                                      'TICKET_PAGE_Text_8mt1g3p9_ON_TAP');
+                                                  logFirebaseEvent(
+                                                      'Text_alert_dialog');
+                                                  await showDialog(
+                                                    context: context,
+                                                    builder: (dialogContext) {
+                                                      return Dialog(
+                                                        elevation: 0,
+                                                        insetPadding:
+                                                            EdgeInsets.zero,
+                                                        backgroundColor:
+                                                            Colors.transparent,
+                                                        alignment:
+                                                            AlignmentDirectional(
+                                                                    0.0, 0.0)
+                                                                .resolve(
+                                                                    Directionality.of(
+                                                                        context)),
+                                                        child: GestureDetector(
+                                                          onTap: () {
+                                                            FocusScope.of(
+                                                                    dialogContext)
+                                                                .unfocus();
+                                                            FocusManager
+                                                                .instance
+                                                                .primaryFocus
+                                                                ?.unfocus();
+                                                          },
+                                                          child:
+                                                              TextfieldModalWidget(
+                                                            title:
+                                                                'Other violation',
+                                                            buttonTitle:
+                                                                'Confirm',
+                                                            buttonColor:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .success,
+                                                            subtitle:
+                                                                'Please specify in the text field.',
+                                                            acceptButtonAction:
+                                                                () async {},
+                                                            cancelButtonAction:
+                                                                () async {
+                                                              logFirebaseEvent(
+                                                                  '_close_dialog_drawer_etc');
+                                                              Navigator.pop(
+                                                                  context);
+                                                            },
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                  );
+                                                },
+                                                child: Text(
+                                                  'Other violations\nPlease Specify...',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        font:
+                                                            GoogleFonts.manrope(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .fontStyle,
+                                                        ),
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondaryText,
+                                                        fontSize: 12.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .fontStyle,
+                                                      ),
+                                                ),
+                                              ),
+                                            ),
+                                            FlutterFlowIconButton(
+                                              borderRadius: 8.0,
+                                              buttonSize: 40.0,
+                                              fillColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                              icon: Icon(
+                                                Icons.search,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                size: 24.0,
+                                              ),
+                                              onPressed: () async {
+                                                logFirebaseEvent(
+                                                    'TICKET_PAGE_searchButton_ON_TAP');
+                                                logFirebaseEvent(
+                                                    'searchButton_navigate_to');
 
-                                            context.pushNamed(
-                                                SearchPageWidget.routeName);
-                                          },
+                                                context.pushNamed(
+                                                    SearchPageWidget.routeName);
+                                              },
+                                            ),
+                                          ].divide(SizedBox(width: 16.0)),
                                         ),
                                       ],
                                     ),
@@ -3895,7 +3999,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                                                         Expanded(
                                                           child: wrapWithModel(
                                                             model: _model
-                                                                .violationCardModels1
+                                                                .violationCardModels
                                                                 .getModel(
                                                               selectedViolationName1Index
                                                                   .toString(),
@@ -3968,189 +4072,6 @@ class _TicketWidgetState extends State<TicketWidget> {
                                         ),
                                       ),
                                     ),
-                                    if (false)
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            4.0, 0.0, 4.0, 0.0),
-                                        child: Container(
-                                          width:
-                                              MediaQuery.sizeOf(context).width *
-                                                  1.0,
-                                          height: MediaQuery.sizeOf(context)
-                                                  .height *
-                                              0.59,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryBackground,
-                                            boxShadow: [
-                                              BoxShadow(
-                                                blurRadius: 3.0,
-                                                color: Color(0x35000000),
-                                                offset: Offset(
-                                                  0.0,
-                                                  1.0,
-                                                ),
-                                              )
-                                            ],
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
-                                          ),
-                                          child: Padding(
-                                            padding: EdgeInsets.all(8.0),
-                                            child: Builder(
-                                              builder: (context) {
-                                                final selectedViolationName1 =
-                                                    FFAppState()
-                                                        .citationRef
-                                                        .toList();
-
-                                                return ListView.separated(
-                                                  padding: EdgeInsets.zero,
-                                                  primary: false,
-                                                  shrinkWrap: true,
-                                                  scrollDirection:
-                                                      Axis.vertical,
-                                                  itemCount:
-                                                      selectedViolationName1
-                                                          .length,
-                                                  separatorBuilder: (_, __) =>
-                                                      SizedBox(height: 4.0),
-                                                  itemBuilder: (context,
-                                                      selectedViolationName1Index) {
-                                                    final selectedViolationName1Item =
-                                                        selectedViolationName1[
-                                                            selectedViolationName1Index];
-                                                    return StreamBuilder<
-                                                        List<ViolationRecord>>(
-                                                      stream:
-                                                          queryViolationRecord(
-                                                        queryBuilder:
-                                                            (violationRecord) =>
-                                                                violationRecord
-                                                                    .where(
-                                                          'id',
-                                                          isEqualTo:
-                                                              selectedViolationName1Item,
-                                                        ),
-                                                      ),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        // Customize what your widget looks like when it's loading.
-                                                        if (!snapshot.hasData) {
-                                                          return Center(
-                                                            child: SizedBox(
-                                                              width: 50.0,
-                                                              height: 50.0,
-                                                              child:
-                                                                  SpinKitRing(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .tertiary,
-                                                                size: 50.0,
-                                                              ),
-                                                            ),
-                                                          );
-                                                        }
-                                                        List<ViolationRecord>
-                                                            violationViolationRecordList =
-                                                            snapshot.data!;
-
-                                                        return Container(
-                                                          width: 100.0,
-                                                          decoration:
-                                                              BoxDecoration(),
-                                                          child: Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .min,
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              Expanded(
-                                                                child:
-                                                                    wrapWithModel(
-                                                                  model: _model
-                                                                      .violationCardModels2
-                                                                      .getModel(
-                                                                    selectedViolationName1Index
-                                                                        .toString(),
-                                                                    selectedViolationName1Index,
-                                                                  ),
-                                                                  updateCallback: () =>
-                                                                      safeSetState(
-                                                                          () {}),
-                                                                  updateOnChange:
-                                                                      true,
-                                                                  child:
-                                                                      ViolationCardWidget(
-                                                                    key: Key(
-                                                                      'Keyrz2_${selectedViolationName1Index.toString()}',
-                                                                    ),
-                                                                    title:
-                                                                        selectedViolationName1Item,
-                                                                    subtitle: FFAppState()
-                                                                        .selectedViolationSection
-                                                                        .elementAtOrNull(
-                                                                            selectedViolationName1Index),
-                                                                    fine: FFAppState()
-                                                                        .selectedViolationFine
-                                                                        .elementAtOrNull(
-                                                                            selectedViolationName1Index),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              FlutterFlowIconButton(
-                                                                borderRadius:
-                                                                    50.0,
-                                                                buttonSize:
-                                                                    40.0,
-                                                                icon: Icon(
-                                                                  Icons
-                                                                      .delete_forever,
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .error,
-                                                                  size: 24.0,
-                                                                ),
-                                                                onPressed:
-                                                                    () async {
-                                                                  logFirebaseEvent(
-                                                                      'TICKET_PAGE_deleteButton_ON_TAP');
-                                                                  logFirebaseEvent(
-                                                                      'deleteButton_update_app_state');
-                                                                  FFAppState().removeFromSelectedViolationName(
-                                                                      selectedViolationName1Index
-                                                                          .toString());
-                                                                  FFAppState().removeFromSelectedViolationFine(
-                                                                      selectedViolationName1Index
-                                                                          .toDouble());
-                                                                  FFAppState().removeFromSelectedViolationSection(
-                                                                      selectedViolationName1Index
-                                                                          .toString());
-                                                                  FFAppState()
-                                                                      .removeAtIndexFromCitationRef(
-                                                                          selectedViolationName1Index);
-                                                                  safeSetState(
-                                                                      () {});
-                                                                },
-                                                              ),
-                                                            ].divide(SizedBox(
-                                                                width: 4.0)),
-                                                          ),
-                                                        );
-                                                      },
-                                                    );
-                                                  },
-                                                );
-                                              },
-                                            ),
-                                          ),
-                                        ),
-                                      ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 8.0, 0.0, 0.0),

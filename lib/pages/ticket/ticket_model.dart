@@ -140,14 +140,11 @@ class TicketModel extends FlutterFlowModel<TicketWidget> {
   TextEditingController? vehicleDecTextController;
   String? Function(BuildContext, String?)? vehicleDecTextControllerValidator;
   // Models for ViolationCard dynamic component.
-  late FlutterFlowDynamicModels<ViolationCardModel> violationCardModels1;
-  // Models for ViolationCard dynamic component.
-  late FlutterFlowDynamicModels<ViolationCardModel> violationCardModels2;
+  late FlutterFlowDynamicModels<ViolationCardModel> violationCardModels;
 
   @override
   void initState(BuildContext context) {
-    violationCardModels1 = FlutterFlowDynamicModels(() => ViolationCardModel());
-    violationCardModels2 = FlutterFlowDynamicModels(() => ViolationCardModel());
+    violationCardModels = FlutterFlowDynamicModels(() => ViolationCardModel());
   }
 
   @override
@@ -188,7 +185,6 @@ class TicketModel extends FlutterFlowModel<TicketWidget> {
     vehicleDecFocusNode?.dispose();
     vehicleDecTextController?.dispose();
 
-    violationCardModels1.dispose();
-    violationCardModels2.dispose();
+    violationCardModels.dispose();
   }
 }

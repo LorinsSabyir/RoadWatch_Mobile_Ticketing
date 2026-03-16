@@ -8,6 +8,7 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'profile_edit_model.dart';
 export 'profile_edit_model.dart';
@@ -209,6 +210,8 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget> {
                                         _model.userFirstNameTextController,
                                     focusNode: _model.userFirstNameFocusNode,
                                     autofocus: true,
+                                    textCapitalization:
+                                        TextCapitalization.words,
                                     obscureText: false,
                                     decoration: InputDecoration(
                                       labelText: 'Firstname',
@@ -305,6 +308,18 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget> {
                                     validator: _model
                                         .userFirstNameTextControllerValidator
                                         .asValidator(context),
+                                    inputFormatters: [
+                                      if (!isAndroid && !isiOS)
+                                        TextInputFormatter.withFunction(
+                                            (oldValue, newValue) {
+                                          return TextEditingValue(
+                                            selection: newValue.selection,
+                                            text: newValue.text
+                                                .toCapitalization(
+                                                    TextCapitalization.words),
+                                          );
+                                        }),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -316,6 +331,8 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget> {
                                         _model.userLastNameTextController,
                                     focusNode: _model.userLastNameFocusNode,
                                     autofocus: true,
+                                    textCapitalization:
+                                        TextCapitalization.words,
                                     obscureText: false,
                                     decoration: InputDecoration(
                                       labelText: 'Lastname',
@@ -412,6 +429,18 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget> {
                                     validator: _model
                                         .userLastNameTextControllerValidator
                                         .asValidator(context),
+                                    inputFormatters: [
+                                      if (!isAndroid && !isiOS)
+                                        TextInputFormatter.withFunction(
+                                            (oldValue, newValue) {
+                                          return TextEditingValue(
+                                            selection: newValue.selection,
+                                            text: newValue.text
+                                                .toCapitalization(
+                                                    TextCapitalization.words),
+                                          );
+                                        }),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -516,6 +545,7 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget> {
                                                   .bodyLarge
                                                   .fontStyle,
                                         ),
+                                    keyboardType: TextInputType.phone,
                                     validator: _model
                                         .userPhoneNumTextControllerValidator
                                         .asValidator(context),

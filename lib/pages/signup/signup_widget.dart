@@ -8,6 +8,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'signup_model.dart';
@@ -395,6 +396,8 @@ class _SignupWidgetState extends State<SignupWidget>
                                         focusNode: _model.firstNameFocusNode,
                                         autofocus: false,
                                         autofillHints: [AutofillHints.email],
+                                        textCapitalization:
+                                            TextCapitalization.words,
                                         obscureText: false,
                                         decoration: InputDecoration(
                                           labelText: 'First Name',
@@ -500,6 +503,19 @@ class _SignupWidgetState extends State<SignupWidget>
                                         validator: _model
                                             .firstNameTextControllerValidator
                                             .asValidator(context),
+                                        inputFormatters: [
+                                          if (!isAndroid && !isiOS)
+                                            TextInputFormatter.withFunction(
+                                                (oldValue, newValue) {
+                                              return TextEditingValue(
+                                                selection: newValue.selection,
+                                                text: newValue.text
+                                                    .toCapitalization(
+                                                        TextCapitalization
+                                                            .words),
+                                              );
+                                            }),
+                                        ],
                                       ),
                                     ),
                                     Container(
@@ -510,6 +526,8 @@ class _SignupWidgetState extends State<SignupWidget>
                                         focusNode: _model.lastNameFocusNode,
                                         autofocus: false,
                                         autofillHints: [AutofillHints.email],
+                                        textCapitalization:
+                                            TextCapitalization.words,
                                         obscureText: false,
                                         decoration: InputDecoration(
                                           labelText: 'Last Name',
@@ -615,6 +633,19 @@ class _SignupWidgetState extends State<SignupWidget>
                                         validator: _model
                                             .lastNameTextControllerValidator
                                             .asValidator(context),
+                                        inputFormatters: [
+                                          if (!isAndroid && !isiOS)
+                                            TextInputFormatter.withFunction(
+                                                (oldValue, newValue) {
+                                              return TextEditingValue(
+                                                selection: newValue.selection,
+                                                text: newValue.text
+                                                    .toCapitalization(
+                                                        TextCapitalization
+                                                            .words),
+                                              );
+                                            }),
+                                        ],
                                       ),
                                     ),
                                     Container(

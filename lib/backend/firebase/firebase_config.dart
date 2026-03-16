@@ -10,7 +10,8 @@ Future initFirebase() async {
             projectId: "road-watch-capstone-pro-bj1osc",
             storageBucket: "road-watch-capstone-pro-bj1osc.firebasestorage.app",
             messagingSenderId: "972099236659",
-            appId: "1:972099236659:web:210418b55cac3474de0446"));
+            appId: "1:972099236659:web:210418b55cac3474de0446",
+            measurementId: "G-ZHWDSYBDR4"));
   } else {
     await Firebase.initializeApp();
   }

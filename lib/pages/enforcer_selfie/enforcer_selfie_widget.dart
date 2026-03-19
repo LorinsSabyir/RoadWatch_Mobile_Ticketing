@@ -212,7 +212,8 @@ class _EnforcerSelfieWidgetState extends State<EnforcerSelfieWidget> {
                                   size: 50.0,
                                 ),
                                 Text(
-                                  'Take a picture of your face',
+                                  'Press here to\ntake a picture of your face',
+                                  textAlign: TextAlign.center,
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
@@ -238,128 +239,135 @@ class _EnforcerSelfieWidgetState extends State<EnforcerSelfieWidget> {
                               ],
                             ),
                           ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 16.0),
-                          child: Container(
-                            width: MediaQuery.sizeOf(context).width * 0.7,
-                            height: 60.0,
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 3.0,
-                                  color: Color(0x35000000),
-                                  offset: Offset(
-                                    0.0,
-                                    1.0,
-                                  ),
-                                )
-                              ],
-                            ),
-                            child: FFButtonWidget(
-                              onPressed: () async {
-                                logFirebaseEvent(
-                                    'ENFORCER_SELFIE_PAGE_scanButton_ON_TAP');
-                                logFirebaseEvent(
-                                    'scanButton_upload_file_to_firebase');
-                                {
-                                  safeSetState(() => _model
-                                      .isDataUploading_enforcerFace = true);
-                                  var selectedUploadedFiles =
-                                      <FFUploadedFile>[];
-                                  var selectedFiles = <SelectedFile>[];
-                                  var downloadUrls = <String>[];
-                                  try {
-                                    selectedUploadedFiles = _model
-                                            .uploadedLocalFile_uploadEnforcerFace
-                                            .bytes!
-                                            .isNotEmpty
-                                        ? [
-                                            _model
-                                                .uploadedLocalFile_uploadEnforcerFace
-                                          ]
-                                        : <FFUploadedFile>[];
-                                    selectedFiles =
-                                        selectedFilesFromUploadedFiles(
-                                      selectedUploadedFiles,
-                                    );
-                                    downloadUrls = (await Future.wait(
-                                      selectedFiles.map(
-                                        (f) async => await uploadData(
-                                            f.storagePath, f.bytes),
-                                      ),
-                                    ))
-                                        .where((u) => u != null)
-                                        .map((u) => u!)
-                                        .toList();
-                                  } finally {
-                                    _model.isDataUploading_enforcerFace = false;
+                        if ((_model.uploadedLocalFile_uploadEnforcerFace.bytes
+                                    ?.isNotEmpty ??
+                                false))
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 16.0),
+                            child: Container(
+                              width: MediaQuery.sizeOf(context).width * 0.7,
+                              height: 60.0,
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 3.0,
+                                    color: Color(0x35000000),
+                                    offset: Offset(
+                                      0.0,
+                                      1.0,
+                                    ),
+                                  )
+                                ],
+                              ),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  logFirebaseEvent(
+                                      'ENFORCER_SELFIE_PAGE_scanButton_ON_TAP');
+                                  logFirebaseEvent(
+                                      'scanButton_upload_file_to_firebase');
+                                  {
+                                    safeSetState(() => _model
+                                        .isDataUploading_enforcerFace = true);
+                                    var selectedUploadedFiles =
+                                        <FFUploadedFile>[];
+                                    var selectedFiles = <SelectedFile>[];
+                                    var downloadUrls = <String>[];
+                                    try {
+                                      selectedUploadedFiles = _model
+                                              .uploadedLocalFile_uploadEnforcerFace
+                                              .bytes!
+                                              .isNotEmpty
+                                          ? [
+                                              _model
+                                                  .uploadedLocalFile_uploadEnforcerFace
+                                            ]
+                                          : <FFUploadedFile>[];
+                                      selectedFiles =
+                                          selectedFilesFromUploadedFiles(
+                                        selectedUploadedFiles,
+                                      );
+                                      downloadUrls = (await Future.wait(
+                                        selectedFiles.map(
+                                          (f) async => await uploadData(
+                                              f.storagePath, f.bytes),
+                                        ),
+                                      ))
+                                          .where((u) => u != null)
+                                          .map((u) => u!)
+                                          .toList();
+                                    } finally {
+                                      _model.isDataUploading_enforcerFace =
+                                          false;
+                                    }
+                                    if (selectedUploadedFiles.length ==
+                                            selectedFiles.length &&
+                                        downloadUrls.length ==
+                                            selectedFiles.length) {
+                                      safeSetState(() {
+                                        _model.uploadedLocalFile_enforcerFace =
+                                            selectedUploadedFiles.first;
+                                        _model.uploadedFileUrl_enforcerFace =
+                                            downloadUrls.first;
+                                      });
+                                    } else {
+                                      safeSetState(() {});
+                                      return;
+                                    }
                                   }
-                                  if (selectedUploadedFiles.length ==
-                                          selectedFiles.length &&
-                                      downloadUrls.length ==
-                                          selectedFiles.length) {
-                                    safeSetState(() {
-                                      _model.uploadedLocalFile_enforcerFace =
-                                          selectedUploadedFiles.first;
-                                      _model.uploadedFileUrl_enforcerFace =
-                                          downloadUrls.first;
-                                    });
-                                  } else {
-                                    safeSetState(() {});
-                                    return;
-                                  }
-                                }
 
-                                logFirebaseEvent('scanButton_backend_call');
+                                  logFirebaseEvent('scanButton_backend_call');
 
-                                await currentUserReference!
-                                    .update(createUsersRecordData(
-                                  photoUrl: _model.uploadedFileUrl_enforcerFace,
-                                ));
-                                logFirebaseEvent('scanButton_auth');
-                                GoRouter.of(context).prepareAuthEvent();
-                                await authManager.signOut();
-                                GoRouter.of(context).clearRedirectLocation();
+                                  await currentUserReference!
+                                      .update(createUsersRecordData(
+                                    photoUrl:
+                                        _model.uploadedFileUrl_enforcerFace,
+                                  ));
+                                  logFirebaseEvent('scanButton_auth');
+                                  GoRouter.of(context).prepareAuthEvent();
+                                  await authManager.signOut();
+                                  GoRouter.of(context).clearRedirectLocation();
 
-                                logFirebaseEvent('scanButton_update_app_state');
-                                FFAppState().imagePath = '';
-                                safeSetState(() {});
-                                logFirebaseEvent('scanButton_navigate_to');
+                                  logFirebaseEvent(
+                                      'scanButton_update_app_state');
+                                  FFAppState().imagePath = '';
+                                  safeSetState(() {});
+                                  logFirebaseEvent('scanButton_navigate_to');
 
-                                context.goNamedAuth(
-                                    ApprovalPageWidget.routeName,
-                                    context.mounted);
-                              },
-                              text: 'Submit Selfie',
-                              options: FFButtonOptions(
-                                height: 60.0,
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 0.0, 16.0, 0.0),
-                                iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                color: FlutterFlowTheme.of(context).primary,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleLarge
-                                    .override(
-                                      font: GoogleFonts.manrope(
+                                  context.goNamedAuth(
+                                      ApprovalPageWidget.routeName,
+                                      context.mounted);
+                                },
+                                text: 'Submit Selfie',
+                                options: FFButtonOptions(
+                                  height: 60.0,
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      16.0, 0.0, 16.0, 0.0),
+                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .titleLarge
+                                      .override(
+                                        font: GoogleFonts.manrope(
+                                          fontWeight: FontWeight.w500,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleLarge
+                                                  .fontStyle,
+                                        ),
+                                        letterSpacing: 0.0,
                                         fontWeight: FontWeight.w500,
                                         fontStyle: FlutterFlowTheme.of(context)
                                             .titleLarge
                                             .fontStyle,
                                       ),
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.w500,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .titleLarge
-                                          .fontStyle,
-                                    ),
-                                elevation: 0.0,
-                                borderRadius: BorderRadius.circular(8.0),
+                                  elevation: 0.0,
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
                               ),
                             ),
                           ),
-                        ),
                       ],
                     ),
                   ),

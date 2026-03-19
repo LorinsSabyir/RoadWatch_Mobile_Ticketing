@@ -252,7 +252,7 @@ class _ViolatorPictureWidgetState extends State<ViolatorPictureWidget> {
                                   size: 50.0,
                                 ),
                                 Text(
-                                  'Take a picture of the violator \nalong with their vehicle',
+                                  'Press here to\ntake a picture of the violator \nalong with their vehicle',
                                   textAlign: TextAlign.center,
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
@@ -279,134 +279,140 @@ class _ViolatorPictureWidgetState extends State<ViolatorPictureWidget> {
                               ],
                             ),
                           ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 16.0),
-                          child: Container(
-                            width: MediaQuery.sizeOf(context).width * 0.7,
-                            height: 60.0,
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 3.0,
-                                  color: Color(0x35000000),
-                                  offset: Offset(
-                                    0.0,
-                                    1.0,
-                                  ),
-                                )
-                              ],
-                            ),
-                            child: FFButtonWidget(
-                              onPressed: () async {
-                                logFirebaseEvent(
-                                    'VIOLATOR_PICTURE_PAGE_scanButton_ON_TAP');
-                                logFirebaseEvent(
-                                    'scanButton_upload_file_to_firebase');
-                                {
-                                  safeSetState(() => _model
-                                      .isDataUploading_violatorPic = true);
-                                  var selectedUploadedFiles =
-                                      <FFUploadedFile>[];
-                                  var selectedFiles = <SelectedFile>[];
-                                  var downloadUrls = <String>[];
-                                  try {
-                                    showUploadMessage(
-                                      context,
-                                      'Uploading file...',
-                                      showLoading: true,
-                                    );
-                                    selectedUploadedFiles = _model
-                                            .uploadedLocalFile_uploadViolatorPic
-                                            .bytes!
-                                            .isNotEmpty
-                                        ? [
-                                            _model
-                                                .uploadedLocalFile_uploadViolatorPic
-                                          ]
-                                        : <FFUploadedFile>[];
-                                    selectedFiles =
-                                        selectedFilesFromUploadedFiles(
-                                      selectedUploadedFiles,
-                                    );
-                                    downloadUrls = (await Future.wait(
-                                      selectedFiles.map(
-                                        (f) async => await uploadData(
-                                            f.storagePath, f.bytes),
-                                      ),
-                                    ))
-                                        .where((u) => u != null)
-                                        .map((u) => u!)
-                                        .toList();
-                                  } finally {
-                                    ScaffoldMessenger.of(context)
-                                        .hideCurrentSnackBar();
-                                    _model.isDataUploading_violatorPic = false;
+                        if ((_model.uploadedLocalFile_uploadViolatorPic.bytes
+                                    ?.isNotEmpty ??
+                                false))
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 16.0),
+                            child: Container(
+                              width: MediaQuery.sizeOf(context).width * 0.7,
+                              height: 60.0,
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 3.0,
+                                    color: Color(0x35000000),
+                                    offset: Offset(
+                                      0.0,
+                                      1.0,
+                                    ),
+                                  )
+                                ],
+                              ),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  logFirebaseEvent(
+                                      'VIOLATOR_PICTURE_PAGE_scanButton_ON_TAP');
+                                  logFirebaseEvent(
+                                      'scanButton_upload_file_to_firebase');
+                                  {
+                                    safeSetState(() => _model
+                                        .isDataUploading_violatorPic = true);
+                                    var selectedUploadedFiles =
+                                        <FFUploadedFile>[];
+                                    var selectedFiles = <SelectedFile>[];
+                                    var downloadUrls = <String>[];
+                                    try {
+                                      showUploadMessage(
+                                        context,
+                                        'Uploading file...',
+                                        showLoading: true,
+                                      );
+                                      selectedUploadedFiles = _model
+                                              .uploadedLocalFile_uploadViolatorPic
+                                              .bytes!
+                                              .isNotEmpty
+                                          ? [
+                                              _model
+                                                  .uploadedLocalFile_uploadViolatorPic
+                                            ]
+                                          : <FFUploadedFile>[];
+                                      selectedFiles =
+                                          selectedFilesFromUploadedFiles(
+                                        selectedUploadedFiles,
+                                      );
+                                      downloadUrls = (await Future.wait(
+                                        selectedFiles.map(
+                                          (f) async => await uploadData(
+                                              f.storagePath, f.bytes),
+                                        ),
+                                      ))
+                                          .where((u) => u != null)
+                                          .map((u) => u!)
+                                          .toList();
+                                    } finally {
+                                      ScaffoldMessenger.of(context)
+                                          .hideCurrentSnackBar();
+                                      _model.isDataUploading_violatorPic =
+                                          false;
+                                    }
+                                    if (selectedUploadedFiles.length ==
+                                            selectedFiles.length &&
+                                        downloadUrls.length ==
+                                            selectedFiles.length) {
+                                      safeSetState(() {
+                                        _model.uploadedLocalFile_violatorPic =
+                                            selectedUploadedFiles.first;
+                                        _model.uploadedFileUrl_violatorPic =
+                                            downloadUrls.first;
+                                      });
+                                      showUploadMessage(
+                                        context,
+                                        'Success!',
+                                      );
+                                    } else {
+                                      safeSetState(() {});
+                                      showUploadMessage(
+                                        context,
+                                        'Failed to upload file',
+                                      );
+                                      return;
+                                    }
                                   }
-                                  if (selectedUploadedFiles.length ==
-                                          selectedFiles.length &&
-                                      downloadUrls.length ==
-                                          selectedFiles.length) {
-                                    safeSetState(() {
-                                      _model.uploadedLocalFile_violatorPic =
-                                          selectedUploadedFiles.first;
-                                      _model.uploadedFileUrl_violatorPic =
-                                          downloadUrls.first;
-                                    });
-                                    showUploadMessage(
-                                      context,
-                                      'Success!',
-                                    );
-                                  } else {
-                                    safeSetState(() {});
-                                    showUploadMessage(
-                                      context,
-                                      'Failed to upload file',
-                                    );
-                                    return;
-                                  }
-                                }
 
-                                logFirebaseEvent('scanButton_update_app_state');
-                                FFAppState().imagePath =
-                                    _model.uploadedFileUrl_violatorPic;
-                                safeSetState(() {});
-                                logFirebaseEvent('scanButton_navigate_to');
+                                  logFirebaseEvent(
+                                      'scanButton_update_app_state');
+                                  FFAppState().imagePath =
+                                      _model.uploadedFileUrl_violatorPic;
+                                  safeSetState(() {});
+                                  logFirebaseEvent('scanButton_navigate_to');
 
-                                context
-                                    .pushNamed(TicketReceiptWidget.routeName);
-                              },
-                              text: 'Submit Selfie',
-                              options: FFButtonOptions(
-                                height: 60.0,
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 0.0, 16.0, 0.0),
-                                iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                color: FlutterFlowTheme.of(context).primary,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleLarge
-                                    .override(
-                                      font: GoogleFonts.manrope(
+                                  context
+                                      .pushNamed(TicketReceiptWidget.routeName);
+                                },
+                                text: 'Submit Selfie',
+                                options: FFButtonOptions(
+                                  height: 60.0,
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      16.0, 0.0, 16.0, 0.0),
+                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .titleLarge
+                                      .override(
+                                        font: GoogleFonts.manrope(
+                                          fontWeight: FontWeight.w500,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleLarge
+                                                  .fontStyle,
+                                        ),
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        letterSpacing: 0.0,
                                         fontWeight: FontWeight.w500,
                                         fontStyle: FlutterFlowTheme.of(context)
                                             .titleLarge
                                             .fontStyle,
                                       ),
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.w500,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .titleLarge
-                                          .fontStyle,
-                                    ),
-                                elevation: 0.0,
-                                borderRadius: BorderRadius.circular(8.0),
+                                  elevation: 0.0,
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
                               ),
                             ),
                           ),
-                        ),
                       ],
                     ),
                   ),
